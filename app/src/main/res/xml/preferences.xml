@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+<PreferenceCategory android:title="Auto Wifi Settings"
+    android:key="pref_key_wifi_settings">
+    <CheckBoxPreference
+        android:key="enable_auto_wifi"
+        android:title="Auto WOL on Wifi"
+        android:summary="Enable automatic WOL Requests when connecting to wifi"
+        android:defaultValue="true" />
+
+    <EditTextPreference
+        android:key="home_ssid"
+        android:title="Home Wifi SSID"
+        android:summary="SSID to send auto WOL Requests"
+        android:defaultValue="Thom_Nik"/>
+
+</PreferenceCategory>
+
+
+
+</PreferenceScreen>

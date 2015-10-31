@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">wakeOnLan</string>
+    <string name="wol_action">com.teamgy.wakeonlan.ACTION_WOL</string>
+    <string name="shared_preference_key">com.teamgy.preferences</string>
+    <string name="my_mac">fcaa142804ea</string>
+    <string name="action_settings">Settings</string>
+
+</resources>
