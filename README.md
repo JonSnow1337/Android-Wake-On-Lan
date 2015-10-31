@@ -4,11 +4,11 @@ Application that wakes up your pc from sleeping or hibernating
 
 
 ## Usage
-1.Download Android Studio
-2.Import this somehow
-3.Get upset because something wont import properly
-4.Google for hours 
-5.Loose all interest
+1. Download Android Studio
+2. Import this somehow
+3. Get upset because something wont import properly
+4. Google for hours 
+5. Loose all interest
 
 
 
