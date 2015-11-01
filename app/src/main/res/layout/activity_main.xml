@@ -16,41 +16,22 @@
 
     </android.support.design.widget.AppBarLayout>
 
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="wake pc"
-        android:onClick="sendMagicPacket"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/app_bar_layout"
-        android:layout_margin="16dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:text="MAC:"
-            android:paddingRight="30dp"/>
-
-        <EditText
+        <!--<include layout="@layout/content_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/edit_text"
+            android:layout_height="match_parent"
+            android:layout_below="@id/app_bar_layout"
+            android:id="@+id/test"
+            >
 
-            />
+        </include> -->
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/app_bar_layout"
+        android:id="@+id/fragment_container"
+        ></FrameLayout>
 
-        <!-- android:text="fcaa142804ea" -->
-
-
-    </LinearLayout>
 
 
     

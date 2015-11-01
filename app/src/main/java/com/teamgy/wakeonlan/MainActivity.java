@@ -1,29 +1,22 @@
 package com.teamgy.wakeonlan;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.media.audiofx.BassBoost;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 
 import java.io.IOException;
 import java.net.SocketException;
 
 public class MainActivity extends AppCompatActivity {
-    private EditText editText;
-    private String macAdress;
+
+    private MainFragment mainFrag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,37 +24,31 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
 
-        editText = (EditText) findViewById(R.id.edit_text);
-        SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_preference_key), Context.MODE_PRIVATE);
+        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
 
-        macAdress = sharedPreferences.getString("macAdress", "none");
-        if(macAdress.equals("none")){
-
-            macAdress = getString(R.string.my_mac);
-
-
-        }
-        editText.setText(macAdress);
-
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                macAdress = s.toString();
+            public void onBackStackChanged() {
+                int stackHeight = getFragmentManager().getBackStackEntryCount();
+                if (stackHeight > 1) {
+                    getSupportActionBar().setHomeButtonEnabled(true);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                } else {
+                    getSupportActionBar().setHomeButtonEnabled(false);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    getSupportActionBar().setTitle("Wake On Lan");
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+                }
             }
         });
+
+        mainFrag = new MainFragment();
+        replaceFragmentContainer(mainFrag);
+
+
 
     }
     @Override
@@ -83,38 +70,23 @@ public class MainActivity extends AppCompatActivity {
             startActivity(startSettings);
 
         }
+        if(id == android.R.id.home){
+
+            getFragmentManager().popBackStack();
+            getSupportActionBar().setHomeAsUpIndicator(null);
+
+
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onPause() {
-        saveAdress();
-        super.onPause();
-    }
 
-    @Override
-    protected void onStop() {
-        saveAdress();
-        super.onStop();
 
-    }
-    private void saveAdress(){
-        if(macAdress != null){
-
-            SharedPreferences sharedPreferences = getSharedPreferences(getString(R.string.shared_preference_key), Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-
-            editor.putString("macAdress",macAdress);
-            editor.commit();
-
-        }
-
-    }
 
     public void sendMagicPacket (View view) throws SocketException , IOException{
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String pref = sharedPreferences.getString("home_ssid",null);
         if(pref != null){
 
@@ -130,9 +102,61 @@ public class MainActivity extends AppCompatActivity {
 
         serviceIntent.putExtra("macAdresses",array);
 
-        startService(serviceIntent);
+        startService(serviceIntent);*/
+       // getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditPCFragment()).commit();
+
+
+
+    }
+    public void startAddPcActivity(View view){
+
+        /*Intent i = new Intent(this,EditPCFragment.class);
+        startActivity(i);*/
+        //we are adding a new pc, so no arguments for fragment
+        EditPCFragment frag = EditPCFragment.newInstance(null);
+        replaceFragmentContainer(frag);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check_white_24dp);
+        getSupportActionBar().setTitle("Add new device");
+        frag.addOnPCInfoAddedListener(new EditPCFragment.onPCInfoAddedListener() {
+            @Override
+            public void onPcInfoAdded(PCInfo pcInfo) {
+                mainFrag.addNewPCInfo(pcInfo);
+            }
+        });
+
+
+
+    }
+    public void startEditPCFragment(View view,PCInfo pcInfo){
+
+        EditPCFragment frag = EditPCFragment.newInstance(pcInfo);
+        replaceFragmentContainer(frag);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check_white_24dp);
+
+
+    }
+    private void replaceFragmentContainer(Fragment newFragment){
+        FragmentTransaction fts = getFragmentManager().beginTransaction();
+        fts.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fts.replace(R.id.fragment_container, newFragment);
+        fts.addToBackStack("tag");
+        fts.commit();
 
     }
 
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        }
+
+        else{
+            finish();
+            System.exit(0);
+        }
+
+
+    }
 }
 
