@@ -47,7 +47,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="25dp"
         android:src="@drawable/ic_add_black_24dp"
-        android:onClick="startAddPcActivity"
+        android:onClick="startAddPcFragment"
         />
 
 </RelativeLayout>

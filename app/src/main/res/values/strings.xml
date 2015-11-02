@@ -4,5 +4,7 @@
     <string name="shared_preference_key">com.teamgy.preferences</string>
     <string name="my_mac">fcaa142804ea</string>
     <string name="action_settings">Settings</string>
+    <string name="action_launch_reqs">Send WOL Reqs</string>
+
 
 </resources>

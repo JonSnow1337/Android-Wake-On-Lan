@@ -5,12 +5,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -23,6 +20,16 @@ public class MainFragment extends Fragment {
     private EditText editText;
     private String macAdress;
     private Context context;
+    private OnCreateViewListener listener;
+
+    public ListView getListview() {
+        return listview;
+    }
+
+    private ListView listview;
+
+
+
     ArrayList<PCInfo> pcinfoArrList;
     PcInfoAdapter adapter;
 
@@ -30,12 +37,14 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.content_main,container,false);
+        View view = inflater.inflate(R.layout.content_main, container, false);
         context = view.getContext();
         SharedPreferences sharedPreferences = context.getSharedPreferences(getString(R.string.shared_preference_key), Context.MODE_PRIVATE);
 
 
-        ListView listview = (ListView)view.findViewById(R.id.pc_list_view);
+        listview = (ListView)view.findViewById(R.id.pc_list_view);
+
+
 
 
 
@@ -44,7 +53,7 @@ public class MainFragment extends Fragment {
         listview.setAdapter(adapter);
 
 
-
+        if(listener != null){listener.onViewCreated();}
         return view;
 
 
@@ -93,7 +102,19 @@ public class MainFragment extends Fragment {
         pcinfoArrList.add(pcInfo);
         adapter.notifyDataSetChanged();
 
+    }
+    public void editPCInfo(PCInfo pcInfo,int position){
+        pcinfoArrList.remove(position);
+        pcinfoArrList.add(position,pcInfo);
+        adapter.notifyDataSetChanged();
 
     }
+    public ArrayList<PCInfo> getPcinfoArrList() {
+        return pcinfoArrList;
+    }
+    public void setOnCreateViewListener(OnCreateViewListener listener){
+        this.listener = listener;
+    }
+
 
 }

@@ -20,6 +20,7 @@ public class EditPCFragment extends Fragment {
     private EditText editSSID;
     private PCInfo pcinfo;
     private onPCInfoAddedListener listener;
+    private boolean editMode;
 
     private AppCompatActivity activity;
 
@@ -38,12 +39,15 @@ public class EditPCFragment extends Fragment {
 
         if(macAdress == null || ssid == null){
 
+
             //we are creating a new pc then
             //layout is fine since we have hints there
+            editMode = false;
         }
         else{
             editMac.setText(pcinfo.getMacAdress());
             editSSID.setText(pcinfo.getSSID());
+            editMode = true;
 
         }
 
@@ -79,8 +83,10 @@ public class EditPCFragment extends Fragment {
     @Override
     public void onDetach() {
         //toolbar.setNavigationIcon(null);
-        PCInfo addedPCInfo = new PCInfo(editMac.getText().toString(),editSSID.getText().toString());
-        listener.onPcInfoAdded(addedPCInfo);
+        PCInfo addedPCInfo = new PCInfo(editMac.getText().toString().toLowerCase(),editSSID.getText().toString());
+
+        listener.onPcInfoAdded(addedPCInfo,editMode);
+
         super.onDetach();
 
     }
@@ -95,7 +101,7 @@ public class EditPCFragment extends Fragment {
     }
     public interface onPCInfoAddedListener{
 
-        void onPcInfoAdded(PCInfo pcInfo);
+        void onPcInfoAdded(PCInfo pcInfo,boolean editMode);
     }
 
 }
