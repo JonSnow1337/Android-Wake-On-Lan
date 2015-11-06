@@ -1,11 +1,14 @@
 package com.teamgy.wakeonlan;
 
+import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +53,17 @@ public class EditPCFragment extends Fragment {
             editMode = true;
 
         }
+
+        /*if(Build.VERSION.SDK_INT >= 21){
+
+            Slide slide = new Slide();
+            slide.setDuration(1000);
+            setEnterTransition(slide);
+            setExitTransition(slide);
+
+        }*/
+
+
 
         return view;
 

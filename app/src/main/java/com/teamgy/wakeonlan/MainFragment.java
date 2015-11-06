@@ -17,6 +17,8 @@ import java.util.ArrayList;
  * Created by Jakov on 01/11/2015.
  */
 public class MainFragment extends Fragment {
+    
+
     private EditText editText;
     private String macAdress;
     private Context context;
@@ -46,10 +48,20 @@ public class MainFragment extends Fragment {
 
 
 
+        if(savedInstanceState == null){
+            if(pcinfoArrList == null){
+                pcinfoArrList = new ArrayList<PCInfo>();
+                adapter = new PcInfoAdapter(context,R.layout.pc_list_item,pcinfoArrList);
+            }
 
 
-        loadPCInfos();
-        adapter = new PcInfoAdapter(context,R.layout.pc_list_item,pcinfoArrList);
+
+        }else{
+            pcinfoArrList = (ArrayList<PCInfo>)savedInstanceState.getSerializable("pcinfoArrList");
+            adapter = new PcInfoAdapter(context,R.layout.pc_list_item,pcinfoArrList);
+
+        }
+
         listview.setAdapter(adapter);
 
 
@@ -73,8 +85,19 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onPause() {
+
+
         saveAdress();
         super.onPause();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(pcinfoArrList != null){
+            outState.putSerializable("pcinfoArrList",pcinfoArrList);
+
+        }
     }
 
     @Override
@@ -88,7 +111,6 @@ public class MainFragment extends Fragment {
 
         if (pcinfoArrList == null) {
 
-            pcinfoArrList = new ArrayList<PCInfo>();
         }
         else{
             //TODO load from database

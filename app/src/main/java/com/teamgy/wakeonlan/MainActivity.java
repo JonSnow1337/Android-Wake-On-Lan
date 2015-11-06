@@ -14,9 +14,6 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -41,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
             @Override
             public void onBackStackChanged() {
                 int stackHeight = getFragmentManager().getBackStackEntryCount();
-                if (stackHeight > 1) {
+                if (stackHeight > 0) {
                     getSupportActionBar().setHomeButtonEnabled(true);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 } else {
@@ -53,13 +50,23 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
             }
         });
 
-        mainFrag = new MainFragment();
-        mainFrag.setOnCreateViewListener(this);
-        replaceFragmentContainer(mainFrag);
 
 
 
 
+        if(savedInstanceState == null){
+
+            mainFrag = new MainFragment();
+            mainFrag.setOnCreateViewListener(this); //to set click listview listener
+            replaceFragmentContainer(mainFrag, false);
+
+        }
+        else{
+            mainFrag = (MainFragment)getFragmentManager().findFragmentById(R.id.fragment_container);
+            mainFrag.setOnCreateViewListener(this);
+            replaceFragmentContainer(mainFrag, false);
+
+        }
 
     }
 
@@ -67,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
     protected void onStart() {
         super.onStart();
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -144,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
     public void startEditPCFragment(View view,PCInfo pcInfo, final int position){
 
         EditPCFragment frag = EditPCFragment.newInstance(pcInfo);
-        replaceFragmentContainer(frag);
+        replaceFragmentContainer(frag,true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check_white_24dp);
         getSupportActionBar().setTitle("Add new device");
         frag.addOnPCInfoAddedListener(new EditPCFragment.onPCInfoAddedListener() {
@@ -160,11 +172,13 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
 
     }
-    private void replaceFragmentContainer(Fragment newFragment){
+    private void replaceFragmentContainer(Fragment newFragment,boolean addToBack){
         FragmentTransaction fts = getFragmentManager().beginTransaction();
         fts.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fts.replace(R.id.fragment_container, newFragment);
-        fts.addToBackStack("tag");
+        if(addToBack){
+            fts.addToBackStack(null);
+        }
         fts.commit();
 
     }
