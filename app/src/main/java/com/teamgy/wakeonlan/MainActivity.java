@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +23,8 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements  OnCreateViewListener{
 
     private MainFragment mainFrag;
+    final static int REQUEST_EDIT = 1;
+    final static int REQUEST_ADD=2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,25 +144,26 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
         String[] arr = macArraylist.toArray(new String[macArraylist.size()]);
         serviceIntent.putExtra("macAdresses", arr);
         startService(serviceIntent);
-       // getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditPCFragment()).commit();
+       // getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditPCActivity()).commit();
 
 
 
     }
    public void startAddPcFragment(View view){
 
-        //we are adding a new pc, so no arguments for fragment
-        startEditPCFragment(view,null,0);
+       Intent i = new Intent(this,EditPCActivity.class);
+       i.putExtra("mode", REQUEST_ADD);
+       startActivityForResult(i, REQUEST_ADD);
 
     }
 
     public void startEditPCFragment(View view,PCInfo pcInfo, final int position){
-
-        EditPCFragment frag = EditPCFragment.newInstance(pcInfo);
+    /*
+        EditPCActivity frag = EditPCActivity.newInstance(pcInfo);
         replaceFragmentContainer(frag,true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check_white_24dp);
         getSupportActionBar().setTitle("Add new device");
-        frag.addOnPCInfoAddedListener(new EditPCFragment.onPCInfoAddedListener() {
+        frag.addOnPCInfoAddedListener(new EditPCActivity.onPCInfoAddedListener() {
             @Override
             public void onPcInfoAdded(PCInfo pcInfo, boolean edited) {
                 if (edited) {
@@ -168,10 +172,43 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
                     mainFrag.addNewPCInfo(pcInfo);
                 }
             }
-        });
+        });*/
 
+        Intent i = new Intent(this,EditPCActivity.class);
+        i.putExtra("mode", REQUEST_EDIT);
+        if(pcInfo != null){
+
+            i.putExtra("macAdress", pcInfo.getMacAdress());
+            i.putExtra("ssid", pcInfo.getSSID());
+            i.putExtra("position",position);
+
+        }
+        startActivityForResult(i, REQUEST_EDIT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        Log.d("main", "recieved result");
+        PCInfo result = new PCInfo(data.getStringExtra("macAdress"),data.getStringExtra("ssid"));
+        if(requestCode == REQUEST_EDIT){
+
+            int pos = data.getIntExtra("position",0);
+            mainFrag.editPCInfo(result,pos);
+
+
+
+        }
+        if(requestCode == REQUEST_ADD){
+
+            mainFrag.addNewPCInfo(result);
+
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
 
     }
+
     private void replaceFragmentContainer(Fragment newFragment,boolean addToBack){
         FragmentTransaction fts = getFragmentManager().beginTransaction();
         fts.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
