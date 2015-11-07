@@ -5,6 +5,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -144,17 +145,16 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
         }*/
 
-        //TODO try catch here
         Intent serviceIntent = new Intent(getApplicationContext(),WOLService.class);
         ArrayList<PCInfo> pcInfos = mainFrag.getPcinfoArrList();
         ArrayList<String> macArraylist = pcInfosToMacArrayList(pcInfos);
+        //TODO check which are enabled!
 
-
-        //TODO get from saved data
         String[] arr = macArraylist.toArray(new String[macArraylist.size()]);
         serviceIntent.putExtra("macAdresses", arr);
         startService(serviceIntent);
        // getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditPCActivity()).commit();
+        Snackbar.make(findViewById(R.id.fab),"Requests sent!",Snackbar.LENGTH_SHORT).show();
 
 
 
