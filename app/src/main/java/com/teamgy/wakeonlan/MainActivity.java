@@ -16,12 +16,16 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.teamgy.wakeonlan.SQL.AndroidDatabaseManager;
+import com.teamgy.wakeonlan.SQL.PCInfoDatabaseHelper;
+
 import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements  OnCreateViewListener{
 
+    public static final int RESULT_DELETE = 10;
     private MainFragment mainFrag;
     final static int REQUEST_EDIT = 1;
     final static int REQUEST_ADD=2;
@@ -117,6 +121,12 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
                 e.printStackTrace();
             }
         }
+        if(id == R.id.debug_database){
+
+            Intent dbmanager = new Intent(this,AndroidDatabaseManager.class);
+            startActivity(dbmanager);
+
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -180,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
             i.putExtra("macAdress", pcInfo.getMacAdress());
             i.putExtra("ssid", pcInfo.getSSID());
-            i.putExtra("position",position);
+            i.putExtra("position", position);
 
         }
         startActivityForResult(i, REQUEST_EDIT);
@@ -190,19 +200,35 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         Log.d("main", "recieved result");
-        PCInfo result = new PCInfo(data.getStringExtra("macAdress"),data.getStringExtra("ssid"));
-        if(requestCode == REQUEST_EDIT){
 
-            int pos = data.getIntExtra("position",0);
-            mainFrag.editPCInfo(result,pos);
+        PCInfoDatabaseHelper dbHelper = PCInfoDatabaseHelper.getsInstance(this);
+        if(resultCode != RESULT_CANCELED){
+
+            PCInfo result = new PCInfo(data.getStringExtra("macAdress"),data.getStringExtra("ssid"));
+            if(requestCode == REQUEST_EDIT){
+
+                if(resultCode == RESULT_DELETE){
+                    int pos = data.getIntExtra("position",0);
+                    mainFrag.deletePcInfo(pos);
 
 
+                }
+                if(resultCode == RESULT_OK){
 
-        }
-        if(requestCode == REQUEST_ADD){
+                    int pos = data.getIntExtra("position",0);
+                    mainFrag.editPCInfo(result,pos);
 
-            mainFrag.addNewPCInfo(result);
+                }
 
+
+            }
+            if(requestCode == REQUEST_ADD){
+
+                mainFrag.addNewPCInfo(result);
+                dbHelper.addPCInfo(result);
+
+
+            }
 
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -254,7 +280,8 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.pc_item_checkbox);
                 Tools.changeCheckboxState(checkBox);
-
+                PCInfo pcToEdit = mainFrag.getPCInfo(position);
+                mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(),pcToEdit.getSSID(),checkBox.isChecked()),position); //just chaning enabled state of pcinfo
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

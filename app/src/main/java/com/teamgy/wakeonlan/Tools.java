@@ -17,5 +17,19 @@ public final class Tools {
             checkBox.setChecked(true);
         }
     }
+    public static int booleanToInt(boolean bool){
+        if(bool){
+            return 1;
+        }
+        return 0;
+    }
+    public static boolean intToBoolean(int i){
+        if(i == 1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
 }

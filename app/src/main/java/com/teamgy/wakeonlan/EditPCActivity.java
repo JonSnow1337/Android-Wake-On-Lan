@@ -1,5 +1,6 @@
 package com.teamgy.wakeonlan;
 
+import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Context;
@@ -11,10 +12,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
@@ -60,12 +64,15 @@ public class EditPCActivity extends AppCompatActivity {
 
         if(mode == MainActivity.REQUEST_ADD){
 
-
+            getSupportActionBar().setTitle("Add New PC");
             //we are creating a new pc then
             //layout is fine since we have hints there
             editMode = false;
         }
         else{
+            //its edit
+            getSupportActionBar().setTitle("Edit PC");
+
             editMac.setText(pcinfo.getMacAdress());
             editSSID.setText(pcinfo.getSSID());
             positon = bundle.getInt("position");
@@ -76,28 +83,22 @@ public class EditPCActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     public void addOnPCInfoAddedListener(onPCInfoAddedListener lst){
         this.listener = lst;
     }
 
     @Override
     public void onBackPressed() {
+        Intent data = new Intent();
+        setResult(RESULT_CANCELED, data);
         super.onBackPressed();
     }
-
-    //return result somehow!
-    /*
-    @Override
-    public void onDetach() {
-        //toolbar.setNavigationIcon(null);
-        PCInfo addedPCInfo = new PCInfo(editMac.getText().toString().toLowerCase(),editSSID.getText().toString());
-
-        listener.onPcInfoAdded(addedPCInfo,editMode);
-
-        super.onDetach();
-
-    }
-*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -107,6 +108,13 @@ public class EditPCActivity extends AppCompatActivity {
             finish();//very sketch, why do you do this android, just call the method in main :((
             return true;
         }
+        if(item.getItemId() == R.id.menu_pc_trash){
+            Intent data = new Intent();
+            data.putExtra("position", positon);
+            setResult(MainActivity.RESULT_DELETE, data);
+            finish();
+
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -114,7 +122,7 @@ public class EditPCActivity extends AppCompatActivity {
         Intent data = new Intent();
         data.putExtra("macAdress",editMac.getText().toString());
         data.putExtra("ssid",editSSID.getText().toString());
-        data.putExtra("postion", positon); //TODO PLEASE CHANGE THIS ITS DUMB
+        data.putExtra("position", positon); //TODO PLEASE CHANGE THIS ITS DUMB
         setResult(RESULT_OK, data);
 
     }
@@ -122,6 +130,11 @@ public class EditPCActivity extends AppCompatActivity {
     public interface onPCInfoAddedListener{
 
         void onPcInfoAdded(PCInfo pcInfo,boolean editMode);
+    }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_edit_pc_activity, menu);
+        return true;
     }
 
 }

@@ -14,5 +14,14 @@
         android:title="@string/action_launch_reqs"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_power_settings_new_white_24dp" />
+    <item
+        android:id="@+id/debug_database"
+        android:orderInCategory="100"
+        android:title="debug database"
+        app:showAsAction="always"
+       />
+
+
+
 
 </menu>

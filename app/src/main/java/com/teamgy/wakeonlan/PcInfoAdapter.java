@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -29,8 +30,10 @@ public class PcInfoAdapter extends ArrayAdapter<PCInfo> {
         }
         TextView tvMac = (TextView) convertView.findViewById(R.id.list_item_mac);
         TextView tvSSID = (TextView) convertView.findViewById(R.id.list_item_ssid);
+        CheckBox chk = (CheckBox)convertView.findViewById(R.id.pc_item_checkbox);
         tvMac.setText(info.getMacAdress());
         tvSSID.setText(info.getSSID());
+        chk.setChecked(info.isEnabled());
 
         return convertView;
 

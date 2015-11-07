@@ -27,6 +27,9 @@
             android:parentActivityName=".MainActivity">
             >
         </activity>
+        <activity android:name=".SQL.AndroidDatabaseManager"
+            android:theme="@style/Theme.AppCompat.Light"/>
+
 
         <activity android:name=".SettingsActivity">
             >

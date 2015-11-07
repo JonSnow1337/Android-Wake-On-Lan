@@ -8,12 +8,28 @@ import java.io.Serializable;
 public class PCInfo  implements Serializable{
     private String macAdress;
     private String SSID;
+    private boolean enabled = false;
 
     public PCInfo(String macAdress,String ssid){
 
         setMacAdress(macAdress);
         setSSID(ssid);
+        setEnabled(false);
     }
+    public PCInfo(String macAdress,String ssid,boolean enabled){
+
+        setMacAdress(macAdress);
+        setSSID(ssid);
+        setEnabled(enabled);
+    }
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
     public String getMacAdress() {
         return macAdress;
     }
