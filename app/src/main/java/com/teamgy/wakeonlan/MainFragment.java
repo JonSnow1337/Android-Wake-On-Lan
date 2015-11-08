@@ -101,18 +101,6 @@ public class MainFragment extends Fragment {
 
     }
 
-    private  void loadPCInfos() {
-
-        if (pcinfoArrList == null) {
-
-        }
-        else{
-            //TODO load from database
-
-        }
-
-
-    }
     public void addNewPCInfo(PCInfo pcInfo){
 
         pcinfoArrList.add(pcInfo);

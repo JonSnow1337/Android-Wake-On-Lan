@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 public class WOLService extends IntentService{
 
@@ -36,13 +37,6 @@ public class WOLService extends IntentService{
         wifiManager = (WifiManager)getSystemService(WIFI_SERVICE);
 
     }
-    /*public WOLService(WifiManager wifiManager){
-        this.wifiManager = wifiManager;
-
-    }*/
-
-
-
 
     public  byte[] hexStringToByteArray(String s) {
         int len = s.length();
@@ -67,10 +61,13 @@ public class WOLService extends IntentService{
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        //foreach mac adress, send magic packet
+        //magicpacket = FF * 6 + mac *16
+        //http://support.amd.com/TechDocs/20213.pdf specification for magic packet
 
             try{
 
-                String [] macAdresses = intent.getStringArrayExtra("macAdresses");
+                ArrayList<String> macAdresses = intent.getStringArrayListExtra("macAdresses");
                 if(macAdresses != null) {
                     DatagramSocket socket = new DatagramSocket(4000);
                     socket.setBroadcast(true);

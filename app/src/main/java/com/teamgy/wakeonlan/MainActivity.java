@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -128,6 +129,14 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
             startActivity(dbmanager);
 
         }
+        if(id == R.id.action_launch_wikipedia){
+            Uri wikiArticle = Uri.parse(getString(R.string.wiki_article_url));
+            Intent launchWiki = new Intent(Intent.ACTION_VIEW,wikiArticle);
+            startActivity(launchWiki);
+
+
+
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -137,27 +146,12 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
     public void sendMagicPacket (View view) throws SocketException , IOException{
 
-        /*SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String pref = sharedPreferences.getString("home_ssid",null);
-        if(pref != null){
-
-            Log.d("main", pref);
-
-        }*/
-
         Intent serviceIntent = new Intent(getApplicationContext(),WOLService.class);
         ArrayList<PCInfo> pcInfos = mainFrag.getPcinfoArrList();
-        ArrayList<String> macArraylist = pcInfosToMacArrayList(pcInfos);
-        //TODO check which are enabled!
-
-        String[] arr = macArraylist.toArray(new String[macArraylist.size()]);
-        serviceIntent.putExtra("macAdresses", arr);
+        ArrayList<String> enabledMacs = Tools.getEnabledMacs(pcInfos);
+        serviceIntent.putStringArrayListExtra("macAdresses",enabledMacs);
         startService(serviceIntent);
-       // getFragmentManager().beginTransaction().replace(R.id.fragment_container, new EditPCActivity()).commit();
         Snackbar.make(findViewById(R.id.fab),"Requests sent!",Snackbar.LENGTH_SHORT).show();
-
-
-
     }
    public void startAddPcFragment(View view){
 
@@ -167,23 +161,8 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
     }
 
-    public void startEditPCFragment(View view,PCInfo pcInfo, final int position){
-    /*
-        EditPCActivity frag = EditPCActivity.newInstance(pcInfo);
-        replaceFragmentContainer(frag,true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_check_white_24dp);
-        getSupportActionBar().setTitle("Add new device");
-        frag.addOnPCInfoAddedListener(new EditPCActivity.onPCInfoAddedListener() {
-            @Override
-            public void onPcInfoAdded(PCInfo pcInfo, boolean edited) {
-                if (edited) {
-                    mainFrag.editPCInfo(pcInfo, position);
-                } else {
-                    mainFrag.addNewPCInfo(pcInfo);
-                }
-            }
-        });*/
-
+    public void startEditPCActivity(View view, PCInfo pcInfo, final int position){
+    
         Intent i = new Intent(this,EditPCActivity.class);
         i.putExtra("mode", REQUEST_EDIT);
         if(pcInfo != null){
@@ -260,17 +239,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
 
     }
-    public static ArrayList<String> pcInfosToMacArrayList(ArrayList<PCInfo> pcInfos){
-        ArrayList<String> macArraylist = new ArrayList<String>();
-        for (PCInfo pcInfo : pcInfos) {
-            macArraylist.add(pcInfo.getMacAdress());
 
-        }
-        return macArraylist;
-
-
-
-    }
 
     @Override
     public void onViewCreated() {
@@ -291,8 +260,8 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
                 TextView tvMac = (TextView) view.findViewById(R.id.list_item_mac);
                 TextView tvSSID = (TextView) view.findViewById(R.id.list_item_ssid);
                 PCInfo info = new PCInfo(tvMac.getText().toString(), tvSSID.getText().toString());
-                // startEditPCFragment(view,);
-                startEditPCFragment(view, info, position);
+                // startEditPCActivity(view,);
+                startEditPCActivity(view, info, position);
                 return true;
             }
         });
