@@ -20,16 +20,6 @@
         android:title="@string/action_launch_reqs"
         app:showAsAction="never"
         android:icon="@drawable/ic_power_settings_new_white_24dp" />
-    <item
-        android:id="@+id/action_launch_wikipedia"
-        android:orderInCategory="1"
-        android:title="@string/settings_lean_more_wol"
-        app:showAsAction="never"
-      />
-
-
-
-
 
 
 </menu>

@@ -129,14 +129,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
             startActivity(dbmanager);
 
         }
-        if(id == R.id.action_launch_wikipedia){
-            Uri wikiArticle = Uri.parse(getString(R.string.wiki_article_url));
-            Intent launchWiki = new Intent(Intent.ACTION_VIEW,wikiArticle);
-            startActivity(launchWiki);
 
-
-
-        }
 
         return super.onOptionsItemSelected(item);
     }
