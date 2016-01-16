@@ -2,21 +2,6 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-<PreferenceCategory android:title="Auto Wifi Settings"
-    android:key="pref_key_wifi_settings">
-    <CheckBoxPreference
-        android:key="enable_auto_wifi"
-        android:title="Auto WOL on Wifi"
-        android:summary="Enable automatic WOL Requests when connecting to wifi"
-        android:defaultValue="true" />
-
-    <EditTextPreference
-        android:key="home_ssid"
-        android:title="Home Wifi pcName"
-        android:summary="pcName to send auto WOL Requests"
-        android:defaultValue="Thom_Nik"/>
-
-</PreferenceCategory>
 <PreferenceCategory
     android:title="Extras">
 
@@ -28,6 +13,12 @@
         <intent android:action="android.intent.action.VIEW"
             android:data="@string/github_url"/>
     </Preference>
+    <Preference android:title="@string/how_to_setup">
+        <intent android:action="android.intent.action.VIEW"
+            android:data="@string/google_url"/>
+    </Preference>
+
+
 
 
 </PreferenceCategory>

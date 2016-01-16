@@ -34,6 +34,25 @@ public class MacFormatTest {
         Assert.assertEquals("000a959d6816",Tools.reformatMACInput("00:0a:95:9d:68:16"));
         Assert.assertEquals("000a959d6816",Tools.reformatMACInput("00:0a:95:9d::::68:16"));
 
+    }
+    @Test
+    public void test_mac_OverLimit(){
+
+        Assert.assertEquals("000a959d6816",Tools.reformatMACInput("00:0a:95:9d:68:16:85:12"));
+
+
+    }
+    @Test
+    public void test_mac_dots(){
+
+        Assert.assertEquals("000a959d6816",Tools.reformatMACInput("00.0a:95:9d:68:16"));
+
+
+    }
+    @Test
+    public void test_mac_software_tester_user(){
+
+        Assert.assertEquals("000a959d6816",Tools.reformatMACInput("00???????????0a$*$%*&95#@&&$9d:68!@@#$&16213213123213123123"));
 
 
 

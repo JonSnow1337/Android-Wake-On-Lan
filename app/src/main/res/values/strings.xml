@@ -9,6 +9,9 @@
     <string name="wiki_article_url">https://en.wikipedia.org/wiki/Wake-on-LAN</string>
     <string name="github_url">https://github.com/JediMaster93/Android-Wake-On-Lan</string>
     <string name="settings_visit_github">View Github repository</string>
+    <string name="how_to_setup">How to setup Wake-On-Lan</string>
+    <string name="google_url">https://goo.gl/Uhx1tX</string>
+
 
 
 </resources>

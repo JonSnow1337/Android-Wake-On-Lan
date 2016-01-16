@@ -26,18 +26,19 @@
             android:paddingLeft="15dp">
             <TextView
                 android:padding="5dp"
-                android:id="@+id/list_item_mac"
-                android:layout_margin="5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Mac Adress"/>
-            <TextView
-                android:padding="5dp"
                 android:id="@+id/list_item_ssid"
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="pcName"/>
+                android:hint="PC Name"/>
+            <TextView
+                android:padding="5dp"
+                android:id="@+id/list_item_mac"
+                android:layout_margin="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mac Address"/>
+
 
         </LinearLayout>
     <CheckBox

@@ -1,5 +1,6 @@
 package com.teamgy.wakeonlan;
 
+import android.util.Log;
 import android.widget.CheckBox;
 
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ public final class Tools {
         input = input.replaceAll("\\s+","");
 
 
-        String pattern = "([^:-]++)";
+        String pattern = "[abcdef0-9]+";
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(input);
 
@@ -78,11 +79,17 @@ public final class Tools {
 
         }
 
+        if(formattedString.length() > 12 && formattedString.length() > 0){
+           try{
+                formattedString = formattedString.substring(0,12);
+
+            }catch (IndexOutOfBoundsException e){
+
+                Log.d("exception","lenght is " +  formattedString.length());
+            }
 
 
-
-
-
+        }
         return formattedString;
 
     }
