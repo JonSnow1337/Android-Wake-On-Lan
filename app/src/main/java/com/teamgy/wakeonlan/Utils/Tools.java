@@ -1,7 +1,9 @@
-package com.teamgy.wakeonlan;
+package com.teamgy.wakeonlan.Utils;
 
 import android.util.Log;
 import android.widget.CheckBox;
+
+import com.teamgy.wakeonlan.PCInfo;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan.SQL;
+package com.teamgy.wakeonlan.Utils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +10,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.teamgy.wakeonlan.PCInfo;
-import com.teamgy.wakeonlan.Tools;
 
 import java.util.ArrayList;
 
@@ -71,13 +70,13 @@ public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
             onCreate(db);
         }
     }
-    public void updatePCInfo(PCInfo pcInfo,int position){
+    public void updatePCInfo(PCInfo pcInfo, int position){
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PC_INFO, null);
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_PC_INFO_MAC,pcInfo.getMacAdress());
         contentValues.put(KEY_PC_INFO_SSID,pcInfo.getPcName());
-        contentValues.put(KEY_PC_INFO_ENABLED,Tools.booleanToInt(pcInfo.isEnabled()));
+        contentValues.put(KEY_PC_INFO_ENABLED, Tools.booleanToInt(pcInfo.isEnabled()));
         try{
             //find row id by using position in table and update it
             cursor.moveToPosition(position);

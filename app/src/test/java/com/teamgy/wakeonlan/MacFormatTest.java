@@ -1,7 +1,8 @@
 package com.teamgy.wakeonlan;
 
 import org.junit.Test;
-import com.teamgy.wakeonlan.EditPCActivity;
+
+import com.teamgy.wakeonlan.Utils.Tools;
 
 import junit.framework.Assert;
 
@@ -13,7 +14,7 @@ public class MacFormatTest {
     @Test
     public void test_macFormatting_spaces(){
 
-        Assert.assertEquals("000a959d6816",Tools.reformatMACInput("00 0a 95 9d 68 16"));
+        Assert.assertEquals("000a959d6816", Tools.reformatMACInput("00 0a 95 9d 68 16"));
         Assert.assertEquals("000a959d6816",Tools.reformatMACInput("00 0a 95 9d  68 16"));
 
 

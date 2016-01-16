@@ -17,8 +17,9 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.teamgy.wakeonlan.SQL.AndroidDatabaseManager;
-import com.teamgy.wakeonlan.SQL.PCInfoDatabaseHelper;
+import com.teamgy.wakeonlan.Utils.AndroidDatabaseManager;
+import com.teamgy.wakeonlan.Utils.PCInfoDatabaseHelper;
+import com.teamgy.wakeonlan.Utils.Tools;
 
 import java.io.IOException;
 import java.net.SocketException;

@@ -4,8 +4,9 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
-import android.os.AsyncTask;
 import android.util.Log;
+
+import com.teamgy.wakeonlan.Utils.Config;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -74,16 +75,29 @@ public class WOLService extends IntentService{
                     socket.setReuseAddress(true);
                     String wolHeader = "ffffffffffff";
 
-                    for (String macAdress:macAdresses ) {
+                    for (int i = 0; i < Config.retryInterval; i++){
 
-                        String macWolData = new String(new char[16]).replace("\0", macAdress); //repeat mac 16 times
-                        byte[] data = hexStringToByteArray(wolHeader + macWolData); //6 byes
-                        DatagramPacket packet = new DatagramPacket(data, data.length, getBroadcastAddress(), 40000);
-                        socket.send(packet);
-                        Log.d("wol service:", "sent packet ");
+                        for (String macAdress:macAdresses ) {
 
+                            String macWolData = new String(new char[16]).replace("\0", macAdress); //repeat mac 16 times
+                            byte[] data = hexStringToByteArray(wolHeader + macWolData); //6 bytes
+                            DatagramPacket packet = new DatagramPacket(data, data.length, getBroadcastAddress(), 40000);
+                            socket.send(packet);
+                            Log.d("wol service:", "sent packet ");
+
+                        }
+
+                        try {
+                            Log.d("wol", "sleeping");
+                            //this is retrying because wifi might me iffy when user connects first time
+                            Thread.sleep(Config.retrySleep * 1000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
 
                     }
+
+
                     socket.close();
                 }
             }catch (IOException e){

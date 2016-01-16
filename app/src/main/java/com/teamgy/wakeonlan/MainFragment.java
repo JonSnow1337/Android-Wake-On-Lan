@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.teamgy.wakeonlan.SQL.PCInfoDatabaseHelper;
+import com.teamgy.wakeonlan.Utils.PCInfoDatabaseHelper;
 
 import java.util.ArrayList;
 
