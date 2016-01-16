@@ -7,19 +7,19 @@ import java.io.Serializable;
  */
 public class PCInfo  implements Serializable{
     private String macAdress;
-    private String SSID;
+    private String pcName;
     private boolean enabled = false;
 
     public PCInfo(String macAdress,String ssid){
 
         setMacAdress(macAdress);
-        setSSID(ssid);
+        setPcName(ssid);
         setEnabled(false);
     }
     public PCInfo(String macAdress,String ssid,boolean enabled){
 
         setMacAdress(macAdress);
-        setSSID(ssid);
+        setPcName(ssid);
         setEnabled(enabled);
     }
     public boolean isEnabled() {
@@ -38,11 +38,11 @@ public class PCInfo  implements Serializable{
         this.macAdress = macAdress;
     }
 
-    public String getSSID() {
-        return SSID;
+    public String getPcName() {
+        return pcName;
     }
 
-    public void setSSID(String SSID) {
-        this.SSID = SSID;
+    public void setPcName(String pcName) {
+        this.pcName = pcName;
     }
 }

@@ -3,6 +3,9 @@ package com.teamgy.wakeonlan;
 import android.widget.CheckBox;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 /**
  * Created by Jakov on 02/11/2015.
@@ -54,4 +57,33 @@ public final class Tools {
         return enabledMacs;
     }
 
+    public static String reformatMACInput(String input){
+        //this method reformats mac to correct format
+        //user can input spaces or whatever
+        //this overwrites it to correct format
+
+        //get out all numbers and characters from string
+        //merge them back
+        String formattedString = "";
+        input = input.replaceAll("\\s+","");
+
+
+        String pattern = "([^:-]++)";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(input);
+
+        while(m.find()){
+
+            formattedString += m.group();
+
+        }
+
+
+
+
+
+
+        return formattedString;
+
+    }
 }

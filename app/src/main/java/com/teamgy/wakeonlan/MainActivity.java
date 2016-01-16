@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -161,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
         if(pcInfo != null){
 
             i.putExtra("macAdress", pcInfo.getMacAdress());
-            i.putExtra("ssid", pcInfo.getSSID());
+            i.putExtra("ssid", pcInfo.getPcName());
             i.putExtra("position", position);
 
         }
@@ -195,7 +194,8 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
             }
             if(requestCode == REQUEST_ADD){
-
+                //if we are adding new item set it to enabled by default
+                result.setEnabled(true);
                 mainFrag.addNewPCInfo(result);
                 dbHelper.addPCInfo(result);
 
@@ -243,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.pc_item_checkbox);
                 Tools.changeCheckboxState(checkBox);
                 PCInfo pcToEdit = mainFrag.getPCInfo(position);
-                mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(),pcToEdit.getSSID(),checkBox.isChecked()),position); //just chaning enabled state of pcinfo
+                mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(),pcToEdit.getPcName(),checkBox.isChecked()),position); //just chaning enabled state of pcinfo
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

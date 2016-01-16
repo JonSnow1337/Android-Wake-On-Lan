@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/Android-Wake-On-Lan.iml" filepath="$PROJECT_DIR$/Android-Wake-On-Lan.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/wakeOnLan.iml" filepath="$PROJECT_DIR$/wakeOnLan.iml" />
     </modules>
   </component>
 </project>

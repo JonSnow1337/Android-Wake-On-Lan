@@ -1,25 +1,13 @@
 package com.teamgy.wakeonlan;
 
-import android.animation.Animator;
-import android.annotation.TargetApi;
-import android.app.Fragment;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.transition.Slide;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 /**
@@ -74,7 +62,7 @@ public class EditPCActivity extends AppCompatActivity {
             getSupportActionBar().setTitle("Edit PC");
 
             editMac.setText(pcinfo.getMacAdress());
-            editSSID.setText(pcinfo.getSSID());
+            editSSID.setText(pcinfo.getPcName());
             positon = bundle.getInt("position");
             editMode = true;
 
@@ -136,5 +124,6 @@ public class EditPCActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_edit_pc_activity, menu);
         return true;
     }
+
 
 }

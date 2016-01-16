@@ -3,7 +3,6 @@ package com.teamgy.wakeonlan;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -12,7 +11,6 @@ import android.util.Log;
 
 import com.teamgy.wakeonlan.SQL.PCInfoDatabaseHelper;
 
-import java.sql.Array;
 import java.util.ArrayList;
 
 /**
@@ -34,24 +32,29 @@ public class WakeOnHomeWifiReciever extends BroadcastReceiver {
 
                 for (PCInfo pcInfo : pcInfos) {
 
-                    if (wifiInfo.getSSID().equals("\"" + pcInfo.getSSID() + "\"")) {
+                    if (!wifiInfo.getSSID().equals("<unknown ssid>")) {
 
-                        Log.d("breciver", wifiInfo.getSSID() + "is " + "\"" + pcInfo.getSSID() + "\"");
+                        Log.d("breciver", wifiInfo.getSSID() + "is " + "\"" + pcInfo.getPcName() + "\"");
                         pcInfosToSend.add(pcInfo);
 
                     } else {
 
-                        Log.d("breciver", wifiInfo.getSSID() + "is not" + "\"" + pcInfo.getSSID() + "\"");
+                        Log.d("breciver", "we got unknow ssid" +  wifiInfo.getSSID());
                     }
 
                 }
 
-                Intent serviceIntent = new Intent(context, WOLService.class);
+                if(pcInfosToSend.size()> 0){
+                    Intent serviceIntent = new Intent(context, WOLService.class);
 
-                serviceIntent.putStringArrayListExtra("macAdresses", Tools.pcInfosToMacArrayList(pcInfosToSend));
+                    serviceIntent.putStringArrayListExtra("macAdresses", Tools.pcInfosToMacArrayList(pcInfosToSend));
 
-                context.startService(serviceIntent);
-                Log.d("broadcast reciever:", "started service");
+                    context.startService(serviceIntent);
+                    Log.d("broadcast reciever:", "started service");
+
+                }
+
+
 
 
             }

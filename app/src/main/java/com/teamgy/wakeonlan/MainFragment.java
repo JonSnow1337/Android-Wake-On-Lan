@@ -3,14 +3,11 @@ package com.teamgy.wakeonlan;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.teamgy.wakeonlan.SQL.PCInfoDatabaseHelper;
@@ -112,7 +109,7 @@ public class MainFragment extends Fragment {
         //pcinfoArrList.add(position, pcInfo);
         PCInfo toEdit = pcinfoArrList.get(position);
         toEdit.setMacAdress(pcInfo.getMacAdress());
-        toEdit.setSSID(pcInfo.getSSID());
+        toEdit.setPcName(pcInfo.getPcName());
         toEdit.setEnabled(pcInfo.isEnabled());
         adapter.notifyDataSetChanged();
         dbHelper.updatePCInfo(pcInfo, position);

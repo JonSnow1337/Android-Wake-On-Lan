@@ -29,31 +29,6 @@
         android:layout_below="@+id/app_bar_layout">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            >
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp"
-                android:layout_marginTop="0dp"
-                android:layout_weight="8"
-                android:src="@drawable/ic_desktop_windows_black_24dp"
-
-                />
-
-            <EditText
-                android:id="@+id/edit_mac"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="25dp"
-                android:layout_weight="1"
-                android:hint="Mac Adress"
-                />
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,7 +40,7 @@
                 android:layout_margin="10dp"
                 android:layout_marginTop="0dp"
                 android:layout_weight="8"
-                android:src="@drawable/ic_wifi_black_24dp" />
+                android:src="@drawable/ic_desktop_windows_black_24dp" />
 
             <EditText
                 android:id="@+id/edit_ssid"
@@ -73,8 +48,36 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp"
                 android:layout_weight="1"
-                android:hint="SSID name" />
+                android:hint="PC Name" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_weight="8"
+                android:src="@drawable/ic_developer_board_black_24dp"
+
+                />
+
+            <EditText
+                android:id="@+id/edit_mac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                android:layout_weight="1"
+                android:maxLength="12"
+                android:hint="Mac Adress"
+                />
+        </LinearLayout>
+
+
 
 
     </LinearLayout>

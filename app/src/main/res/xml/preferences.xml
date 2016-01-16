@@ -12,8 +12,8 @@
 
     <EditTextPreference
         android:key="home_ssid"
-        android:title="Home Wifi SSID"
-        android:summary="SSID to send auto WOL Requests"
+        android:title="Home Wifi pcName"
+        android:summary="pcName to send auto WOL Requests"
         android:defaultValue="Thom_Nik"/>
 
 </PreferenceCategory>

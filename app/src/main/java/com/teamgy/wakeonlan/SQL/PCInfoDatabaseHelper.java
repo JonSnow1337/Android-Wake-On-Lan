@@ -76,7 +76,7 @@ public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PC_INFO, null);
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_PC_INFO_MAC,pcInfo.getMacAdress());
-        contentValues.put(KEY_PC_INFO_SSID,pcInfo.getSSID());
+        contentValues.put(KEY_PC_INFO_SSID,pcInfo.getPcName());
         contentValues.put(KEY_PC_INFO_ENABLED,Tools.booleanToInt(pcInfo.isEnabled()));
         try{
             //find row id by using position in table and update it
@@ -103,8 +103,8 @@ public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
         db.beginTransaction();
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_PC_INFO_MAC, pcInfo.getMacAdress());
-        contentValues.put(KEY_PC_INFO_SSID, pcInfo.getSSID());
-        contentValues.put(KEY_PC_INFO_ENABLED,0);
+        contentValues.put(KEY_PC_INFO_SSID, pcInfo.getPcName());
+        contentValues.put(KEY_PC_INFO_ENABLED, pcInfo.isEnabled());
         db.insertOrThrow(TABLE_PC_INFO, null, contentValues);
         db.setTransactionSuccessful();
         db.endTransaction();
