@@ -22,9 +22,8 @@ Application that wakes up your pc from sleeping or hibernating
 
 
 ## ScreenShots
-![alt tag](http://i.imgur.com/2YRd420.png)
-![alt tag](http://i.imgur.com/w19cJ1s.png)
-
+<img src="http://i.imgur.com/2YRd420.png" width="400">
+<img src="http://i.imgur.com/w19cJ1s.png" width="400">
 
 
 ></content>
