@@ -1,9 +1,12 @@
 package com.teamgy.wakeonlan;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -25,19 +29,19 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements  OnCreateViewListener{
+public class MainActivity extends AppCompatActivity implements  OnCreateViewListener {
 
     public static final int RESULT_DELETE = 10;
     private MainFragment mainFrag;
     final static int REQUEST_EDIT = 1;
-    final static int REQUEST_ADD=2;
+    final static int REQUEST_ADD = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
@@ -60,18 +64,14 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
         });
 
 
-
-
-
-        if(savedInstanceState == null){
+        if (savedInstanceState == null) {
 
             mainFrag = new MainFragment();
             mainFrag.setOnCreateViewListener(this); //to set click listview listener
             replaceFragmentContainer(mainFrag, false);
 
-        }
-        else{
-            mainFrag = (MainFragment)getFragmentManager().findFragmentById(R.id.fragment_container);
+        } else {
+            mainFrag = (MainFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
             mainFrag.setOnCreateViewListener(this);
             replaceFragmentContainer(mainFrag, false);
 
@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -95,15 +96,17 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent startSettings = new Intent(this, SettingsActivity.class);
-            startActivity(startSettings);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                startActivity(startSettings, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            }
 
         }
-        if(id == android.R.id.home){
+        if (id == android.R.id.home) {
 
             getFragmentManager().popBackStack();
             getSupportActionBar().setHomeAsUpIndicator(null);
         }
-        if(id == R.id.action_launch_reqs){
+        if (id == R.id.action_launch_reqs) {
 
 
             try {
@@ -112,9 +115,9 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
                 e.printStackTrace();
             }
         }
-        if(id == R.id.debug_database){
+        if (id == R.id.debug_database) {
 
-            Intent dbmanager = new Intent(this,AndroidDatabaseManager.class);
+            Intent dbmanager = new Intent(this, AndroidDatabaseManager.class);
             startActivity(dbmanager);
 
         }
@@ -124,36 +127,53 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
     }
 
 
+    public void sendMagicPacket(View view) throws IOException {
 
-
-    public void sendMagicPacket (View view) throws IOException{
-
-        Intent serviceIntent = new Intent(getApplicationContext(),WOLService.class);
+        Intent serviceIntent = new Intent(getApplicationContext(), WOLService.class);
         ArrayList<PCInfo> pcInfos = mainFrag.getPcinfoArrList();
         ArrayList<String> enabledMacs = Tools.getEnabledMacs(pcInfos);
-        serviceIntent.putStringArrayListExtra("macAdresses",enabledMacs);
+        serviceIntent.putStringArrayListExtra("macAdresses", enabledMacs);
         startService(serviceIntent);
-        Snackbar.make(findViewById(R.id.fab),"Requests sent!",Snackbar.LENGTH_SHORT).show();
-    }
-   public void startAddPcFragment(View view){
-
-       Intent i = new Intent(this,EditPCActivity.class);
-       i.putExtra("mode", REQUEST_ADD);
-       startActivityForResult(i, REQUEST_ADD);
-
+        Snackbar.make(findViewById(R.id.fab), "Requests sent!", Snackbar.LENGTH_SHORT).show();
     }
 
-    public void startEditPCActivity(View view, PCInfo pcInfo, final int position){
-    
-        Intent i = new Intent(this,EditPCActivity.class);
+    public void startAddPcFragment(View view) {
+
+        Intent i = new Intent(this, EditPCActivity.class);
+        i.putExtra("mode", REQUEST_ADD);
+
+        View sharedView = (View) findViewById(R.id.fab);
+        String transitionName = getString(R.string.transition);
+
+        ActivityOptions transitionActivityOptions = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, sharedView, transitionName);
+            startActivityForResult(i, REQUEST_ADD, transitionActivityOptions.toBundle());
+        }
+        else{
+            startActivityForResult(i, REQUEST_ADD);
+
+
+        }
+
+
+
+    }
+
+    public void startEditPCActivity(View view, PCInfo pcInfo, final int position) {
+
+
+        Intent i = new Intent(this, EditPCActivity.class);
         i.putExtra("mode", REQUEST_EDIT);
-        if(pcInfo != null){
+        if (pcInfo != null) {
 
             i.putExtra("macAdress", pcInfo.getMacAdress());
             i.putExtra("ssid", pcInfo.getPcName());
             i.putExtra("position", position);
 
         }
+
+
         startActivityForResult(i, REQUEST_EDIT);
     }
 
@@ -163,27 +183,27 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
         Log.d("main", "recieved result");
 
         PCInfoDatabaseHelper dbHelper = PCInfoDatabaseHelper.getsInstance(this);
-        if(resultCode != RESULT_CANCELED){
+        if (resultCode != RESULT_CANCELED) {
 
-            PCInfo result = new PCInfo(data.getStringExtra("macAdress"),data.getStringExtra("ssid"));
-            if(requestCode == REQUEST_EDIT){
+            PCInfo result = new PCInfo(data.getStringExtra("macAdress"), data.getStringExtra("ssid"));
+            if (requestCode == REQUEST_EDIT) {
 
-                if(resultCode == RESULT_DELETE){
-                    int pos = data.getIntExtra("position",0);
+                if (resultCode == RESULT_DELETE) {
+                    int pos = data.getIntExtra("position", 0);
                     mainFrag.deletePcInfo(pos);
 
 
                 }
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
 
-                    int pos = data.getIntExtra("position",0);
-                    mainFrag.editPCInfo(result,pos);
+                    int pos = data.getIntExtra("position", 0);
+                    mainFrag.editPCInfo(result, pos);
 
                 }
 
 
             }
-            if(requestCode == REQUEST_ADD){
+            if (requestCode == REQUEST_ADD) {
                 //if we are adding new item set it to enabled by default
                 result.setEnabled(true);
                 mainFrag.addNewPCInfo(result);
@@ -197,11 +217,11 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
     }
 
-    private void replaceFragmentContainer(Fragment newFragment,boolean addToBack){
+    private void replaceFragmentContainer(Fragment newFragment, boolean addToBack) {
         FragmentTransaction fts = getFragmentManager().beginTransaction();
         fts.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
         fts.replace(R.id.fragment_container, newFragment);
-        if(addToBack){
+        if (addToBack) {
             fts.addToBackStack(null);
         }
         fts.commit();
@@ -213,9 +233,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
         FragmentManager fragmentManager = getFragmentManager();
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
-        }
-
-        else{
+        } else {
             finish();
             System.exit(0);
         }
@@ -233,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
                 CheckBox checkBox = (CheckBox) view.findViewById(R.id.pc_item_checkbox);
                 Tools.changeCheckboxState(checkBox);
                 PCInfo pcToEdit = mainFrag.getPCInfo(position);
-                mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(),pcToEdit.getPcName(),checkBox.isChecked()),position); //just chaning enabled state of pcinfo
+                mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(), pcToEdit.getPcName(), checkBox.isChecked()), position); //just chaning enabled state of pcinfo
             }
         });
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -243,12 +261,15 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
                 TextView tvMac = (TextView) view.findViewById(R.id.list_item_mac);
                 TextView tvSSID = (TextView) view.findViewById(R.id.list_item_ssid);
                 PCInfo info = new PCInfo(tvMac.getText().toString(), tvSSID.getText().toString());
-                // startEditPCActivity(view,);
                 startEditPCActivity(view, info, position);
                 return true;
             }
         });
 
+
     }
+
 }
+
+
 

@@ -24,7 +24,7 @@
         </activity>
         <activity android:name=".EditPCActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" >
+            >
         android:parentActivityName=".MainActivity">
             >
         </activity>

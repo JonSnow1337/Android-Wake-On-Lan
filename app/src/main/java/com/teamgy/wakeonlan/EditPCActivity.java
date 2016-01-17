@@ -1,11 +1,15 @@
 package com.teamgy.wakeonlan;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Transition;
+import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -83,6 +87,54 @@ public class EditPCActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
+        Transition transition = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            transition = TransitionInflater.from(this).inflateTransition(R.transition.changebounds);
+
+            getWindow().setSharedElementEnterTransition(transition);
+
+            transition.addListener(new Transition.TransitionListener() {
+                @Override
+                public void onTransitionStart(Transition transition) {
+                    View v = findViewById(R.id.edit_pc_backgroud);
+                    v.setVisibility(View.GONE);
+
+
+                }
+
+                @Override
+                public void onTransitionEnd(Transition transition) {
+
+                    View v = findViewById(R.id.edit_pc_backgroud);
+                    Tools.circularRevealShow(v);
+
+
+
+                }
+
+                @Override
+                public void onTransitionCancel(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionPause(Transition transition) {
+
+                }
+
+                @Override
+                public void onTransitionResume(Transition transition) {
+
+                }
+            });
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setReturnTransition(null);
+        }
+
 
     }
 
@@ -94,7 +146,7 @@ public class EditPCActivity extends AppCompatActivity {
     public void onBackPressed() {
         Intent data = new Intent();
         setResult(RESULT_CANCELED, data);
-        super.onBackPressed();
+        finish();
     }
 
     @Override

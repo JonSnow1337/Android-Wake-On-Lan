@@ -8,9 +8,13 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
+import com.teamgy.wakeonlan.utils.Tools;
 
 import java.util.ArrayList;
 
@@ -62,7 +66,6 @@ public class MainFragment extends Fragment {
         }
 
         listview.setAdapter(adapter);
-
         if(listener != null){listener.onViewCreated();}
         return view;
 

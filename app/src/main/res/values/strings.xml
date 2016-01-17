@@ -11,7 +11,7 @@
     <string name="settings_visit_github">View Github repository</string>
     <string name="how_to_setup">How to setup Wake-On-Lan</string>
     <string name="google_url">https://goo.gl/Uhx1tX</string>
-
+    <string name="transition">transition</string>
 
 
 </resources>
