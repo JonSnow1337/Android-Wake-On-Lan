@@ -17,9 +17,9 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.teamgy.wakeonlan.Utils.AndroidDatabaseManager;
-import com.teamgy.wakeonlan.Utils.PCInfoDatabaseHelper;
-import com.teamgy.wakeonlan.Utils.Tools;
+import com.teamgy.wakeonlan.utils.AndroidDatabaseManager;
+import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
+import com.teamgy.wakeonlan.utils.Tools;
 
 import java.io.IOException;
 import java.net.SocketException;
@@ -80,17 +80,6 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -137,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
 
 
-    public void sendMagicPacket (View view) throws SocketException , IOException{
+    public void sendMagicPacket (View view) throws IOException{
 
         Intent serviceIntent = new Intent(getApplicationContext(),WOLService.class);
         ArrayList<PCInfo> pcInfos = mainFrag.getPcinfoArrList();

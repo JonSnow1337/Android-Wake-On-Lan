@@ -1,7 +1,5 @@
 package com.teamgy.wakeonlan;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 

@@ -9,8 +9,8 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
-import com.teamgy.wakeonlan.Utils.PCInfoDatabaseHelper;
-import com.teamgy.wakeonlan.Utils.Tools;
+import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
+import com.teamgy.wakeonlan.utils.Tools;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan.Utils;//add your package name here example: package com.example.dbm;
+package com.teamgy.wakeonlan.utils;//add your package name here example: package com.example.dbm;
 
 //SOURCE -> https://github.com/sanathp/DatabaseManager_For_Android
 //all required import files

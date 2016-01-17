@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.teamgy.wakeonlan.Utils.PCInfoDatabaseHelper;
+import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
 
 import java.util.ArrayList;
 
@@ -40,7 +40,6 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.content_main, container, false);
         context = view.getContext();
         dbHelper = PCInfoDatabaseHelper.getsInstance(context);
-        SharedPreferences sharedPreferences = context.getSharedPreferences(getString(R.string.shared_preference_key), Context.MODE_PRIVATE);
 
 
         listview = (ListView)view.findViewById(R.id.pc_list_view);
@@ -51,14 +50,14 @@ public class MainFragment extends Fragment {
             if(pcinfoArrList == null){
                 pcinfoArrList = new ArrayList<PCInfo>();
                 pcinfoArrList = dbHelper.getAllPCInfos();
-                adapter = new PcInfoAdapter(context,R.layout.pc_list_item,pcinfoArrList);
+                adapter = new PcInfoAdapter(context, pcinfoArrList);
             }
 
 
 
         }else{
             pcinfoArrList = (ArrayList<PCInfo>)savedInstanceState.getSerializable("pcinfoArrList");
-            adapter = new PcInfoAdapter(context,R.layout.pc_list_item,pcinfoArrList);
+            adapter = new PcInfoAdapter(context, pcinfoArrList);
 
         }
 
@@ -69,16 +68,11 @@ public class MainFragment extends Fragment {
 
 
     }
-    private void saveAdress(){
-
-
-    }
 
     @Override
     public void onPause() {
 
 
-        saveAdress();
         super.onPause();
     }
 
@@ -93,7 +87,6 @@ public class MainFragment extends Fragment {
 
     @Override
     public void onStop() {
-        saveAdress();
         super.onStop();
 
     }

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class PcInfoAdapter extends ArrayAdapter<PCInfo> {
 
-    public PcInfoAdapter(Context context, int resource, ArrayList<PCInfo> infos) {
+    public PcInfoAdapter(Context context, ArrayList<PCInfo> infos) {
         super(context, 0, infos);
     }
 

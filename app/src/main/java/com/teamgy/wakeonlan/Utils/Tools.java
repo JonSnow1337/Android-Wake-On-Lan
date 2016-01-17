@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan.Utils;
+package com.teamgy.wakeonlan.utils;
 
 import android.util.Log;
 import android.widget.CheckBox;
@@ -32,12 +32,7 @@ public final class Tools {
         return 0;
     }
     public static boolean intToBoolean(int i){
-        if(i == 1){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return i == 1;
     }
     public static ArrayList<String> pcInfosToMacArrayList(ArrayList<PCInfo> pcInfos){
         ArrayList<String> macArraylist = new ArrayList<String>();

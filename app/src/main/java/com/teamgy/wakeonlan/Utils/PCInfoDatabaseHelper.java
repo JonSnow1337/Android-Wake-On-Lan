@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan.Utils;
+package com.teamgy.wakeonlan.utils;
 
 import android.content.ContentValues;
 import android.content.Context;

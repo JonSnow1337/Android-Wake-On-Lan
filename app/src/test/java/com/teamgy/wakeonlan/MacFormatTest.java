@@ -2,7 +2,7 @@ package com.teamgy.wakeonlan;
 
 import org.junit.Test;
 
-import com.teamgy.wakeonlan.Utils.Tools;
+import com.teamgy.wakeonlan.utils.Tools;
 
 import junit.framework.Assert;
 

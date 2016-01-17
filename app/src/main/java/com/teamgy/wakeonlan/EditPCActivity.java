@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
-import com.teamgy.wakeonlan.Utils.Tools;
+import com.teamgy.wakeonlan.utils.Tools;
 
 /**
  * Created by Jakov on 01/11/2015.
@@ -83,12 +83,6 @@ public class EditPCActivity extends AppCompatActivity {
             }
         });
 
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
 
     }
 

@@ -6,7 +6,7 @@ import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 import android.util.Log;
 
-import com.teamgy.wakeonlan.Utils.Config;
+import com.teamgy.wakeonlan.utils.Config;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -100,7 +100,7 @@ public class WOLService extends IntentService{
 
                     socket.close();
                 }
-            }catch (IOException e){
+            }catch (IOException ignored){
 
 
             }
