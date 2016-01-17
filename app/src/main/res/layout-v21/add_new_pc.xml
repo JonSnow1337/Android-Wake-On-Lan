@@ -31,9 +31,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_below="@+id/app_bar_layout"
-        android:background="@color/primary_light"
         android:id="@+id/edit_pc_backgroud"
         >
+    <!-- android:background="@drawable/transition_drawable"-->
 
 
 

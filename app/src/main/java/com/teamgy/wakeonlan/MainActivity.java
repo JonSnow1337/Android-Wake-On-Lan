@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements  OnCreateViewListener {
+public class MainActivity extends AppCompatActivity implements  OnCreateViewListener, View.OnTouchListener {
 
     public static final int RESULT_DELETE = 10;
     private MainFragment mainFrag;
@@ -173,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
         }
 
-
         startActivityForResult(i, REQUEST_EDIT);
     }
 
@@ -269,6 +268,16 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
     }
 
+    private float touchX;
+    private float touchY;
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+
+        touchX = event.getX();
+        touchY = event.getY();
+        return false;
+    }
 }
 
 

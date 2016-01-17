@@ -2,12 +2,18 @@ package com.teamgy.wakeonlan.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.drawable.TransitionDrawable;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.CheckBox;
 
 import com.teamgy.wakeonlan.PCInfo;
+import com.teamgy.wakeonlan.R;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -155,6 +161,13 @@ public final class Tools {
 
         // start the animation
         anim.start();
+
+    }
+
+    public  static void backgroudTransition(View v){
+        //has to have 2 colors in drawable as background
+        TransitionDrawable transition = (TransitionDrawable) v.getBackground();
+        transition.startTransition(500);
 
     }
 

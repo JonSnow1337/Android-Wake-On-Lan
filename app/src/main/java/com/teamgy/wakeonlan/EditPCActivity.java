@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -87,11 +86,22 @@ public class EditPCActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab2);
-        Transition transition = null;
+
+
+        initializeCircularAnimation();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setReturnTransition(null);
+        }
+
+
+
+    }
+
+    private void initializeCircularAnimation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-            transition = TransitionInflater.from(this).inflateTransition(R.transition.changebounds);
+            Transition transition = TransitionInflater.from(this).inflateTransition(R.transition.changebounds);
 
             getWindow().setSharedElementEnterTransition(transition);
 
@@ -100,6 +110,8 @@ public class EditPCActivity extends AppCompatActivity {
                 public void onTransitionStart(Transition transition) {
                     View v = findViewById(R.id.edit_pc_backgroud);
                     v.setVisibility(View.GONE);
+                    //setting this drawable with 2 colors to transition between them after circualr reveal
+                    v.setBackground(getDrawable(R.drawable.transition_drawable));
 
 
                 }
@@ -109,9 +121,8 @@ public class EditPCActivity extends AppCompatActivity {
 
                     View v = findViewById(R.id.edit_pc_backgroud);
                     Tools.circularRevealShow(v);
-
-
-
+                    //fading the color fast to white
+                    Tools.backgroudTransition(v);
                 }
 
                 @Override
@@ -130,12 +141,6 @@ public class EditPCActivity extends AppCompatActivity {
                 }
             });
         }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setReturnTransition(null);
-        }
-
-
     }
 
     public void addOnPCInfoAddedListener(onPCInfoAddedListener lst){
