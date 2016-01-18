@@ -133,7 +133,6 @@ public class EditPCActivity extends AppCompatActivity {
                 public void onTransitionEnd(Transition transition) {
 
                     View v = findViewById(R.id.edit_pc_backgroud);
-                    //Tools.circularRevealShow(v);
                     v.setVisibility(View.VISIBLE);
                     Tools.backgroudTransition(v);
                     v = findViewById(R.id.app_bar_layout);
@@ -183,10 +182,15 @@ public class EditPCActivity extends AppCompatActivity {
             return true;
         }
         if(item.getItemId() == R.id.menu_pc_trash){
-            Intent data = new Intent();
-            data.putExtra("position", positon);
-            setResult(MainActivity.RESULT_DELETE, data);
-            finish();
+            if(!editMode){
+                onBackPressed();
+            }else{
+                Intent data = new Intent();
+                data.putExtra("position", positon);
+                setResult(MainActivity.RESULT_DELETE, data);
+                finish();
+            }
+
 
         }
         return super.onOptionsItemSelected(item);

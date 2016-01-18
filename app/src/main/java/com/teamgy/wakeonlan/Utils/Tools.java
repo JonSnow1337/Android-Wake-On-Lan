@@ -122,8 +122,30 @@ public final class Tools {
             //TODO
             //add animation for sdk <5.0
         }
+        // make the view visible and start the animation
+        myView.setVisibility(View.VISIBLE);
+        anim.start();
 
+    }
+    public static void circularRevealShow(View myView,int cx, int cy){
+        // previously invisible view
 
+        // get the center for the clipping circle
+
+        // get the final radius for the clipping circle
+        float finalRadius = (float) Math.hypot(cx, cy);
+
+        // create the animator for this view (the start radius is zero)
+        Animator anim =
+                null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, 1500);
+        }
+        else{
+
+            //TODO
+            //add animation for sdk <5.0
+        }
         // make the view visible and start the animation
         myView.setVisibility(View.VISIBLE);
         anim.start();
