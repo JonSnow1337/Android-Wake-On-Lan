@@ -8,7 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name ="colorControlHighlight">@color/colorPrimary</item>
         <item name="android:windowEnterTransition">@transition/fade</item>
-
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">false</item>
         <item name="android:windowAllowReturnTransitionOverlap">false</item>

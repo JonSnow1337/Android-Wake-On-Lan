@@ -1,5 +1,6 @@
 package com.teamgy.wakeonlan;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.teamgy.wakeonlan.utils.Tools;
@@ -38,6 +41,9 @@ public class EditPCActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.add_new_pc);
         Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_check_white_24dp);
@@ -98,6 +104,7 @@ public class EditPCActivity extends AppCompatActivity {
 
     }
 
+
     private void initializeCircularAnimation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
@@ -113,6 +120,12 @@ public class EditPCActivity extends AppCompatActivity {
                     //setting this drawable with 2 colors to transition between them after circualr reveal
                     v.setBackground(getDrawable(R.drawable.transition_drawable));
 
+                    v  = findViewById(R.id.app_bar_layout);
+                    v.setVisibility(View.GONE);
+                    v  = findViewById(R.id.toolbar);
+                    v.setVisibility(View.GONE);
+
+
 
                 }
 
@@ -120,9 +133,15 @@ public class EditPCActivity extends AppCompatActivity {
                 public void onTransitionEnd(Transition transition) {
 
                     View v = findViewById(R.id.edit_pc_backgroud);
-                    Tools.circularRevealShow(v);
-                    //fading the color fast to white
+                    //Tools.circularRevealShow(v);
+                    v.setVisibility(View.VISIBLE);
                     Tools.backgroudTransition(v);
+                    v = findViewById(R.id.app_bar_layout);
+                    Tools.circularRevealShow(v);
+                    v = findViewById(R.id.toolbar);
+                    Tools.circularRevealShow(v);
+
+                    //fading the color fast to white
                 }
 
                 @Override
