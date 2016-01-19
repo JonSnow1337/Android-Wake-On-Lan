@@ -101,8 +101,9 @@ public final class Tools {
 
     }
 
-    public static void circularRevealShow(View myView){
+    public static void circularRevealShow( View myView){
         // previously invisible view
+
 
         // get the center for the clipping circle
         int cx = myView.getWidth() / 2;
@@ -112,19 +113,23 @@ public final class Tools {
         float finalRadius = (float) Math.hypot(cx, cy);
 
         // create the animator for this view (the start radius is zero)
-        Animator anim =
-                null;
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+            if (myView.isAttachedToWindow()){
+                //this is to avoid crash when back is pressed instantly after animation starts
+                Animator anim = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+                myView.setVisibility(View.VISIBLE);
+                anim.start();
+            }
         }
         else{
 
             //TODO
             //add animation for sdk <5.0
         }
-        // make the view visible and start the animation
-        myView.setVisibility(View.VISIBLE);
-        anim.start();
+
+
+
 
     }
     public static void circularRevealShow(View myView,int cx, int cy){

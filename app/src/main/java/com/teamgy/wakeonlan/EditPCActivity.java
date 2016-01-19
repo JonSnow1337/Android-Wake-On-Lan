@@ -135,9 +135,9 @@ public class EditPCActivity extends AppCompatActivity {
                     View v = findViewById(R.id.edit_pc_backgroud);
                     v.setVisibility(View.VISIBLE);
                     Tools.backgroudTransition(v);
-                    v = findViewById(R.id.app_bar_layout);
-                    Tools.circularRevealShow(v);
                     v = findViewById(R.id.toolbar);
+                    Tools.circularRevealShow(v);
+                    v = findViewById(R.id.app_bar_layout);
                     Tools.circularRevealShow(v);
 
                     //fading the color fast to white
