@@ -33,6 +33,7 @@ public class MacFormatTest {
     public void test_macFormatting_colon(){
 
         Assert.assertEquals("000a959d6816",Tools.reformatMACInput("00:0a:95:9d:68:16"));
+        Assert.assertEquals("fcaa142804ea",Tools.reformatMACInput("FC:AA:14:28:04:EA"));
         Assert.assertEquals("000a959d6816",Tools.reformatMACInput("00:0a:95:9d::::68:16"));
 
     }

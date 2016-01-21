@@ -12,6 +12,9 @@
     <string name="how_to_setup">How to setup Wake-On-Lan</string>
     <string name="google_url">https://goo.gl/Uhx1tX</string>
     <string name="transition">transition</string>
+    <string name="invalidMacAlert">MAC adress is invalid.</string>
+    <string name="edit">Edit</string>
+    <string name="discard">Discard</string>
 
 
 </resources>

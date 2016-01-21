@@ -7,6 +7,7 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import com.teamgy.wakeonlan.utils.Config;
+import com.teamgy.wakeonlan.utils.Tools;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -78,6 +79,8 @@ public class WOLService extends IntentService{
                     for (int i = 0; i < Config.retryInterval; i++){
 
                         for (String macAdress:macAdresses ) {
+
+                            macAdress = Tools.reformatMACInput(macAdress,true);
 
                             String macWolData = new String(new char[16]).replace("\0", macAdress); //repeat mac 16 times
                             byte[] data = hexStringToByteArray(wolHeader + macWolData); //6 bytes

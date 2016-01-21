@@ -1,6 +1,7 @@
 package com.teamgy.wakeonlan;
 
 import android.app.ActionBar;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,7 +24,7 @@ import com.teamgy.wakeonlan.utils.Tools;
 /**
  * Created by Jakov on 01/11/2015.
  */
-public class EditPCActivity extends AppCompatActivity {
+public class EditPCActivity extends AppCompatActivity implements MACFormatInvalidDialogFragment.MACFormatInvalidListener {
 
     private EditText editMac;
     private EditText editSSID;
@@ -81,19 +82,6 @@ public class EditPCActivity extends AppCompatActivity {
             editMode = true;
 
         }
-
-        editMac.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-
-               reformatMac();
-
-
-            }
-        });
-
-
-
         initializeCircularAnimation();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -176,10 +164,20 @@ public class EditPCActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.d("edit", "called it");
         if(item.getItemId() == android.R.id.home){
-            reformatMac();
-            applyResult();
-            finish();//very sketch, why do you do this android, just call the method in main :((
-            return true;
+            String mac = editMac.getText().toString();
+            if(!Tools.isMacValid(mac)){
+                //popup dialog your mac is invalid, enter it again, continue anyway.
+
+                DialogFragment invalidMacFragment = MACFormatInvalidDialogFragment.newIntance(mac);
+                invalidMacFragment.show(getFragmentManager(),"tag");
+
+            }
+            else {
+
+                applyResult();
+                finish();//very sketch, why do you do this android, just call the method in main :((
+                return true;
+            }
         }
         if(item.getItemId() == R.id.menu_pc_trash){
             if(!editMode){
@@ -197,13 +195,24 @@ public class EditPCActivity extends AppCompatActivity {
     }
 
     private void applyResult(){
-        reformatMac();
         Intent data = new Intent();
         Log.d("",editMac.getText().toString());
         data.putExtra("macAdress",editMac.getText().toString());
         data.putExtra("ssid",editSSID.getText().toString());
         data.putExtra("position", positon); //TODO PLEASE CHANGE THIS ITS DUMB
         setResult(RESULT_OK, data);
+
+    }
+
+    @Override
+    public void onDialogEditClick() {
+        //do nothing,. user is returned and free to edit
+    }
+
+    @Override
+    public void onDialogDiscardClick() {
+
+        onBackPressed();
 
     }
 
@@ -219,10 +228,10 @@ public class EditPCActivity extends AppCompatActivity {
     private void reformatMac(){
 
         String inputText = editMac.getText().toString();
-        String formatedText = Tools.reformatMACInput(inputText);
+        String formatedText = Tools.reformatMACInput(inputText,true);
         if(!inputText.equals(formatedText)){
             Log.d("debug", "input: " + inputText + " format: " + formatedText);
-            editMac.setText(Tools.reformatMACInput(editMac.getText().toString()));
+            editMac.setText(Tools.reformatMACInput(editMac.getText().toString(),true));
             Snackbar.make(findViewById(R.id.edit_pc_view),"Reformatted MAC to application format",Snackbar.LENGTH_SHORT).show();
 
         }

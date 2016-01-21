@@ -65,7 +65,7 @@ public final class Tools {
         return enabledMacs;
     }
 
-    public static String reformatMACInput(String input){
+    public static String reformatMACInput(String input, boolean cutOverLimit){
         //this method reformats mac to correct format
         //user can input spaces or whatever
         //this overwrites it to correct format
@@ -73,6 +73,7 @@ public final class Tools {
         //get out all numbers and characters from string
         //merge them back
         String formattedString = "";
+        input  = input.toLowerCase();
         input = input.replaceAll("\\s+","");
 
 
@@ -86,20 +87,21 @@ public final class Tools {
 
         }
 
-        if(formattedString.length() > 12 && formattedString.length() > 0){
-           try{
-                formattedString = formattedString.substring(0,12);
+        if(cutOverLimit){
+            if(formattedString.length() > 12 && formattedString.length() > 0){
+                try{
+                    formattedString = formattedString.substring(0,12);
 
-            }catch (IndexOutOfBoundsException e){
+                }catch (IndexOutOfBoundsException e){
 
-                Log.d("exception","lenght is " +  formattedString.length());
+                    Log.d("exception","lenght is " +  formattedString.length());
+                }
             }
-
-
         }
         return formattedString;
 
     }
+
 
     public static void circularRevealShow( View myView){
         // previously invisible view
@@ -199,4 +201,36 @@ public final class Tools {
     }
 
 
+    public static boolean isMacValid(String input) {
+        //checks to see if letters and numbers adds up to 12
+        input = input.replaceAll("\\s+","");
+        input  = input.toLowerCase();
+        String pattern = "[abcdef0-9]";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(input);
+
+        int macValidCounter = 0;
+
+        while(m.find()){
+            macValidCounter ++;
+        }
+
+        return macValidCounter == 12;
+
+    }
+
+    public static String findBadMACCharacters(String input){
+        input = input.replaceAll("\\s+","");
+        input  = input.toLowerCase();
+        String pattern = "[g-z]";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(input);
+
+        String badCharacters = "";
+        while(m.find()){
+            badCharacters += m.group();
+        }
+
+        return badCharacters;
+    }
 }
