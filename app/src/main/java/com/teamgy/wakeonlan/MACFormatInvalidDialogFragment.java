@@ -46,7 +46,7 @@ public class MACFormatInvalidDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         String badMac = getArguments().getString("badMac");
-        builder.setTitle( "\'" + badMac + "\'" + " is not a valid MAC address");
+        builder.setTitle( "Edit entry?");
         builder.setMessage(buildAlertMessage(badMac));
         builder.setPositiveButton(R.string.edit, new DialogInterface.OnClickListener() {
             @Override
@@ -66,7 +66,7 @@ public class MACFormatInvalidDialogFragment extends DialogFragment {
     }
     public String buildAlertMessage(String badMac){
         String reformatedMAC = Tools.reformatMACInput(badMac,false);
-        String alertMessage = "";
+        String alertMessage = "\'" + badMac + "\'" + " is not a valid MAC address! \n";
         if(reformatedMAC.length() != 12){
             alertMessage += "Address should have 12 characters, not " + reformatedMAC.length() + ". \n";
         }
