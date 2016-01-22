@@ -46,7 +46,7 @@ public class MACFormatInvalidDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         String badMac = getArguments().getString("badMac");
-        builder.setTitle( "Edit entry?");
+        builder.setTitle( "Edit invalid entry?");
         builder.setMessage(buildAlertMessage(badMac));
         builder.setPositiveButton(R.string.edit, new DialogInterface.OnClickListener() {
             @Override
