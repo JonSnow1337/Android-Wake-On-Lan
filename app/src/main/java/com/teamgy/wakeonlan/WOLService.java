@@ -15,7 +15,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
 
-public class WOLService extends IntentService{
+public class WOLService extends IntentService {
 
     private WifiManager wifiManager;
 
@@ -28,7 +28,7 @@ public class WOLService extends IntentService{
         super(name);
     }
 
-    public WOLService(){
+    public WOLService() {
         super("WOLService");
 
     }
@@ -36,21 +36,21 @@ public class WOLService extends IntentService{
     @Override
     public void onCreate() {
         super.onCreate();
-        wifiManager = (WifiManager)getSystemService(WIFI_SERVICE);
+        wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
 
     }
 
-    public  byte[] hexStringToByteArray(String s) {
+    private byte[] hexStringToByteArray(String s) {
         int len = s.length();
         byte[] data = new byte[len / 2];
         for (int i = 0; i < len; i += 2) {
             data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i+1), 16));
+                    + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
     }
 
-    InetAddress getBroadcastAddress() throws IOException {
+    private InetAddress getBroadcastAddress() throws IOException {
         DhcpInfo dhcp = wifiManager.getDhcpInfo();
         // handle null somehow
 
@@ -67,46 +67,46 @@ public class WOLService extends IntentService{
         //magicpacket = FF * 6 + mac *16
         //http://support.amd.com/TechDocs/20213.pdf specification for magic packet
 
-            try{
+        try {
 
-                ArrayList<String> macAdresses = intent.getStringArrayListExtra("macAdresses");
-                if(macAdresses != null) {
-                    DatagramSocket socket = new DatagramSocket(4000);
-                    socket.setBroadcast(true);
-                    socket.setReuseAddress(true);
-                    String wolHeader = "ffffffffffff";
+            ArrayList<String> macAdresses = intent.getStringArrayListExtra("macAdresses");
+            if (macAdresses != null) {
+                DatagramSocket socket = new DatagramSocket(4000);
+                socket.setBroadcast(true);
+                socket.setReuseAddress(true);
+                String wolHeader = "ffffffffffff";
 
-                    for (int i = 0; i < Config.retryInterval; i++){
+                for (int i = 0; i < Config.retryInterval; i++) {
 
-                        for (String macAdress:macAdresses ) {
+                    for (String macAdress : macAdresses) {
 
-                            macAdress = Tools.reformatMACInput(macAdress,true);
+                        macAdress = Tools.reformatMACInput(macAdress, true);
 
-                            String macWolData = new String(new char[16]).replace("\0", macAdress); //repeat mac 16 times
-                            byte[] data = hexStringToByteArray(wolHeader + macWolData); //6 bytes
-                            DatagramPacket packet = new DatagramPacket(data, data.length, getBroadcastAddress(), 40000);
-                            socket.send(packet);
-                            Log.d("wol service:", "sent packet ");
-
-                        }
-
-                        try {
-                            Log.d("wol", "sleeping");
-                            //this is retrying because wifi might me iffy when user connects first time
-                            Thread.sleep(Config.retrySleep * 1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                        String macWolData = new String(new char[16]).replace("\0", macAdress); //repeat mac 16 times
+                        byte[] data = hexStringToByteArray(wolHeader + macWolData); //6 bytes
+                        DatagramPacket packet = new DatagramPacket(data, data.length, getBroadcastAddress(), 40000);
+                        socket.send(packet);
+                        Log.d("wol service:", "sent packet ");
 
                     }
 
+                    try {
+                        Log.d("wol", "sleeping");
+                        //this is retrying because wifi might me iffy when user connects first time
+                        Thread.sleep(Config.retrySleep * 1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-                    socket.close();
                 }
-            }catch (IOException ignored){
 
 
+                socket.close();
             }
+        } catch (IOException ignored) {
+
+
         }
+    }
 
 }

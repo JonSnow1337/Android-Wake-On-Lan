@@ -40,12 +40,12 @@ public class WakeOnHomeWifiReciever extends BroadcastReceiver {
 
                     } else {
 
-                        Log.d("breciver", "we got unknow ssid" +  wifiInfo.getSSID());
+                        Log.d("breciver", "we got unknow ssid" + wifiInfo.getSSID());
                     }
 
                 }
 
-                if(pcInfosToSend.size()> 0){
+                if (pcInfosToSend.size() > 0) {
                     Intent serviceIntent = new Intent(context, WOLService.class);
 
                     serviceIntent.putStringArrayListExtra("macAdresses", Tools.pcInfosToMacArrayList(pcInfosToSend));
@@ -54,8 +54,6 @@ public class WakeOnHomeWifiReciever extends BroadcastReceiver {
                     Log.d("broadcast reciever:", "started service");
 
                 }
-
-
 
 
             }

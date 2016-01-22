@@ -15,13 +15,15 @@ import com.teamgy.wakeonlan.utils.Tools;
 public class MACFormatInvalidDialogFragment extends DialogFragment {
 
 
-    public interface MACFormatInvalidListener{
+    public interface MACFormatInvalidListener {
         public void onDialogEditClick();
+
         public void onDialogDiscardClick();
     }
+
     private MACFormatInvalidListener listener;
 
-    public static MACFormatInvalidDialogFragment newIntance(String badMac){
+    public static MACFormatInvalidDialogFragment newIntance(String badMac) {
         MACFormatInvalidDialogFragment fragment = new MACFormatInvalidDialogFragment();
         Bundle b = new Bundle();
         b.putString("badMac", badMac);
@@ -34,9 +36,9 @@ public class MACFormatInvalidDialogFragment extends DialogFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if(activity instanceof MACFormatInvalidListener){
-            this.listener = (MACFormatInvalidListener)activity;
-        }else{
+        if (activity instanceof MACFormatInvalidListener) {
+            this.listener = (MACFormatInvalidListener) activity;
+        } else {
             throw new ClassCastException("Class must implement MACFormatInvalidListener");
         }
     }
@@ -46,7 +48,7 @@ public class MACFormatInvalidDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         String badMac = getArguments().getString("badMac");
-        builder.setTitle( "Edit invalid entry?");
+        builder.setTitle("Edit invalid entry?");
         builder.setMessage(buildAlertMessage(badMac));
         builder.setPositiveButton(R.string.edit, new DialogInterface.OnClickListener() {
             @Override
@@ -64,20 +66,21 @@ public class MACFormatInvalidDialogFragment extends DialogFragment {
 
         return builder.create();
     }
-    public String buildAlertMessage(String badMac){
-        String reformatedMAC = Tools.reformatMACInput(badMac,false);
+
+    public String buildAlertMessage(String badMac) {
+        String reformatedMAC = Tools.reformatMACInput(badMac, false);
         String alertMessage = "\'" + badMac + "\'" + " is not a valid MAC address! \n";
-        if(reformatedMAC.length() != 12){
+        if (reformatedMAC.length() != 12) {
             alertMessage += "Address should have 12 characters, not " + reformatedMAC.length() + ". \n";
         }
         String badCharactes = Tools.findBadMACCharacters(badMac);
 
-        if(badCharactes.length() > 0){
-            if(badCharactes.length() ==1){
-                alertMessage += "\'" + badCharactes + "\'" +  " is not a hexadecimal.";
+        if (badCharactes.length() > 0) {
+            if (badCharactes.length() == 1) {
+                alertMessage += "\'" + badCharactes + "\'" + " is not a hexadecimal.";
 
-            }else{
-                alertMessage += "\'" + badCharactes + "\'" +  " are not hexadecimal.";
+            } else {
+                alertMessage += "\'" + badCharactes + "\'" + " are not hexadecimal.";
             }
         }
 

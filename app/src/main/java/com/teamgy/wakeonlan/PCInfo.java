@@ -5,23 +5,25 @@ import java.io.Serializable;
 /**
  * Created by Jakov on 01/11/2015.
  */
-public class PCInfo  implements Serializable{
+public class PCInfo implements Serializable {
     private String macAdress;
     private String pcName;
     private boolean enabled = false;
 
-    public PCInfo(String macAdress,String ssid){
+    public PCInfo(String macAdress, String ssid) {
 
         setMacAdress(macAdress);
         setPcName(ssid);
         setEnabled(false);
     }
-    public PCInfo(String macAdress,String ssid,boolean enabled){
+
+    public PCInfo(String macAdress, String ssid, boolean enabled) {
 
         setMacAdress(macAdress);
         setPcName(ssid);
         setEnabled(enabled);
     }
+
     public boolean isEnabled() {
         return enabled;
     }

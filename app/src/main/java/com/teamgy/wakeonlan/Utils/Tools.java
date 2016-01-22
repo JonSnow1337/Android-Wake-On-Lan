@@ -205,7 +205,7 @@ public final class Tools {
         //checks to see if letters and numbers adds up to 12
         input = input.replaceAll("\\s+","");
         input  = input.toLowerCase();
-        String pattern = "[abcdef0-9]";
+        String pattern = "[a-z0-9]";
         Pattern p = Pattern.compile(pattern);
         Matcher m = p.matcher(input);
 

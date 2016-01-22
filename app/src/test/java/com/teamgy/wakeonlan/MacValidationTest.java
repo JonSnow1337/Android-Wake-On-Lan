@@ -35,6 +35,21 @@ public class MacValidationTest {
         Assert.assertEquals(false, Tools.isMacValid(""));
 
     }
+    @Test
+    public void test_macValid_badCharacters(){
+        Assert.assertEquals(false, Tools.isMacValid("fcaa142804eaghjl"));
+        Assert.assertEquals(false, Tools.isMacValid("fcaa142804ea-gh-jl"));
+
+
+    }
+    @Test
+    public void test_macValid_OK(){
+        Assert.assertEquals(true, Tools.isMacValid("fcaa142804ea"));
+        Assert.assertEquals(true, Tools.isMacValid("fc:aa:14:28:04:ea"));
+
+
+    }
+
 
 
 

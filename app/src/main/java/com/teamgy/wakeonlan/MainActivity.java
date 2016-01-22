@@ -1,6 +1,5 @@
 package com.teamgy.wakeonlan;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -14,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -26,10 +24,9 @@ import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
 import com.teamgy.wakeonlan.utils.Tools;
 
 import java.io.IOException;
-import java.net.SocketException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements  OnCreateViewListener, View.OnTouchListener {
+public class MainActivity extends AppCompatActivity implements OnCreateViewListener {
 
     public static final int RESULT_DELETE = 10;
     private MainFragment mainFrag;
@@ -142,20 +139,16 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
         Intent i = new Intent(this, EditPCActivity.class);
         i.putExtra("mode", REQUEST_ADD);
 
-        View sharedView = (View) findViewById(R.id.fab);
+        View sharedView = findViewById(R.id.fab);
         String transitionName = getString(R.string.transition);
 
         ActivityOptions transitionActivityOptions = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             transitionActivityOptions = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, sharedView, transitionName);
             startActivityForResult(i, REQUEST_ADD, transitionActivityOptions.toBundle());
-        }
-        else{
+        } else {
             startActivityForResult(i, REQUEST_ADD);
-
-
         }
-
 
 
     }
@@ -268,16 +261,6 @@ public class MainActivity extends AppCompatActivity implements  OnCreateViewList
 
     }
 
-    private float touchX;
-    private float touchY;
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-
-        touchX = event.getX();
-        touchY = event.getY();
-        return false;
-    }
 }
 
 
