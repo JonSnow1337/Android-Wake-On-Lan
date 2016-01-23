@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
-        android:title="kek"
+        android:title="@string/save"
         android:id="@+id/menu_pc_check"
         android:orderInCategory="100"
         app:showAsAction="always"

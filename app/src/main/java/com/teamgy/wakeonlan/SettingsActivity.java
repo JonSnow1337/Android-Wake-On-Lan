@@ -1,10 +1,7 @@
 package com.teamgy.wakeonlan;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 /**

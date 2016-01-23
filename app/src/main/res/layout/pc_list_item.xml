@@ -29,14 +29,14 @@
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="PC Name"/>
+                android:hint="@string/pc_name"/>
             <TextView
                 android:padding="5dp"
                 android:id="@+id/list_item_mac"
                 android:layout_margin="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mac Address"/>
+                android:hint="@string/mac_address"/>
 
 
         </LinearLayout>

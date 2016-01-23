@@ -5,8 +5,10 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +21,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.teamgy.wakeonlan.appIntro.MyIntro;
 import com.teamgy.wakeonlan.utils.AndroidDatabaseManager;
 import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
 import com.teamgy.wakeonlan.utils.Tools;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initialiseIntro();
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -114,12 +118,7 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
                 e.printStackTrace();
             }
         }
-        if (id == R.id.debug_database) {
 
-            Intent dbmanager = new Intent(this, AndroidDatabaseManager.class);
-            startActivity(dbmanager);
-
-        }
 
 
         return super.onOptionsItemSelected(item);
@@ -306,6 +305,40 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
     public void configurePressed(PCInfo pcinfo,int position) {
 
         startEditPCActivity(null,pcinfo,position);
+
+    }
+    public void initialiseIntro(){
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  Initialize SharedPreferences
+                SharedPreferences getPrefs = PreferenceManager
+                        .getDefaultSharedPreferences(getBaseContext());
+
+                //  Create a new boolean and preference and set it to true
+                boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
+
+                //  If the activity has never started before...
+                if (isFirstStart) {
+
+                    //  Launch app intro
+                    Intent i = new Intent(MainActivity.this, MyIntro.class);
+                    startActivity(i);
+
+                    //  Make a new preferences editor
+                    SharedPreferences.Editor e = getPrefs.edit();
+
+                    //  Edit preference to make it false because we don't want this to run again
+                    e.putBoolean("firstStart", false);
+
+                    //  Apply changes
+                    e.apply();
+                }
+            }
+        });
+
+        // Start the thread
+        t.start();
 
 
     }

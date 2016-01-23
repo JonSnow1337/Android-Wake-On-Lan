@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">wakeOnLan</string>
+    <string name="app_name">Wake On LAN</string>
     <string name="action_settings">Settings</string>
     <string name="action_launch_reqs">Test PC Wake-Up</string>
     <string name="settings_lean_more_wol">Learn more about wake-on-LAN</string>
@@ -7,10 +7,14 @@
     <string name="github_url">https://github.com/JediMaster93/Android-Wake-On-Lan</string>
     <string name="settings_visit_github">View Github repository</string>
     <string name="how_to_setup">How to setup Wake-On-Lan</string>
-    <string name="google_url">https://goo.gl/Uhx1tX</string>
+    <string name="google_url">http://lmgtfy.com/?q=how+to+set+up+wake+on+lan#</string>
     <string name="transition">transition</string>
     <string name="edit">Edit</string>
     <string name="discard">Discard</string>
-
-
+    <string name="save">save</string>
+    <string name="pc_name">PC Name</string>
+    <string name="mac_address">Mac Address</string>
+    <string name="intro_welcome">Welcome to Wake On Lan!</string>
+    <string name="intro_description1">We will automatically wake up your pc when you connect to your wifi network!</string>
+    <string name="intro_title_2">First setup your PC to recieve magic packets</string>
 </resources>

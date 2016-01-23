@@ -35,6 +35,10 @@
         <activity android:name=".SettingsActivity">
             >
         </activity>
+        <activity android:name=".appIntro.MyIntro"
+            android:label="@string/intro_welcome"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
         <service android:name=".WOLService"
             android:enabled="true"
             android:exported="false"

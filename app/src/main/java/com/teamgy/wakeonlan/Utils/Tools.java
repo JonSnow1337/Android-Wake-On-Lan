@@ -3,17 +3,12 @@ package com.teamgy.wakeonlan.utils;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.drawable.TransitionDrawable;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.CheckBox;
 
 import com.teamgy.wakeonlan.PCInfo;
-import com.teamgy.wakeonlan.R;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;

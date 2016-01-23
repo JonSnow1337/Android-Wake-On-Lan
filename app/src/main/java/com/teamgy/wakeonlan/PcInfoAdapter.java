@@ -1,10 +1,7 @@
 package com.teamgy.wakeonlan;
 
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.media.Image;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.teamgy.wakeonlan.utils.Tools;
 
 import java.util.ArrayList;
 
