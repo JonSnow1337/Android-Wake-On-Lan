@@ -26,7 +26,7 @@ import com.teamgy.wakeonlan.utils.Tools;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnCreateViewListener {
+public class MainActivity extends AppCompatActivity implements OnCreateViewListener,PcInfoAdapter.PCInfoAdapterCallback {
 
     public static final int RESULT_DELETE = 10;
     private MainFragment mainFrag;
@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
             Intent startSettings = new Intent(this, SettingsActivity.class);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 startActivity(startSettings, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+            }else{
+                startActivity(startSettings);
             }
 
         }
@@ -237,30 +239,76 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
     @Override
     public void onViewCreated() {
         ListView listView = mainFrag.getListview();
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CheckBox checkBox = (CheckBox) view.findViewById(R.id.pc_item_checkbox);
-                Tools.changeCheckboxState(checkBox);
-                PCInfo pcToEdit = mainFrag.getPCInfo(position);
-                mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(), pcToEdit.getPcName(), checkBox.isChecked()), position); //just chaning enabled state of pcinfo
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //TODO maybe customize items to contain pcInfo somehow?
-                TextView tvMac = (TextView) view.findViewById(R.id.list_item_mac);
-                TextView tvSSID = (TextView) view.findViewById(R.id.list_item_ssid);
-                PCInfo info = new PCInfo(tvMac.getText().toString(), tvSSID.getText().toString());
-                startEditPCActivity(view, info, position);
-                return true;
-            }
-        });
+
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    CheckBox checkBox = (CheckBox) view.findViewById(R.id.pc_item_checkbox);
+                    Tools.changeCheckboxState(checkBox);
+                    PCInfo pcToEdit = mainFrag.getPCInfo(position);
+                    mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(), pcToEdit.getPcName(), checkBox.isChecked()), position); //just chaning enabled state of pcinfo
+                }
+            });
+            listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                    //TODO maybe customize items to contain pcInfo somehow?
+                    TextView tvMac = (TextView) view.findViewById(R.id.list_item_mac);
+                    TextView tvSSID = (TextView) view.findViewById(R.id.list_item_ssid);
+                    PCInfo info = new PCInfo(tvMac.getText().toString(), tvSSID.getText().toString());
+                    startEditPCActivity(view, info, position);
+                    return true;
+                }
+            });
+
+        }else{
+
+            PcInfoAdapter adapter = (PcInfoAdapter) listView.getAdapter();
+            adapter.setCallback(this);
+            //pre lolipop
+            /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    PCInfo pcToEdit = mainFrag.getPCInfo(position);
+                    if(view.getId() == R.id.pc_item_checkbox){
+                        pcToEdit = mainFrag.getPCInfo(position);
+                        CheckBox checkBox = (CheckBox) view;
+                        mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(), pcToEdit.getPcName(), checkBox.isChecked()), position); //just chaning enabled state of pcinfo/
+                    }
+                    if(view.getId() == R.id.pre_lolipop_editPC){
+                        TextView tvMac = (TextView) parent.findViewById(R.id.list_item_mac);
+                        TextView tvSSID = (TextView) parent.findViewById(R.id.list_item_ssid);
+                        PCInfo info = new PCInfo(tvMac.getText().toString(), tvSSID.getText().toString());
+                        startEditPCActivity(view, info, position);
+                    }
+                }
+            });*/
+
+        }
+
+
+    }
+    public MainFragment getMainFrag() {
+        return mainFrag;
+    }
+
+    @Override
+    public void checkboxPressed(CheckBox chk, PCInfo pcinfo,int position) {
+        //pre lolipop callback from listitem
+
+        mainFrag.editPCInfo(new PCInfo(pcinfo.getMacAdress(), pcinfo.getPcName(), chk.isChecked()), position); //just chaning enabled state of pcinfo
 
 
     }
 
+    @Override
+    public void configurePressed(PCInfo pcinfo,int position) {
+
+        startEditPCActivity(null,pcinfo,position);
+
+
+    }
 }
 
 

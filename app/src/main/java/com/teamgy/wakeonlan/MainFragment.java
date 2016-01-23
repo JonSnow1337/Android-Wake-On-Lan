@@ -27,10 +27,9 @@ public class MainFragment extends Fragment {
 
     private ListView listview;
     private PCInfoDatabaseHelper dbHelper;
-
-
     private ArrayList<PCInfo> pcinfoArrList;
     private PcInfoAdapter adapter;
+    private MainActivity activity;
 
     @Nullable
     @Override
@@ -113,6 +112,5 @@ public class MainFragment extends Fragment {
     public void setOnCreateViewListener(OnCreateViewListener listener) {
         this.listener = listener;
     }
-
 
 }
