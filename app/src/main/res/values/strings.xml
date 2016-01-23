@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">wakeOnLan</string>
-    <string name="wol_action">com.teamgy.wakeonlan.ACTION_WOL</string>
-    <string name="shared_preference_key">com.teamgy.preferences</string>
-    <string name="my_mac">fcaa142804ea</string>
     <string name="action_settings">Settings</string>
     <string name="action_launch_reqs">Test PC Wake-Up</string>
     <string name="settings_lean_more_wol">Learn more about wake-on-LAN</string>
@@ -12,7 +9,6 @@
     <string name="how_to_setup">How to setup Wake-On-Lan</string>
     <string name="google_url">https://goo.gl/Uhx1tX</string>
     <string name="transition">transition</string>
-    <string name="invalidMacAlert">MAC adress is invalid.</string>
     <string name="edit">Edit</string>
     <string name="discard">Discard</string>
 
