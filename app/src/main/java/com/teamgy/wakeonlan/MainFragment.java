@@ -87,7 +87,9 @@ public class MainFragment extends Fragment {
         toEdit.setPcName(pcInfo.getPcName());
         toEdit.setEnabled(pcInfo.isEnabled());
         adapter.notifyDataSetChanged();
-        dbHelper.updatePCInfo(pcInfo, position);
+        //dbHelper.updatePCInfo(pcInfo, position);
+        updateDatabase(toEdit,position);
+
 
     }
     public void editPcInfoEnabled(boolean newEnabled, final int position) {
@@ -95,14 +97,21 @@ public class MainFragment extends Fragment {
         toEdit.setEnabled(newEnabled);
         adapter.notifyDataSetChanged();
 
-        dbHelper.updatePCInfo(toEdit, position);
-      /*  Thread t = new Thread(){
+       // dbHelper.updatePCInfo(toEdit, position);
+        updateDatabase(toEdit,position);
+
+    }
+
+    public void updateDatabase(final PCInfo toEdit,final int position){
+        Thread t = new Thread(){
             public void run(){
 
                 dbHelper.updatePCInfo(toEdit,position);
             }
 
-        };*/
+        };
+        t.start();
+
 
     }
 

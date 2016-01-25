@@ -37,17 +37,18 @@ public class PcInfoAdapter extends ArrayAdapter<PCInfo> {
         }
         TextView tvMac = (TextView) convertView.findViewById(R.id.list_item_mac);
         TextView tvSSID = (TextView) convertView.findViewById(R.id.list_item_ssid);
-        final CheckBox chk = (CheckBox) convertView.findViewById(R.id.pc_item_checkbox);
-        final ImageButton preLolipopConfigureButton = (ImageButton) convertView.findViewById(R.id.pre_lolipop_editPC);
         tvMac.setText(info.getMacAdress());
         tvSSID.setText(info.getPcName());
-        chk.setChecked(info.isEnabled());
+
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 
             //callback here because i cant access activity methods
             //for lolipop we dont even respond to buttons,
             //its all long click and single click  on list item direcrtly
+            final CheckBox chk = (CheckBox) convertView.findViewById(R.id.pc_item_checkbox);
+            final ImageButton preLolipopConfigureButton = (ImageButton) convertView.findViewById(R.id.pre_lolipop_editPC);
+            chk.setChecked(info.isEnabled());
 
             if(callback != null){
 

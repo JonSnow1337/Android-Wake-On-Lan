@@ -246,7 +246,8 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
                     CheckBox checkBox = (CheckBox) view.findViewById(R.id.pc_item_checkbox);
                     Tools.changeCheckboxState(checkBox);
                     PCInfo pcToEdit = mainFrag.getPCInfo(position);
-                    mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(), pcToEdit.getPcName(), checkBox.isChecked()), position); //just chaning enabled state of pcinfo
+                    //mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(), pcToEdit.getPcName(), checkBox.isChecked()), position); //just chaning enabled state of pcinfo
+                    mainFrag.editPcInfoEnabled(checkBox.isChecked(),position);
                 }
             });
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -275,7 +276,8 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
     public void checkboxPressed(CheckBox chk, PCInfo pcinfo,int position) {
         //pre lolipop callback from listitem
 
-        mainFrag.editPCInfo(new PCInfo(pcinfo.getMacAdress(), pcinfo.getPcName(), chk.isChecked()), position); //just chaning enabled state of pcinfo
+        PCInfo pcToEdit = mainFrag.getPCInfo(position);
+        mainFrag.editPcInfoEnabled(chk.isChecked(),position);
 
 
     }
