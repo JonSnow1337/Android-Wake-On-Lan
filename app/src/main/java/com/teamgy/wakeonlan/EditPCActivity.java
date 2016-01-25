@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,10 +65,27 @@ public class EditPCActivity extends AppCompatActivity  {
             getSupportActionBar().setTitle("Edit PC");
             editMac.setText(pcinfo.getMacAdress());
             editSSID.setText(pcinfo.getPcName());
+
             positon = bundle.getInt("position");
             editMode = true;
             toolbar.setNavigationIcon(R.drawable.ic_delete_white_24dp);
         }
+
+        editMac.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                boolean isEnterPressed = (event.getAction() == KeyEvent.ACTION_DOWN)
+                                       && (keyCode == KeyEvent.KEYCODE_ENTER);
+                if (isEnterPressed) {
+                    Log.d("enter pressed", "hello????");
+                    finishIfValidMac(editMac.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
         initializeCircularAnimation();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -143,15 +161,7 @@ public class EditPCActivity extends AppCompatActivity  {
         if (item.getItemId() == R.id.menu_pc_check) {
             String mac = editMac.getText().toString();
 
-            if (!Tools.isMacValid(mac)) {
-                editMac.setError("Invalid MAC");
-                editMac.requestFocus();
-            } else {
-                applyResult();
-                finish();//very sketch, why do you do this android, just call the method in main :((
-                return true;
-            }
-
+            return finishIfValidMac(mac);
         }
         if (item.getItemId() == android.R.id.home) {
 
@@ -168,6 +178,21 @@ public class EditPCActivity extends AppCompatActivity  {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean finishIfValidMac(String mac) {
+        /**Checks if input mac is valid and Sets error to editMac if not
+         * If its valid it exits activiry and applies result.
+         */
+        if (!Tools.isMacValid(mac)) {
+            editMac.setError("Invalid MAC");
+            editMac.requestFocus();
+        } else {
+            applyResult();
+            finish();//very sketch, why do you do this android, just call the method in main :((
+            return true;
+        }
+        return false;
     }
 
     private void applyResult() {
