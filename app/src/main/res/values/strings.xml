@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Wake On LAN</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Help</string>
     <string name="action_launch_reqs">Test PC Wake-Up</string>
     <string name="settings_lean_more_wol">Learn more about wake-on-LAN</string>
     <string name="wiki_article_url">https://en.wikipedia.org/wiki/Wake-on-LAN</string>

@@ -47,15 +47,11 @@ public class EditPCActivity extends AppCompatActivity  {
         Intent i = getIntent();
         Bundle bundle = i.getExtras();
         int mode = bundle.getInt("mode");
-      /*  String macAdress = bundle.getString("macAdress");
-        String ssid = bundle.getString("ssid");
-        PCInfo pcinfo = new PCInfo(macAdress, ssid);*/
 
         this.pcInfoEditing = (PCInfo) bundle.getSerializable("pcInfo");
 
         editMac = (EditText) findViewById(R.id.edit_mac);
         editSSID = (EditText) findViewById(R.id.edit_ssid);
-        //Log.d("d", "meme");
 
         if (mode == MainActivity.REQUEST_ADD) {
 
@@ -112,7 +108,6 @@ public class EditPCActivity extends AppCompatActivity  {
                     v.setVisibility(View.GONE);
                     //setting this drawable with 2 colors to transition between them after circualr reveal
                     v.setBackground(getDrawable(R.drawable.transition_drawable));
-
                     v = findViewById(R.id.app_bar_layout);
                     v.setVisibility(View.GONE);
                     v = findViewById(R.id.toolbar);
@@ -192,7 +187,7 @@ public class EditPCActivity extends AppCompatActivity  {
             editMac.requestFocus();
         } else {
             applyResult();
-            finish();//very sketch, why do you do this android, just call the method in main :((
+            finish();
             return true;
         }
         return false;

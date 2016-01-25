@@ -27,7 +27,6 @@ public class sendWakeOnLan extends AsyncTask {
             DatagramSocket socket = new DatagramSocket(4000);
             socket.setBroadcast(true);
             String wolHeader = "ffffffffffff";
-            //String mac = "fcaa142804ea";
             String mac = params[0].toString();
             String macWolData = new String(new char[16]).replace("\0", mac); //repeat mac 16 times
             byte[] data = hexStringToByteArray(wolHeader + macWolData); //6 byes

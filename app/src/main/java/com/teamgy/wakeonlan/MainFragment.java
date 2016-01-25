@@ -82,8 +82,6 @@ public class MainFragment extends Fragment {
     }
 
     public void editPCInfo(PCInfo pcInfo, int position) {
-        //pcinfoArrList.remove(position);
-        //pcinfoArrList.add(position, pcInfo);
         PCInfo toEdit = pcinfoArrList.get(position);
         toEdit.setMacAdress(pcInfo.getMacAdress());
         toEdit.setPcName(pcInfo.getPcName());
@@ -92,12 +90,27 @@ public class MainFragment extends Fragment {
         dbHelper.updatePCInfo(pcInfo, position);
 
     }
+    public void editPcInfoEnabled(boolean newEnabled, final int position) {
+        final PCInfo toEdit = pcinfoArrList.get(position);
+        toEdit.setEnabled(newEnabled);
+        adapter.notifyDataSetChanged();
+
+        dbHelper.updatePCInfo(toEdit, position);
+      /*  Thread t = new Thread(){
+            public void run(){
+
+                dbHelper.updatePCInfo(toEdit,position);
+            }
+
+        };*/
+
+    }
 
     public void deletePcInfo(int position) {
 
         pcinfoArrList.remove(position);
         adapter.notifyDataSetChanged();
-        dbHelper.deletePCInfo(position); //database counts from 1
+        dbHelper.deletePCInfo(position);
 
     }
 
