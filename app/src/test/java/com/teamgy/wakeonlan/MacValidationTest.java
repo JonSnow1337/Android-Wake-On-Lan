@@ -49,6 +49,12 @@ public class MacValidationTest {
 
 
     }
+    @Test
+    public void test_macValid_rota(){
+        Assert.assertEquals(false, Tools.isMacValid("qwdffffhhggg"));
+    }
+
+
 
 
 
