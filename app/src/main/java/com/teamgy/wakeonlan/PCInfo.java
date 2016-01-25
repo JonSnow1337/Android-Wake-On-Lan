@@ -9,6 +9,8 @@ public class PCInfo implements Serializable {
     private String macAdress;
     private String pcName;
     private boolean enabled = false;
+    private static final long serialVersionUID = 1L;
+
 
     public PCInfo(String macAdress, String ssid) {
 

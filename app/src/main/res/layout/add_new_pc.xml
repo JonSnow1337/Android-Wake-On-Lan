@@ -46,7 +46,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp"
                 android:layout_weight="1"
-                android:hint="@string/pc_name" />
+                android:hint="@string/pc_name"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +72,7 @@
                 android:layout_margin="25dp"
                 android:layout_weight="1"
                 android:hint="@string/mac_address"
-                />
+                android:singleLine="true" />
         </LinearLayout>
 
 

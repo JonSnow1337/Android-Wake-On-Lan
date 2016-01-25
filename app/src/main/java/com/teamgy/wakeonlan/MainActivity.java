@@ -118,7 +118,12 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
                 e.printStackTrace();
             }
         }
+        if (id == R.id.debug_database) {
 
+            Intent dbmanager = new Intent(this, AndroidDatabaseManager.class);
+            startActivity(dbmanager);
+
+        }
 
 
         return super.onOptionsItemSelected(item);
@@ -160,11 +165,8 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
         Intent i = new Intent(this, EditPCActivity.class);
         i.putExtra("mode", REQUEST_EDIT);
         if (pcInfo != null) {
-
-            i.putExtra("macAdress", pcInfo.getMacAdress());
-            i.putExtra("ssid", pcInfo.getPcName());
+            i.putExtra("pcInfo", pcInfo);
             i.putExtra("position", position);
-
         }
 
         startActivityForResult(i, REQUEST_EDIT);
@@ -178,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
         PCInfoDatabaseHelper dbHelper = PCInfoDatabaseHelper.getsInstance(this);
         if (resultCode != RESULT_CANCELED) {
 
-            PCInfo result = new PCInfo(data.getStringExtra("macAdress"), data.getStringExtra("ssid"));
+            PCInfo result = (PCInfo) data.getSerializableExtra("pcInfo");
             if (requestCode == REQUEST_EDIT) {
 
                 if (resultCode == RESULT_DELETE) {
@@ -191,9 +193,7 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
 
                     int pos = data.getIntExtra("position", 0);
                     mainFrag.editPCInfo(result, pos);
-
                 }
-
 
             }
             if (requestCode == REQUEST_ADD) {
@@ -252,10 +252,7 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                    //TODO maybe customize items to contain pcInfo somehow?
-                    TextView tvMac = (TextView) view.findViewById(R.id.list_item_mac);
-                    TextView tvSSID = (TextView) view.findViewById(R.id.list_item_ssid);
-                    PCInfo info = new PCInfo(tvMac.getText().toString(), tvSSID.getText().toString());
+                    PCInfo info = mainFrag.getPCInfo(position);
                     startEditPCActivity(view, info, position);
                     return true;
                 }
@@ -265,24 +262,6 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
 
             PcInfoAdapter adapter = (PcInfoAdapter) listView.getAdapter();
             adapter.setCallback(this);
-            //pre lolipop
-            /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    PCInfo pcToEdit = mainFrag.getPCInfo(position);
-                    if(view.getId() == R.id.pc_item_checkbox){
-                        pcToEdit = mainFrag.getPCInfo(position);
-                        CheckBox checkBox = (CheckBox) view;
-                        mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(), pcToEdit.getPcName(), checkBox.isChecked()), position); //just chaning enabled state of pcinfo/
-                    }
-                    if(view.getId() == R.id.pre_lolipop_editPC){
-                        TextView tvMac = (TextView) parent.findViewById(R.id.list_item_mac);
-                        TextView tvSSID = (TextView) parent.findViewById(R.id.list_item_ssid);
-                        PCInfo info = new PCInfo(tvMac.getText().toString(), tvSSID.getText().toString());
-                        startEditPCActivity(view, info, position);
-                    }
-                }
-            });*/
 
         }
 

@@ -26,6 +26,7 @@ public class EditPCActivity extends AppCompatActivity  {
     private EditText editSSID;
     private boolean editMode;
     private int positon;
+    private PCInfo pcInfoEditing;
 
     private AppCompatActivity activity;
 
@@ -46,9 +47,11 @@ public class EditPCActivity extends AppCompatActivity  {
         Intent i = getIntent();
         Bundle bundle = i.getExtras();
         int mode = bundle.getInt("mode");
-        String macAdress = bundle.getString("macAdress");
+      /*  String macAdress = bundle.getString("macAdress");
         String ssid = bundle.getString("ssid");
-        PCInfo pcinfo = new PCInfo(macAdress, ssid);
+        PCInfo pcinfo = new PCInfo(macAdress, ssid);*/
+
+        this.pcInfoEditing = (PCInfo) bundle.getSerializable("pcInfo");
 
         editMac = (EditText) findViewById(R.id.edit_mac);
         editSSID = (EditText) findViewById(R.id.edit_ssid);
@@ -57,15 +60,15 @@ public class EditPCActivity extends AppCompatActivity  {
         if (mode == MainActivity.REQUEST_ADD) {
 
             getSupportActionBar().setTitle("Add New PC");
+            this.pcInfoEditing = new PCInfo("","");
             //we are creating a new pc then
             //layout is fine since we have hints there
             editMode = false;
         } else {
             //its edit
             getSupportActionBar().setTitle("Edit PC");
-            editMac.setText(pcinfo.getMacAdress());
-            editSSID.setText(pcinfo.getPcName());
-
+            editMac.setText(pcInfoEditing.getMacAdress());
+            editSSID.setText(pcInfoEditing.getPcName());
             positon = bundle.getInt("position");
             editMode = true;
             toolbar.setNavigationIcon(R.drawable.ic_delete_white_24dp);
@@ -197,9 +200,11 @@ public class EditPCActivity extends AppCompatActivity  {
 
     private void applyResult() {
         Intent data = new Intent();
-        Log.d("", editMac.getText().toString());
-        data.putExtra("macAdress", editMac.getText().toString());
-        data.putExtra("ssid", editSSID.getText().toString());
+        String newMac = editMac.getText().toString();
+        String newName = editSSID.getText().toString();
+        this.pcInfoEditing.setMacAdress(newMac);
+        this.pcInfoEditing.setPcName(newName);
+        data.putExtra("pcInfo", this.pcInfoEditing);
         data.putExtra("position", positon); //TODO PLEASE CHANGE THIS ITS DUMB
         setResult(RESULT_OK, data);
 
