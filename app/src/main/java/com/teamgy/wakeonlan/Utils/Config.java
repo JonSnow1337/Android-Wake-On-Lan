@@ -7,5 +7,6 @@ public  final class Config {
 
     public static final int retrySleep = 2;
     public  static final int retryInterval = 10;
+    //TODO move to resources
 
 }

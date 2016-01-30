@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan;
+package com.teamgy.wakeonlan.gui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -7,6 +7,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.teamgy.wakeonlan.R;
 import com.teamgy.wakeonlan.utils.Tools;
 
 /**
@@ -16,9 +17,9 @@ public class MACFormatInvalidDialogFragment extends DialogFragment {
 
 
     public interface MACFormatInvalidListener {
-        public void onDialogEditClick();
+        void onDialogEditClick();
 
-        public void onDialogDiscardClick();
+        void onDialogDiscardClick();
     }
 
     private MACFormatInvalidListener listener;

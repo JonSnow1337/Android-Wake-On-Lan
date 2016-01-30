@@ -1,0 +1,129 @@
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@android:color/holo_blue_dark"
+            android:alpha="0.6"/>
+
+        <ImageView
+            android:id="@+id/main_backgroundImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_about_dog"
+            android:alpha="0.3"/>
+
+        <TextView
+            android:id="@+id/textstart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="12pt"
+            android:paddingTop="30dp"
+            android:textColor="@color/secondary_text_default_material_dark"
+            android:textColorHighlight="@android:color/black"
+            android:text="Developed by Jakov Peric"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="30dp"
+            android:layout_below="@id/textstart"
+            android:text="@string/special_thanks"
+            android:textStyle="bold|italic"
+            android:textColor="@color/secondary_text_default_material_dark"
+            android:textSize="10pt"
+            android:id="@+id/textView2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/appintro_thanks"
+            android:textColor="@color/secondary_text_default_material_dark"
+            android:layout_below="@+id/textView2"
+            android:paddingLeft="30dp"
+            android:layout_marginTop="37dp"
+            android:id="@+id/textView3"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_link_white_24dp"
+            android:id="@+id/link_appintro"
+            android:layout_toRightOf="@+id/textView3"
+            android:layout_toEndOf="@+id/textView3"
+            android:layout_alignBottom="@id/textView3"
+            android:layout_alignTop="@id/textView3"
+            android:background="@color/transparent"
+            android:paddingLeft="30dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/dbmanager_thanks"
+            android:textColor="@color/secondary_text_default_material_dark"
+            android:layout_below="@+id/textView3"
+            android:paddingLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/textView4"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_link_white_24dp"
+            android:id="@+id/link_dbmanager"
+            android:layout_toRightOf="@+id/textView4"
+            android:layout_toEndOf="@+id/textView4"
+            android:layout_alignBottom="@id/textView4"
+            android:layout_alignTop="@id/textView4"
+            android:background="@color/transparent"
+            android:paddingLeft="30dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/gagro_thanks"
+            android:textColor="@color/secondary_text_default_material_dark"
+            android:layout_below="@+id/textView4"
+            android:paddingLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/textView5"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:text="@string/torma_thanks"
+            android:textColor="@color/secondary_text_default_material_dark"
+            android:layout_below="@+id/textView5"
+            android:paddingLeft="30dp"
+            android:layout_marginTop="15dp"
+            android:id="@+id/textView6"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:text="@string/wol_version"
+            android:textColor="@color/secondary_text_default_material_dark"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView" />
+    </RelativeLayout>
+

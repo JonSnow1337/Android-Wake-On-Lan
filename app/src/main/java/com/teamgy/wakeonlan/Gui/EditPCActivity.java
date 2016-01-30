@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan;
+package com.teamgy.wakeonlan.gui;
 
 import android.content.Intent;
 import android.os.Build;
@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import com.teamgy.wakeonlan.data.PCInfo;
+import com.teamgy.wakeonlan.R;
 import com.teamgy.wakeonlan.utils.Tools;
 
 /**
@@ -148,9 +150,6 @@ public class EditPCActivity extends AppCompatActivity  {
         }
     }
 
-    public void addOnPCInfoAddedListener(onPCInfoAddedListener lst) {
-        onPCInfoAddedListener listener = lst;
-    }
 
 
     @Override
@@ -211,11 +210,6 @@ public class EditPCActivity extends AppCompatActivity  {
 
     }
 
-
-    public interface onPCInfoAddedListener {
-
-        void onPcInfoAdded(PCInfo pcInfo, boolean editMode);
-    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

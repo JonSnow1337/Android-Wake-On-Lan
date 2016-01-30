@@ -1,0 +1,129 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:alpha="0.6"
+        android:scaleType="centerCrop"
+        android:src="@android:color/holo_blue_dark" />
+
+    <ImageView
+        android:id="@+id/main_backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:alpha="0.3"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_about_dog" />
+
+    <TextView
+        android:id="@+id/textstart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
+        android:text="Developed by Jakov Peric"
+        android:textColor="@color/secondary_text_default_material_dark"
+        android:textColorHighlight="@android:color/black"
+        android:textSize="12pt"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textstart"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
+        android:text="@string/special_thanks"
+        android:textColor="@color/secondary_text_default_material_dark"
+        android:textSize="10pt"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="7dp"
+        android:text="@string/appintro_thanks"
+        android:textColor="@color/secondary_text_default_material_dark" />
+
+    <ImageButton
+        android:id="@+id/link_appintro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView3"
+        android:layout_alignTop="@id/textView3"
+        android:layout_toEndOf="@+id/textView3"
+        android:layout_toRightOf="@+id/textView3"
+        android:background="@color/transparent"
+        android:paddingLeft="30dp"
+        android:src="@drawable/ic_link_white_24dp" />
+
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView3"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="7dp"
+        android:text="@string/dbmanager_thanks"
+        android:textColor="@color/secondary_text_default_material_dark" />
+
+    <ImageButton
+        android:id="@+id/link_dbmanager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView4"
+        android:layout_alignTop="@id/textView4"
+        android:layout_toEndOf="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
+        android:background="@color/transparent"
+        android:paddingLeft="30dp"
+        android:src="@drawable/ic_link_white_24dp" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="7dp"
+        android:text="@string/gagro_thanks"
+        android:textColor="@color/secondary_text_default_material_dark" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView5"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="7dp"
+        android:paddingLeft="30dp"
+        android:paddingTop="7dp"
+        android:text="@string/torma_thanks"
+        android:textColor="@color/secondary_text_default_material_dark" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="30dp"
+        android:text="@string/wol_version"
+        android:textColor="@color/secondary_text_default_material_dark" />
+</RelativeLayout>
+

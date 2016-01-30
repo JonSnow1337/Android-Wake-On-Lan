@@ -1,8 +1,10 @@
-package com.teamgy.wakeonlan;
+package com.teamgy.wakeonlan.sendWol;
 
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
+
+import com.teamgy.wakeonlan.utils.Tools;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -29,7 +31,7 @@ public class sendWakeOnLan extends AsyncTask {
             String wolHeader = "ffffffffffff";
             String mac = params[0].toString();
             String macWolData = new String(new char[16]).replace("\0", mac); //repeat mac 16 times
-            byte[] data = hexStringToByteArray(wolHeader + macWolData); //6 byes
+            byte[] data = Tools.hexStringToByteArray(wolHeader + macWolData); //6 byes
 
 
             DatagramPacket packet = new DatagramPacket(data, data.length, getBroadcastAddress(), 40000);
@@ -41,16 +43,6 @@ public class sendWakeOnLan extends AsyncTask {
 
         }
 
-    }
-
-    private byte[] hexStringToByteArray(String s) {
-        int len = s.length();
-        byte[] data = new byte[len / 2];
-        for (int i = 0; i < len; i += 2) {
-            data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
-                    + Character.digit(s.charAt(i + 1), 16));
-        }
-        return data;
     }
 
     private InetAddress getBroadcastAddress() throws IOException {

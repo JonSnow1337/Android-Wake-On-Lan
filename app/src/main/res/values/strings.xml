@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Wake On LAN</string>
-    <string name="action_settings">Help</string>
+    <string name="action_settings">Extras</string>
     <string name="action_launch_reqs">Test PC Wake-Up</string>
     <string name="settings_lean_more_wol">Learn more about wake-on-LAN</string>
     <string name="wiki_article_url">https://en.wikipedia.org/wiki/Wake-on-LAN</string>
@@ -17,4 +17,15 @@
     <string name="intro_welcome">Welcome to Wake On Lan!</string>
     <string name="intro_description1">We will automatically wake up your pc when you connect to your wifi network!</string>
     <string name="intro_title_2">First setup your PC to recieve magic packets</string>
+    <string name="special_thanks"><u>Special Thanks</u></string>
+    <string name="appintro_thanks">• Paolo Rotolo for AppIntro library</string>
+    <string name="appintro_link">https://github.com/PaoloRotolo/AppIntro</string>
+    <string name="dbmanager_thanks">• Sanath Kumar for Database Manager</string>
+    <string name="gagro_thanks">• Goran Gagro for testing</string>
+    <string name="torma_thanks">• Daniel Torma for testing</string>
+    <string name="wol_version">Wake On Lan 1.0</string>
+    <string name="about">About</string>
+    <string name="dbmanager_link"> https://github.com/sanathp/DatabaseManager_For_Android</string>
+
+
 </resources>

@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan;
+package com.teamgy.wakeonlan.gui;
 
 import android.app.ActivityOptions;
 import android.app.Fragment;
@@ -19,9 +19,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.teamgy.wakeonlan.appIntro.MyIntro;
+import com.teamgy.wakeonlan.data.PCInfo;
+import com.teamgy.wakeonlan.R;
+import com.teamgy.wakeonlan.gui.settings.SettingsActivity;
+import com.teamgy.wakeonlan.gui.appIntro.MyIntro;
+import com.teamgy.wakeonlan.sendWol.WOLService;
 import com.teamgy.wakeonlan.utils.AndroidDatabaseManager;
 import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
 import com.teamgy.wakeonlan.utils.Tools;
@@ -110,13 +113,7 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
             getSupportActionBar().setHomeAsUpIndicator(null);
         }
         if (id == R.id.action_launch_reqs) {
-
-
-            try {
                 sendMagicPacket(null);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
         if (id == R.id.debug_database) {
 
@@ -130,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
     }
 
 
-    public void sendMagicPacket(View view) throws IOException {
+    public void sendMagicPacket(View view) {
 
         Intent serviceIntent = new Intent(getApplicationContext(), WOLService.class);
         ArrayList<PCInfo> pcInfos = mainFrag.getPcinfoArrList();

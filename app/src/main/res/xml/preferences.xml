@@ -17,6 +17,12 @@
         <intent android:action="android.intent.action.VIEW"
             android:data="@string/google_url"/>
     </Preference>
+    <Preference android:title="@string/about">
+        <intent android:targetPackage="com.teamgy.wakeonlan"
+            android:targetClass="com.teamgy.wakeonlan.gui.settings.AboutActivity"/>
+    </Preference>
+
+
 
 
 

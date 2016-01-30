@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan;
+package com.teamgy.wakeonlan.gui;
 
 import android.content.Context;
 import android.os.Build;
@@ -9,6 +9,9 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.teamgy.wakeonlan.data.PCInfo;
+import com.teamgy.wakeonlan.R;
 
 import java.util.ArrayList;
 

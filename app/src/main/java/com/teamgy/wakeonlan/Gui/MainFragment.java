@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan;
+package com.teamgy.wakeonlan.gui;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.teamgy.wakeonlan.data.PCInfo;
+import com.teamgy.wakeonlan.R;
 import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
 
 import java.util.ArrayList;

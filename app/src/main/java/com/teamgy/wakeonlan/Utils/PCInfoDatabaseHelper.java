@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.teamgy.wakeonlan.PCInfo;
+import com.teamgy.wakeonlan.data.PCInfo;
 
 import java.util.ArrayList;
 

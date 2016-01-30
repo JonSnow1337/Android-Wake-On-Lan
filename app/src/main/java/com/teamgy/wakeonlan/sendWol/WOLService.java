@@ -1,4 +1,4 @@
-package com.teamgy.wakeonlan;
+package com.teamgy.wakeonlan.sendWol;
 
 import android.app.IntentService;
 import android.content.Intent;
@@ -104,6 +104,8 @@ public class WOLService extends IntentService {
                 socket.close();
             }
         } catch (IOException ignored) {
+
+            //TODO notify user something failed
 
 
         }
