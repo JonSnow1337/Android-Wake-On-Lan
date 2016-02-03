@@ -168,10 +168,12 @@ public class EditPCActivity extends AppCompatActivity  {
                 data.putExtra("position", positon);
                 setResult(MainActivity.RESULT_DELETE, data);
                 finish();
+                return true;
             } else {
                 Intent data = new Intent();
                 setResult(RESULT_CANCELED, data);
                 finish();
+                return true;
             }
         }
         return super.onOptionsItemSelected(item);
