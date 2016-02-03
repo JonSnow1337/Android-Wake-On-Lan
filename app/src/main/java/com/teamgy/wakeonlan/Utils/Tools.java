@@ -2,7 +2,10 @@ package com.teamgy.wakeonlan.utils;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -241,5 +244,12 @@ public final class Tools {
                     + Character.digit(s.charAt(i + 1), 16));
         }
         return data;
+    }
+
+    public static void openURL(String url,Context c){
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.addFlags(i.FLAG_ACTIVITY_NEW_TASK); //crash without this..
+        i.setData(Uri.parse(url));
+        c.startActivity(i);
     }
 }
