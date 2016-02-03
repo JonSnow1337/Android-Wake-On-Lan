@@ -6,6 +6,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -121,8 +122,13 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
             startActivity(dbmanager);
 
         }
+        if(id == R.id.action_share_app){
 
-
+            Intent share = new Intent(Intent.ACTION_SEND);
+            share.setType("text/plain");
+            share.putExtra(Intent.EXTRA_TEXT, getString(R.string.app_playstore_link));
+            startActivity(Intent.createChooser(share, "Share App Link"));
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -134,7 +140,14 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
         ArrayList<String> enabledMacs = Tools.getEnabledMacs(pcInfos);
         serviceIntent.putStringArrayListExtra("macAdresses", enabledMacs);
         startService(serviceIntent);
-        Snackbar.make(findViewById(R.id.fab), "Requests sent!", Snackbar.LENGTH_SHORT).show();
+        if(pcInfos.size() == 0){
+            Snackbar.make(findViewById(R.id.fab), "Add a PC to the list first!", Snackbar.LENGTH_SHORT).show();
+        }else if (enabledMacs.size() == 0){
+            Snackbar.make(findViewById(R.id.fab), "Enable a PC from the list!", Snackbar.LENGTH_SHORT).show();
+        }else{
+            Snackbar.make(findViewById(R.id.fab), "Requests sent! Your PC should turn on. ", Snackbar.LENGTH_SHORT).show();
+        }
+
     }
 
     public void startAddPcFragment(View view) {

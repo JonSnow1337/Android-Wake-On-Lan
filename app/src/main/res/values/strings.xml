@@ -26,6 +26,8 @@
     <string name="wol_version">Wake On Lan 1.0</string>
     <string name="about">About</string>
     <string name="dbmanager_link"> https://github.com/sanathp/DatabaseManager_For_Android</string>
+    <string name="action_share_app">Share App Link</string>
+    <string name="app_playstore_link">http://play.google.com/store/apps/details?id=com.teamgy.wakeonlan</string>
 
 
 </resources>
