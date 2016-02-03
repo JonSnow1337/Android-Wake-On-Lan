@@ -6,7 +6,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,11 +25,9 @@ import com.teamgy.wakeonlan.R;
 import com.teamgy.wakeonlan.gui.settings.SettingsActivity;
 import com.teamgy.wakeonlan.gui.appIntro.MyIntro;
 import com.teamgy.wakeonlan.sendWol.WOLService;
-import com.teamgy.wakeonlan.utils.AndroidDatabaseManager;
 import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
 import com.teamgy.wakeonlan.utils.Tools;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnCreateViewListener,PcInfoAdapter.PCInfoAdapterCallback {
@@ -116,12 +113,6 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
         }
         if (id == R.id.action_launch_reqs) {
                 sendMagicPacket(null);
-        }
-        if (id == R.id.debug_database) {
-
-            Intent dbmanager = new Intent(this, AndroidDatabaseManager.class);
-            startActivity(dbmanager);
-
         }
         if(id == R.id.action_share_app){
 

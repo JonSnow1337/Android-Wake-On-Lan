@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'key'
+            keyPassword 'PASSWORD'
+            storeFile file('C:/Users/Jedi-Windows/keystores/wakeonlan.jks')
+            storePassword 'PASSWORD'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion '23.0.2'
-
     defaultConfig {
         applicationId "com.teamgy.wakeonlan"
         minSdkVersion 16
@@ -15,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     testOptions {
@@ -34,5 +42,4 @@ dependencies {
     compile 'com.android.support:design:23.1.0'
     compile 'com.github.paolorotolo:appintro:3.3.0'
     compile 'org.json:json:20141113'
-
 }
