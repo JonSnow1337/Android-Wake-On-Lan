@@ -15,7 +15,7 @@
     <string name="pc_name">PC Name</string>
     <string name="mac_address">Mac Address</string>
     <string name="intro_welcome">Welcome to Wake On Lan!</string>
-    <string name="intro_description1">We will automatically wake up your pc when you connect to your wifi network!</string>
+    <string name="intro_description1">Your PC will wake up automatically when you get in wifi range!</string>
     <string name="intro_title_2">First setup your PC to recieve magic packets</string>
     <string name="special_thanks"><u>Special Thanks</u></string>
     <string name="appintro_thanks">• Paolo Rotolo for AppIntro library</string>
@@ -28,6 +28,8 @@
     <string name="dbmanager_link"> https://github.com/sanathp/DatabaseManager_For_Android</string>
     <string name="action_share_app">Share App Link</string>
     <string name="app_playstore_link">http://play.google.com/store/apps/details?id=com.teamgy.wakeonlan</string>
+    <string name="first_time_checkbox_message">PC will not turn on when you get in wifi range.</string>
+    <string name="second_time_checkbox_message">PC will turn on when you get in wifi range.</string>
 
 
 </resources>

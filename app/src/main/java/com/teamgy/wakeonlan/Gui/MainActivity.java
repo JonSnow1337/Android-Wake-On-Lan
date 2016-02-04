@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
     private MainFragment mainFrag;
     final static int REQUEST_EDIT = 1;
     final static int REQUEST_ADD = 2;
+    private int checkboxClickCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,8 +241,42 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
             finish();
             System.exit(0);
         }
+    }
 
+    private void loadCheckBoxHitCounter(){
+        //used for displaying hints
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+        this.checkboxClickCounter = getPrefs.getInt("checkboxHitCounter", 0);
+    }
 
+    @Override
+    protected void onStart() {
+        loadCheckBoxHitCounter();
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+        //save checkbox hit counters
+        SharedPreferences getPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getBaseContext());
+        getPrefs.edit().putInt("checkboxHitCounter", checkboxClickCounter).apply();
+
+        super.onPause();
+    }
+
+    public void displayListViewHint(){
+        //shows a snackbar to user when he clicks a checkbox first time
+        //telling him that his pc will turn on auto on wifi
+
+        //  If the activity has never started before...
+        if (checkboxClickCounter == 1) {
+            Snackbar.make(findViewById(R.id.fab), getString(R.string.first_time_checkbox_message), Snackbar.LENGTH_INDEFINITE).show();
+        }
+        if (checkboxClickCounter == 2) {
+            Snackbar.make(findViewById(R.id.fab), getString(R.string.second_time_checkbox_message), Snackbar.LENGTH_INDEFINITE).show();
+        }
     }
 
 
@@ -258,6 +293,8 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
                     PCInfo pcToEdit = mainFrag.getPCInfo(position);
                     //mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(), pcToEdit.getPcName(), checkBox.isChecked()), position); //just chaning enabled state of pcinfo
                     mainFrag.editPcInfoEnabled(checkBox.isChecked(),position);
+                    checkboxClickCounter ++;
+                    displayListViewHint();
                 }
             });
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -288,8 +325,8 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
 
         PCInfo pcToEdit = mainFrag.getPCInfo(position);
         mainFrag.editPcInfoEnabled(chk.isChecked(),position);
-
-
+        checkboxClickCounter ++;
+        displayListViewHint();
     }
 
     @Override
