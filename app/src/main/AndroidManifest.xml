@@ -34,7 +34,10 @@
             android:theme="@style/Theme.AppCompat.Light">
         </activity>
 
-        <activity android:name=".gui.settings.SettingsActivity"></activity>
+        <activity android:name=".gui.settings.SettingsActivity"
+            android:theme="@style/AppTheme">
+
+        </activity>
 
         <activity
             android:name=".gui.settings.AboutActivity"

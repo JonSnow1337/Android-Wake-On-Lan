@@ -4,14 +4,19 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.widget.CheckBox;
 
 import com.teamgy.wakeonlan.data.PCInfo;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -251,5 +256,34 @@ public final class Tools {
         i.addFlags(i.FLAG_ACTIVITY_NEW_TASK); //crash without this..
         i.setData(Uri.parse(url));
         c.startActivity(i);
+    }
+
+    public static int [] loadJsonTime(Context c, String key){
+        /**
+         * Returns time as int arr
+         * [0] = hour
+         * [1] = minute
+         */
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(c);
+        String savedJSONTime = prefs.getString(key, "0,0");
+        int [] returnArray = new int[2];
+        try {
+            JSONArray jsonArray = new JSONArray(savedJSONTime);
+            returnArray[0] = (int)jsonArray.get(0);
+            returnArray[1] = (int) jsonArray.get(1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            returnArray = null;
+        }
+        return returnArray;
+    }
+
+    public static void saveJsonTime(Context c, String key, int hour, int minutes) {
+        SharedPreferences prefs  = PreferenceManager.getDefaultSharedPreferences(c);
+
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.put(hour);
+        jsonArray.put(minutes);
+        prefs.edit().putString(key, jsonArray.toString()).apply();
     }
 }

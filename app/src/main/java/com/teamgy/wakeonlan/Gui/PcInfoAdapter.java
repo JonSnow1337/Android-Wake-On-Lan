@@ -80,4 +80,5 @@ public class PcInfoAdapter extends ArrayAdapter<PCInfo> {
         void configurePressed(PCInfo pcinfo,int position);
     }
 
+
 }

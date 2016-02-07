@@ -2,33 +2,59 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-<PreferenceCategory
-    android:title="Extras">
+    <PreferenceCategory
+        android:title="Auto WOL settings">
+<!--
+        <Preference android:title="Manage WOL quiet hours"
+            android:summary="Set time range when WOL is disabled">
+            <intent android:action="com.teamgy.wolPicker"
+            />
+        </Preference>
+-->
+        <CheckBoxPreference
+            android:key="@string/key_quiet_hours_enabled"
+            android:title="Enable WOL quiet hours"
+            android:summary="Enable time range when WOL is disabled"
+            android:checked="false"
+            android:persistent="true">
+        </CheckBoxPreference>
+        <com.teamgy.wakeonlan.gui.settings.TimePickerPreference android:title="@string/settings_quiet_wol_start"
+            android:enabled="false"
+            android:key="@string/key_time_start">
+        </com.teamgy.wakeonlan.gui.settings.TimePickerPreference>
+        <com.teamgy.wakeonlan.gui.settings.TimePickerPreference android:title="@string/settings_quiet_wol_end"
+            android:enabled="false"
+            android:key="@string/key_time_end">
+        </com.teamgy.wakeonlan.gui.settings.TimePickerPreference>
 
-    <Preference android:title="@string/settings_lean_more_wol" >
-        <intent android:action="android.intent.action.VIEW"
-            android:data="@string/wiki_article_url"/>
-    </Preference>
-    <Preference android:title="@string/settings_visit_github">
-        <intent android:action="android.intent.action.VIEW"
-            android:data="@string/github_url"/>
-    </Preference>
-    <Preference android:title="@string/how_to_setup">
-        <intent android:action="android.intent.action.VIEW"
-            android:data="@string/google_url"/>
-    </Preference>
-    <Preference android:title="@string/about">
-        <intent android:targetPackage="com.teamgy.wakeonlan"
-            android:targetClass="com.teamgy.wakeonlan.gui.settings.AboutActivity"/>
-    </Preference>
+    </PreferenceCategory>
+        <PreferenceCategory
+            android:title="Extras">
+            <Preference android:title="@string/settings_lean_more_wol"
+                android:summary="Wikipedia article with interesting info">
+                <intent android:action="android.intent.action.VIEW"
+                    android:data="@string/wiki_article_url"/>
+            </Preference>
+            <Preference android:title="@string/how_to_setup">
+                <intent android:action="android.intent.action.VIEW"
+                    android:data="@string/google_url"/>
+            </Preference>
+            <Preference android:title="@string/settings_visit_github"
+                android:summary="Post issues or contribute here">
+                <intent android:action="android.intent.action.VIEW"
+                    android:data="@string/github_url"/>
+            </Preference>
+
+            <Preference android:title="@string/launch_itro"
+                android:summary="@string/intro_summary">
+                <intent android:action="android.intent.action.VIEW"
+                    android:data="@string/google_url"/>
+            </Preference>
+            <Preference android:title="@string/about">
+                <intent android:targetPackage="com.teamgy.wakeonlan"
+                    android:targetClass="com.teamgy.wakeonlan.gui.settings.AboutActivity"/>
+            </Preference>
+        </PreferenceCategory>
 
 
-
-
-
-
-</PreferenceCategory>
-
-
-
-</PreferenceScreen>
+ </PreferenceScreen>

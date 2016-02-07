@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Wake On LAN</string>
-    <string name="action_settings">Extras</string>
+    <string name="action_settings">Settings</string>
     <string name="action_launch_reqs">Test PC Wake-Up</string>
     <string name="settings_lean_more_wol">Learn more about wake-on-LAN</string>
     <string name="wiki_article_url">https://en.wikipedia.org/wiki/Wake-on-LAN</string>
     <string name="github_url">https://github.com/JediMaster93/Android-Wake-On-Lan</string>
-    <string name="settings_visit_github">View Github repository</string>
+    <string name="settings_visit_github">Github </string>
     <string name="how_to_setup">How to setup Wake-On-Lan</string>
     <string name="google_url">http://lmgtfy.com/?q=how+to+set+up+wake+on+lan#</string>
     <string name="transition">transition</string>
@@ -30,6 +30,17 @@
     <string name="app_playstore_link">http://play.google.com/store/apps/details?id=com.teamgy.wakeonlan</string>
     <string name="first_time_checkbox_message">PC will not turn on when you get in wifi range.</string>
     <string name="second_time_checkbox_message">PC will turn on when you get in wifi range.</string>
+    <string name="key_auto_wol_category">auto_wol_settings_category</string>
+    <string name="key_quiet_hours_enabled">quietHoursEnabled</string>
+    <string name="key_time_start">timeStart</string>
+    <string name="set">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings_quiet_wol_start">Quiet hours start</string>
+    <string name="key_time_start_hour">key_time_start_hour</string>
+    <string name="settings_quiet_wol_end">Quiet hours end</string>
+    <string name="key_time_end">key_time_end</string>
+    <string name="launch_itro">Intro</string>
+    <string name="intro_summary">Launch intro again</string>
 
 
 </resources>

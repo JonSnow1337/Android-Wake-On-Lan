@@ -17,9 +17,9 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_layout);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Extras");
+        getSupportActionBar().setTitle("Settings");
         getFragmentManager().beginTransaction()
-                .replace(R.id.settings_container, new SettingsFragment())
+                .replace(android.R.id.content, new SettingsFragment())
                 .commit();
     }
 
