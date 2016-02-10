@@ -16,7 +16,6 @@ import android.widget.CheckBox;
 import com.teamgy.wakeonlan.data.PCInfo;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
@@ -271,7 +270,7 @@ public final class Tools {
             JSONArray jsonArray = new JSONArray(savedJSONTime);
             returnArray[0] = (int)jsonArray.get(0);
             returnArray[1] = (int) jsonArray.get(1);
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             returnArray = null;
         }

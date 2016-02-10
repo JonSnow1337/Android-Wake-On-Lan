@@ -46,4 +46,18 @@ public class TImeRangeTests {
             e.printStackTrace();
         }
     }
+    @Test
+    public void test_timeRange_invalid2(){
+        WakeOnHomeWifiReciever reciever = new WakeOnHomeWifiReciever();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        try{
+            Date timeStart = dateFormat.parse("00:00");
+            Date timeEnd = dateFormat.parse("10:00");
+            Date timeNow = dateFormat.parse("9:30");
+            Assert.assertEquals(true,reciever.isTimeInRange(timeStart,timeEnd,timeNow));
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -61,6 +61,7 @@ public class WOLService extends IntentService {
         return InetAddress.getByAddress(quads);
     }
 
+    private DatagramSocket socket;
     @Override
     protected void onHandleIntent(Intent intent) {
         //foreach mac adress, send magic packet
@@ -68,12 +69,12 @@ public class WOLService extends IntentService {
         //http://support.amd.com/TechDocs/20213.pdf specification for magic packet
 
         try {
-
+            socket = new DatagramSocket(4000);
+            socket.setBroadcast(true);
+            socket.setReuseAddress(true);
             ArrayList<String> macAdresses = intent.getStringArrayListExtra("macAdresses");
+
             if (macAdresses != null) {
-                DatagramSocket socket = new DatagramSocket(4000);
-                socket.setBroadcast(true);
-                socket.setReuseAddress(true);
                 String wolHeader = "ffffffffffff";
 
                 for (int i = 0; i < Config.retryInterval; i++) {
@@ -103,9 +104,11 @@ public class WOLService extends IntentService {
 
                 socket.close();
             }
-        } catch (IOException ignored) {
+        } catch (IOException e) {
 
             //TODO notify user something failed
+            e.printStackTrace();
+            socket.close();
 
 
         }

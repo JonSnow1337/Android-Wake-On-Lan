@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/anim'] } }
 }
 repositories {
@@ -30,5 +33,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.github.paolorotolo:appintro:3.3.0'
+    compile 'org.json:json:20141113'
 
 }

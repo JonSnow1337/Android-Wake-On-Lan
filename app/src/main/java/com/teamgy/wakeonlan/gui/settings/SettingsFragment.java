@@ -6,6 +6,8 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
+import android.preference.SwitchPreference;
+import android.widget.Switch;
 
 import com.teamgy.wakeonlan.R;
 
@@ -21,14 +23,14 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     private void loadHiddenPreferencesState() {
-        //reveals or hides quiet hours dpedning on checkbox
-        CheckBoxPreference checkbox = (CheckBoxPreference)findPreference(getString(R.string.key_quiet_hours_enabled));
+        //reveals or hides quiet hours depending on quietHoursEnabledSwitch
+        SwitchPreference quietHoursEnabledSwitch = (SwitchPreference)findPreference(getString(R.string.key_quiet_hours_enabled));
 
         Preference timeStart = findPreference(getString(R.string.key_time_start));
         Preference timeEnd = findPreference(getString(R.string.key_time_end));
 
-        timeStart.setEnabled(checkbox.isChecked());
-        timeEnd.setEnabled(checkbox.isChecked());
+        timeStart.setEnabled(quietHoursEnabledSwitch.isChecked());
+        timeEnd.setEnabled(quietHoursEnabledSwitch.isChecked());
     }
 
     @Override
@@ -36,13 +38,13 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         Preference pref = findPreference(key);
 
         if(key.equals(getString(R.string.key_quiet_hours_enabled)) ){
-            if(pref instanceof CheckBoxPreference){
+            if(pref instanceof SwitchPreference){
                 //get 2 other preferences in auto wol category
                 Preference timeStart = findPreference(getString(R.string.key_time_start));
                 Preference timeEnd = findPreference(getString(R.string.key_time_end));
 
-                timeEnd.setEnabled(((CheckBoxPreference) pref).isChecked());
-                timeStart.setEnabled(((CheckBoxPreference) pref).isChecked());
+                timeEnd.setEnabled(((SwitchPreference) pref).isChecked());
+                timeStart.setEnabled(((SwitchPreference) pref).isChecked());
             }
         }
     }

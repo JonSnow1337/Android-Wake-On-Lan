@@ -56,8 +56,9 @@ public class WakeOnHomeWifiReciever extends BroadcastReceiver {
                     }
                 }
             }
+        }else{
+            Log.d("wolreciever", "quiet hours active, not waking up.");
         }
-        Log.d("wolreciever", "quiet hours active, not waking up.");
     }
 
 
@@ -90,7 +91,7 @@ public class WakeOnHomeWifiReciever extends BroadcastReceiver {
         }
         Log.d("wolreciever", "queit hours not enabled, allowed waking up");
 
-        return true;
+        return false;
     }
 
     public boolean isTimeInRange(Date timeStart, Date timeEnd, Date timequestioned) {
