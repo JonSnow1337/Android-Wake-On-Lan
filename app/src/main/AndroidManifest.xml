@@ -31,9 +31,9 @@
             android:parentActivityName=".gui.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-        
+
         <activity android:name=".gui.settings.SettingsActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".gui.settings.AboutActivity"
