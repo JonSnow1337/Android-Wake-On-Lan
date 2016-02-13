@@ -43,10 +43,13 @@ public class TimePickerPreference extends DialogPreference {
         this.is24HourTime = DateFormat.is24HourFormat(getContext());
         int [] loadedTime = Tools.loadJsonTime(getContext(),this.getKey());
         try {
-            setSummaryTimeFormat(loadedTime[0], loadedTime[1], is24HourTime);
+            if(loadedTime != null){
+                setSummaryTimeFormat(loadedTime[0], loadedTime[1], is24HourTime);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         return super.onCreateView(parent);
     }
 
