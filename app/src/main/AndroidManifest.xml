@@ -26,7 +26,8 @@
         <activity
             android:name=".gui.EditPCActivity"
             android:parentActivityName=".gui.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
         </activity>
 
         <activity

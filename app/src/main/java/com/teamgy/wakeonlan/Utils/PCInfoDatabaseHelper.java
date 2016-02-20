@@ -8,10 +8,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toolbar;
 
 import com.teamgy.wakeonlan.data.PCInfo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jakov on 07/11/2015.
@@ -20,16 +22,16 @@ import java.util.ArrayList;
 public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
     //database info
     private static final String DATABASE_NAME = "pcInfoDatabase";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
     //Table name
     private static final String TABLE_PC_INFO="pcInfo";
     //table columns
-    private static final String KEY_PC_INFO_ID = "id";
-    private static final String KEY_PC_INFO_MAC = "mac";
-    private static final String KEY_PC_INFO_SSID = "ssid";
-    private static final String KEY_PC_INFO_ENABLED= "enabled";
-
-
+    private static final String KEY_ID = "id";
+    private static final String KEY_MAC = "mac";
+    private static final String KEY_SSID = "ssid";
+    private static final String KEY_ON_WIFI_ENABLED = "onWifiEnabled";
+    private static final String KEY_ON_ALARM_ENABLED = "onAlarmEnabled";
+    private static final String KEY_ALARM_DAYS = "alarmDays"; //1|0|1|1... boolean array
 
 
     //SINGLETON DESIGN PATTERN(one instance allowed)
@@ -54,13 +56,17 @@ public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
 
         String CREATE_PC_INFO_TABLE = "CREATE TABLE " + TABLE_PC_INFO +
                 "(" +
-                    KEY_PC_INFO_ID + " INTEGER PRIMARY KEY,"+
-                    KEY_PC_INFO_MAC + " TEXT," +
-                    KEY_PC_INFO_SSID + " TEXT," +
-                    KEY_PC_INFO_ENABLED + " INTEGER" +
+                KEY_ID + " INTEGER PRIMARY KEY,"+
+                KEY_MAC + " TEXT," +
+                KEY_SSID + " TEXT," +
+                KEY_ON_WIFI_ENABLED + " INTEGER," +
+                KEY_ON_ALARM_ENABLED + " INTEGER," +
+                KEY_ALARM_DAYS + " TEXT" +
                 ")";
-
+        Log.d("db helper", CREATE_PC_INFO_TABLE);
         db.execSQL(CREATE_PC_INFO_TABLE);
+
+
     }
 
     @Override
@@ -74,13 +80,16 @@ public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PC_INFO, null);
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_PC_INFO_MAC,pcInfo.getMacAdress());
-        contentValues.put(KEY_PC_INFO_SSID,pcInfo.getPcName());
-        contentValues.put(KEY_PC_INFO_ENABLED, Tools.booleanToInt(pcInfo.isEnabled()));
+        contentValues.put(KEY_MAC,pcInfo.getMacAdress());
+        contentValues.put(KEY_SSID,pcInfo.getPcName());
+        contentValues.put(KEY_ON_WIFI_ENABLED, Tools.booleanToInt(pcInfo.isOnWifiEnabled()));
+        contentValues.put(KEY_ON_ALARM_ENABLED, Tools.booleanToInt(pcInfo.isOnWifiEnabled()));
+        contentValues.put(KEY_ALARM_DAYS, Tools.booleanArrayToString(pcInfo.getAlarmDays()));
+
         try{
             //find row id by using position in table and update it
             cursor.moveToPosition(position);
-            String rowId = cursor.getString(cursor.getColumnIndex(KEY_PC_INFO_ID));
+            String rowId = cursor.getString(cursor.getColumnIndex(KEY_ID));
             db.update(TABLE_PC_INFO, contentValues,"rowid = " + rowId,null);
 
         }catch (Exception e){
@@ -91,9 +100,7 @@ public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
             if(cursor != null && !cursor.isClosed()){
                 cursor.close();
             }
-
         }
-
     }
     public void addPCInfo(PCInfo pcInfo){
 
@@ -101,9 +108,11 @@ public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.beginTransaction();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_PC_INFO_MAC, pcInfo.getMacAdress());
-        contentValues.put(KEY_PC_INFO_SSID, pcInfo.getPcName());
-        contentValues.put(KEY_PC_INFO_ENABLED, pcInfo.isEnabled());
+        contentValues.put(KEY_MAC, pcInfo.getMacAdress());
+        contentValues.put(KEY_SSID, pcInfo.getPcName());
+        contentValues.put(KEY_ON_WIFI_ENABLED, pcInfo.isOnWifiEnabled());
+        contentValues.put(KEY_ON_ALARM_ENABLED,pcInfo.isOnAlarmEnabled());
+        contentValues.put(KEY_ALARM_DAYS, Tools.booleanArrayToString(pcInfo.getAlarmDays()));
         db.insertOrThrow(TABLE_PC_INFO, null, contentValues);
         db.setTransactionSuccessful();
         db.endTransaction();
@@ -116,10 +125,20 @@ public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
         try{
             if(cursor.moveToFirst()){
                 do{
-                    String mac = cursor.getString(cursor.getColumnIndex(KEY_PC_INFO_MAC));
-                    String ssid = cursor.getString(cursor.getColumnIndex(KEY_PC_INFO_SSID));
-                    int enabled = cursor.getInt(cursor.getColumnIndex(KEY_PC_INFO_ENABLED));
-                    PCInfo pcInfo = new PCInfo(mac,ssid,Tools.intToBoolean(enabled));
+                    String mac = cursor.getString(cursor.getColumnIndex(KEY_MAC));
+                    String ssid = cursor.getString(cursor.getColumnIndex(KEY_SSID));
+                    int onWifiEnabled = cursor.getInt(cursor.getColumnIndex(KEY_ON_WIFI_ENABLED));
+                    int onAlarmEnabled = cursor.getInt(cursor.getColumnIndex(KEY_ON_ALARM_ENABLED));
+                    String alarmDays = cursor.getString(cursor.getColumnIndex(KEY_ALARM_DAYS));
+
+                    PCInfo pcInfo = new PCInfo(
+                            mac,
+                            ssid,
+                            Tools.intToBoolean(onWifiEnabled),
+                            Tools.intToBoolean(onAlarmEnabled),
+                            Tools.stringToBolleanArray(alarmDays)
+                    );
+
                     pcInfos.add(pcInfo);
                 }while (cursor.moveToNext());
 
@@ -141,7 +160,7 @@ public class PCInfoDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_PC_INFO, null);
         try{
             cursor.moveToPosition(position);
-            String rowId = cursor.getString(cursor.getColumnIndex(KEY_PC_INFO_ID));
+            String rowId = cursor.getString(cursor.getColumnIndex(KEY_ID));
             db.delete(TABLE_PC_INFO, "rowid = " +  rowId ,null);
 
         }catch (Exception e){

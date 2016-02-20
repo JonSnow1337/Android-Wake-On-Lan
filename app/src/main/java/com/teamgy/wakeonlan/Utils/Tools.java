@@ -11,6 +11,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.CheckBox;
 
 import com.teamgy.wakeonlan.data.PCInfo;
@@ -18,6 +20,7 @@ import com.teamgy.wakeonlan.data.PCInfo;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,7 +63,7 @@ public final class Tools {
         ArrayList<String> enabledMacs = new ArrayList<>();
 
         for(PCInfo pcInfo: pcInfos){
-            if(pcInfo.isEnabled()){
+            if(pcInfo.isOnWifiEnabled()){
                 enabledMacs.add(pcInfo.getMacAdress());
             }
         }
@@ -284,5 +287,75 @@ public final class Tools {
         jsonArray.put(hour);
         jsonArray.put(minutes);
         prefs.edit().putString(key, jsonArray.toString()).apply();
+    }
+    public static void fadeInView(final View v){
+        final AlphaAnimation anim = new AlphaAnimation(0.0f,1.0f);
+        anim.setDuration(300);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                v.setVisibility(View.VISIBLE);
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        v.startAnimation(anim);
+    }
+    public static void fadeOutView(final View v){
+        AlphaAnimation anim = new AlphaAnimation(1.0f,0.0f);
+        anim.setDuration(300);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                v.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        v.startAnimation(anim);
+    }
+
+    public static String booleanArrayToString(boolean [] arrayToConvert){
+        String result = "";
+
+        for(boolean bool: arrayToConvert){
+            result += booleanToInt(bool)  + "|";
+        }
+        return result;
+    }
+    public static boolean [] stringToBolleanArray(String stringToConvert){
+        ArrayList <Boolean> tmpArrList = new ArrayList<>();
+        String [] booleanStringValues = stringToConvert.split("\\|");
+
+        for (String boolString: booleanStringValues){
+            //values are 1 or 0 as string
+            boolean tmp = intToBoolean(Integer.parseInt(boolString));
+            tmpArrList.add(tmp);
+        }
+
+        boolean [] boolArray = new boolean[tmpArrList.size()];
+        for(int i = 0; i<tmpArrList.size(); i++){
+            boolArray[i] = tmpArrList.get(i);
+        }
+        return boolArray;
+
     }
 }

@@ -1,5 +1,6 @@
 package com.teamgy.wakeonlan.gui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -8,16 +9,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Checkable;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import com.teamgy.wakeonlan.data.PCInfo;
 import com.teamgy.wakeonlan.R;
 import com.teamgy.wakeonlan.utils.Tools;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jakov on 01/11/2015.
@@ -26,11 +35,13 @@ public class EditPCActivity extends AppCompatActivity  {
 
     private EditText editMac;
     private EditText editSSID;
+    private Switch switchAutoWifi;
+    private Switch switchOnAlarm;
+    private PCInfo pcInfoDraft;
+    private ArrayList<Checkable> daysCheckboxes = new ArrayList<Checkable>();
+    private AppCompatActivity activity;
     private boolean editMode;
     private int positon;
-    private PCInfo pcInfoEditing;
-
-    private AppCompatActivity activity;
 
 
     @Override
@@ -50,43 +61,42 @@ public class EditPCActivity extends AppCompatActivity  {
         Bundle bundle = i.getExtras();
         int mode = bundle.getInt("mode");
 
-        this.pcInfoEditing = (PCInfo) bundle.getSerializable("pcInfo");
 
         editMac = (EditText) findViewById(R.id.edit_mac);
         editSSID = (EditText) findViewById(R.id.edit_ssid);
+        switchOnAlarm = (Switch) findViewById(R.id.switch_on_alarm_enabled);
+        switchAutoWifi = (Switch) findViewById(R.id.switch_on_wifi_enabled);
+        daysCheckboxes = initialiseDayCheckboxes();
+
+
+
 
         if (mode == MainActivity.REQUEST_ADD) {
 
             getSupportActionBar().setTitle("Add New PC");
-            this.pcInfoEditing = new PCInfo("","");
+            this.pcInfoDraft = new PCInfo("","");
             //we are creating a new pc then
             //layout is fine since we have hints there
             editMode = false;
         } else {
             //its edit
+            this.pcInfoDraft = (PCInfo) bundle.getSerializable("pcInfo");
             getSupportActionBar().setTitle("Edit PC");
-            editMac.setText(pcInfoEditing.getMacAdress());
-            editSSID.setText(pcInfoEditing.getPcName());
+            editMac.setText(pcInfoDraft.getMacAdress());
+            editSSID.setText(pcInfoDraft.getPcName());
+            switchOnAlarm.setChecked(pcInfoDraft.isOnAlarmEnabled());
+            switchAutoWifi.setChecked(pcInfoDraft.isOnWifiEnabled());
+            for(int j = 0; j < daysCheckboxes.size(); j++){
+                daysCheckboxes.get(j).setChecked(pcInfoDraft.getAlarmDays()[j]);
+            }
+
+
             positon = bundle.getInt("position");
             editMode = true;
             toolbar.setNavigationIcon(R.drawable.ic_delete_white_24dp);
         }
 
-        editMac.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                boolean isEnterPressed = (event.getAction() == KeyEvent.ACTION_DOWN)
-                                       && (keyCode == KeyEvent.KEYCODE_ENTER);
-                if (isEnterPressed) {
-                    Log.d("enter pressed", "hello????");
-                    finishIfValidMac(editMac.getText().toString());
-                    return true;
-                }
-                return false;
-            }
-        });
-
-
+        initialiseButtonsEvents();
         initializeCircularAnimation();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -95,6 +105,75 @@ public class EditPCActivity extends AppCompatActivity  {
 
     }
 
+    private void initialiseButtonsEvents() {
+        //when checkmark(enter) is clicked on keyboard
+        editMac.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                boolean isEnterPressed = (event.getAction() == KeyEvent.ACTION_DOWN)
+                        && (keyCode == KeyEvent.KEYCODE_ENTER);
+                if (isEnterPressed) {
+                    finishIfValidMac(editMac.getText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
+        switchOnAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                LinearLayout alarmDaySelectorLayout = (LinearLayout)findViewById(R.id.clock_alarm_date_selector); //TODO rename resource
+                if(isChecked){
+                    //display day picker below
+                    Tools.fadeInView(alarmDaySelectorLayout);
+
+                }
+                else{
+                    Tools.fadeOutView(alarmDaySelectorLayout);
+
+                }
+
+            }
+        });
+        /*for (int i = 0; i < daysCheckboxes.size(); i++) {
+            CheckBox checkBox = daysCheckboxes.get(i);
+            final int finalI = i;
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    pcInfoDraft.setAlarmDay(Day.values()[finalI],isChecked);
+                }
+            });
+
+        }*/
+
+    }
+
+    private ArrayList<Checkable> initialiseDayCheckboxes(){
+
+        if(daysCheckboxes.size() == 0){
+            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_monday));
+            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_tuesday));
+            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_wednesday));
+            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_thursday));
+            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_friday));
+            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_saturday));
+            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_sunday));
+        }
+        return daysCheckboxes;
+    }
+
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        if(editMode){
+            LinearLayout alarmDaySelectorLayout = (LinearLayout)findViewById(R.id.clock_alarm_date_selector); //TODO rename resource
+            if(switchOnAlarm.isChecked()){
+                alarmDaySelectorLayout.setVisibility( View.VISIBLE);
+            }
+        }
+        return super.onCreateView(name, context, attrs);
+
+    }
 
     private void initializeCircularAnimation() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -198,9 +277,13 @@ public class EditPCActivity extends AppCompatActivity  {
         Intent data = new Intent();
         String newMac = editMac.getText().toString();
         String newName = editSSID.getText().toString();
-        this.pcInfoEditing.setMacAdress(newMac);
-        this.pcInfoEditing.setPcName(newName);
-        data.putExtra("pcInfo", this.pcInfoEditing);
+        this.pcInfoDraft.setMacAdress(newMac);
+        this.pcInfoDraft.setPcName(newName);
+        this.pcInfoDraft.setOnAlarmEnabled(switchOnAlarm.isChecked());
+        this.pcInfoDraft.setOnWifiEnabled(switchAutoWifi.isChecked());
+        this.pcInfoDraft.setAlarmDays(getDaysEnabled(daysCheckboxes));
+
+        data.putExtra("pcInfo", this.pcInfoDraft);
         data.putExtra("position", positon); //TODO PLEASE CHANGE THIS ITS DUMB
         setResult(RESULT_OK, data);
 
@@ -217,6 +300,16 @@ public class EditPCActivity extends AppCompatActivity  {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit_pc_activity, menu);
         return true;
+    }
+
+    private boolean [] getDaysEnabled(List<Checkable> checkables){
+        boolean daysEnabled [] = new boolean[7];
+        for(int i = 0; i <checkables.size(); i++){
+            daysEnabled[i] = checkables.get(i).isChecked();
+        }
+
+        return daysEnabled;
+
     }
 
 

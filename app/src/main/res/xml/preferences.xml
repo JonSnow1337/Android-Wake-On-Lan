@@ -5,7 +5,7 @@
     tools:context=".gui.settings.SettingsActivity">
 
     <PreferenceCategory
-        android:title="Auto WOL settings">
+        android:title="WOL on WiFi settings">
 <!--
         <Preference android:title="Manage WOL quiet hours"
             android:summary="Set time range when WOL is disabled">
@@ -15,8 +15,8 @@
 -->
         <SwitchPreference
             android:key="@string/key_quiet_hours_enabled"
-            android:title="Enable WOL quiet hours"
-            android:summary="Enable time range when WOL is disabled"
+            android:title="Enable WOL on WiFi quiet hours"
+            android:summary="Enable time range when WOL on WiFi connect is disabled"
             android:checked="false"
             android:persistent="true">
         </SwitchPreference>

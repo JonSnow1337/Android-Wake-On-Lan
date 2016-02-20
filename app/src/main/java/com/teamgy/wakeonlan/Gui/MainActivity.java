@@ -71,17 +71,13 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
 
 
         if (savedInstanceState == null) {
-
             mainFrag = new MainFragment();
-            mainFrag.setOnCreateViewListener(this); //to set click listview listener
-            replaceFragmentContainer(mainFrag, false);
-
         } else {
             mainFrag = (MainFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
-            mainFrag.setOnCreateViewListener(this);
-            replaceFragmentContainer(mainFrag, false);
-
         }
+        mainFrag.setOnCreateViewListener(this); //to set click listview listener
+        replaceFragmentContainer(mainFrag, false);
+
 
     }
 
@@ -209,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
             }
             if (requestCode == REQUEST_ADD) {
                 //if we are adding new item set it to enabled by default
-                result.setEnabled(true);
+                result.setOnWifiEnabled(true);
                 mainFrag.addNewPCInfo(result);
                 dbHelper.addPCInfo(result);
 

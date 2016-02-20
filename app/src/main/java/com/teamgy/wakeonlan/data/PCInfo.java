@@ -8,7 +8,10 @@ import java.io.Serializable;
 public class PCInfo implements Serializable {
     private String macAdress;
     private String pcName;
-    private boolean enabled = false;
+    private boolean onWifiEnabled = false;
+    private boolean onAlarmEnabled = false;
+    private boolean [] alarmDays = new boolean[7];
+
     private static final long serialVersionUID = 1L;
 
 
@@ -16,22 +19,30 @@ public class PCInfo implements Serializable {
 
         setMacAdress(macAdress);
         setPcName(ssid);
-        setEnabled(false);
+        setOnWifiEnabled(false);
     }
 
-    public PCInfo(String macAdress, String ssid, boolean enabled) {
+    public PCInfo(String macAdress, String ssid, boolean onWifiEnabled) {
 
         setMacAdress(macAdress);
         setPcName(ssid);
-        setEnabled(enabled);
+        setOnWifiEnabled(onWifiEnabled);
     }
 
-    public boolean isEnabled() {
-        return enabled;
+    public PCInfo(String macAdress, String pcName, boolean onWifiEnabled, boolean onAlarmEnabled, boolean[] alarmDays) {
+        this.alarmDays = alarmDays;
+        this.macAdress = macAdress;
+        this.pcName = pcName;
+        this.onWifiEnabled = onWifiEnabled;
+        this.onAlarmEnabled = onAlarmEnabled;
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+    public boolean isOnWifiEnabled() {
+        return onWifiEnabled;
+    }
+
+    public void setOnWifiEnabled(boolean onWifiEnabled) {
+        this.onWifiEnabled = onWifiEnabled;
     }
 
     public String getMacAdress() {
@@ -49,4 +60,24 @@ public class PCInfo implements Serializable {
     public void setPcName(String pcName) {
         this.pcName = pcName;
     }
+
+    public boolean isOnAlarmEnabled() {
+        return onAlarmEnabled;
+    }
+
+    public void setOnAlarmEnabled(boolean onAlarmEnabled) {
+        this.onAlarmEnabled = onAlarmEnabled;
+    }
+
+    public boolean[] getAlarmDays() {
+        return alarmDays;
+    }
+
+    public void setAlarmDays(boolean[] alarmDays) {
+        this.alarmDays = alarmDays;
+    }
+    public void setAlarmDay(Day d, boolean isEnabled) {
+        alarmDays[d.ordinal()] = isEnabled;
+    }
+
 }

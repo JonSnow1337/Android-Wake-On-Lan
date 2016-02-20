@@ -43,7 +43,7 @@ public class PcInfoAdapter extends ArrayAdapter<PCInfo> {
         tvMac.setText(info.getMacAdress());
         tvSSID.setText(info.getPcName());
         final CheckBox chk = (CheckBox) convertView.findViewById(R.id.pc_item_checkbox);
-        chk.setChecked(info.isEnabled());
+        chk.setChecked(info.isOnWifiEnabled());
 
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {

@@ -84,19 +84,15 @@ public class MainFragment extends Fragment {
     }
 
     public void editPCInfo(PCInfo pcInfo, int position) {
-        PCInfo toEdit = pcinfoArrList.get(position);
-        toEdit.setMacAdress(pcInfo.getMacAdress());
-        toEdit.setPcName(pcInfo.getPcName());
-        toEdit.setEnabled(pcInfo.isEnabled());
+        pcinfoArrList.set(position,pcInfo);
         adapter.notifyDataSetChanged();
-        //dbHelper.updatePCInfo(pcInfo, position);
-        updateDatabase(toEdit,position);
+        updateDatabase(pcInfo,position);
 
 
     }
     public void editPcInfoEnabled(boolean newEnabled, final int position) {
         final PCInfo toEdit = pcinfoArrList.get(position);
-        toEdit.setEnabled(newEnabled);
+        toEdit.setOnWifiEnabled(newEnabled);
         adapter.notifyDataSetChanged();
 
        // dbHelper.updatePCInfo(toEdit, position);
