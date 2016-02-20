@@ -1,7 +1,6 @@
 package com.teamgy.wakeonlan;
 
 import com.teamgy.wakeonlan.sendWol.WakeOnHomeWifiReciever;
-import com.teamgy.wakeonlan.utils.Tools;
 
 import junit.framework.Assert;
 
@@ -9,7 +8,6 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 

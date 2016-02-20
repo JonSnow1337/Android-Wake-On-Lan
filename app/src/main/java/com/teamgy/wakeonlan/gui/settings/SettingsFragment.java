@@ -2,12 +2,9 @@ package com.teamgy.wakeonlan.gui.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.SwitchPreference;
-import android.widget.Switch;
 
 import com.teamgy.wakeonlan.R;
 

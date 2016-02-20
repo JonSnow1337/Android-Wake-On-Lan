@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:fillViewport="true">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,111 +26,8 @@
         </android.support.design.widget.AppBarLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_below="@+id/app_bar_layout">
+        <include layout="@layout/content_pc_create_draft"/>
 
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="8"
-                    android:src="@drawable/ic_desktop_windows_black_24dp" />
-
-                <EditText
-                    android:id="@+id/edit_ssid"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="25dp"
-                    android:layout_weight="1"
-                    android:hint="@string/pc_name"
-                    android:singleLine="true" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="8"
-                    android:src="@drawable/ic_developer_board_black_24dp"
-
-                    />
-
-                <EditText
-                    android:id="@+id/edit_mac"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="25dp"
-                    android:layout_weight="1"
-                    android:hint="@string/mac_address"
-                    android:singleLine="true" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="8"
-                    android:src="@drawable/ic_action_thumb_up"
-
-                    />
-
-                <Switch
-                    android:id="@+id/switch_wifi_range"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="25dp"
-                    android:layout_weight="1"
-                    android:hint="@string/switch_wifi_range"
-                    android:singleLine="true" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="8"
-                    android:src="@drawable/ic_action_thumb_up"
-
-                    />
-
-                <Switch
-                    android:id="@+id/switch_on_alarm_enabled"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="25dp"
-                    android:layout_weight="1"
-                    android:hint="@string/switch_timed_alarm"
-                    android:singleLine="true" />
-            </LinearLayout>
-
-
-        </LinearLayout>
 
 
 

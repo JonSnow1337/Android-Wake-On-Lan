@@ -14,8 +14,7 @@
         android:id="@+id/action_launch_reqs"
         android:orderInCategory="1"
         android:title="@string/action_launch_reqs"
-        app:showAsAction="never"
-        android:icon="@drawable/ic_power_settings_new_white_24dp" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_share_app"
         android:orderInCategory="2"

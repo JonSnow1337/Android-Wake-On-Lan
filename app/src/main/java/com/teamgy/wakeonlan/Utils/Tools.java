@@ -20,7 +20,6 @@ import com.teamgy.wakeonlan.data.PCInfo;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

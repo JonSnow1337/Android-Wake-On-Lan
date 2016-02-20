@@ -6,8 +6,8 @@
     >
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_desktop_windows_black_24dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_hardware_desktop_windows"
             android:layout_weight="1"
             android:layout_margin="10dp"
             android:layout_marginTop="0dp"

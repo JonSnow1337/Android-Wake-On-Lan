@@ -30,13 +30,9 @@
     <string name="app_playstore_link">http://play.google.com/store/apps/details?id=com.teamgy.wakeonlan</string>
     <string name="first_time_checkbox_message">PC will not turn on when you get in wifi range.</string>
     <string name="second_time_checkbox_message">PC will turn on when you get in wifi range.</string>
-    <string name="key_auto_wol_category">auto_wol_settings_category</string>
     <string name="key_quiet_hours_enabled">quietHoursEnabled</string>
     <string name="key_time_start">timeStart</string>
-    <string name="set">Ok</string>
-    <string name="cancel">Cancel</string>
     <string name="settings_quiet_wol_start">Quiet hours start</string>
-    <string name="key_time_start_hour">key_time_start_hour</string>
     <string name="settings_quiet_wol_end">Quiet hours end</string>
     <string name="key_time_end">key_time_end</string>
     <string name="launch_itro">Intro</string>

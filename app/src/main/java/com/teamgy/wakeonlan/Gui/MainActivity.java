@@ -6,7 +6,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,7 +29,6 @@ import com.teamgy.wakeonlan.utils.AndroidDatabaseManager;
 import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
 import com.teamgy.wakeonlan.utils.Tools;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnCreateViewListener,PcInfoAdapter.PCInfoAdapterCallback {

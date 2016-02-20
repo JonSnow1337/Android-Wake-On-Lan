@@ -8,12 +8,10 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toolbar;
 
 import com.teamgy.wakeonlan.data.PCInfo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Jakov on 07/11/2015.

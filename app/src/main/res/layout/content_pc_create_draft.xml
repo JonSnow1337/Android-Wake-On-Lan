@@ -1,0 +1,169 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_below="@+id/app_bar_layout"
+    android:id="@+id/edit_pc_backgroud"
+    >
+    <!-- android:background="@drawable/transition_drawable"-->
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="8"
+            android:src="@drawable/ic_hardware_desktop_windows"
+            />
+
+        <EditText
+            android:id="@+id/edit_ssid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:layout_weight="1"
+            android:hint="@string/pc_name"
+            android:singleLine="true"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="8"
+            android:src="@drawable/ic_developer_board_black_24dp"
+
+            />
+
+        <EditText
+            android:id="@+id/edit_mac"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:layout_weight="1"
+            android:hint="@string/mac_address"
+            android:singleLine="true" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="8"
+            android:src="@drawable/ic_wifi_black_48dp"
+
+            />
+
+        <Switch
+            android:id="@+id/switch_on_wifi_enabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:layout_weight="1"
+            android:hint="@string/switch_wifi_range"
+            android:checked="true"
+            android:singleLine="true" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="8"
+            android:src="@drawable/ic_action_alarm"
+
+            />
+
+        <Switch
+            android:id="@+id/switch_on_alarm_enabled"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="25dp"
+            android:layout_weight="1"
+            android:hint="@string/switch_timed_alarm"
+            android:singleLine="true" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/clock_alarm_date_selector"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+
+
+        >
+        <CheckBox
+            android:id="@+id/day_checkbox_monday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/monday_short"
+            android:layout_weight="1"/>
+        <CheckBox
+            android:id="@+id/day_checkbox_tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tuesday_short"
+            android:layout_weight="1"/>
+        <CheckBox
+            android:id="@+id/day_checkbox_wednesday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wendsay_short"
+            android:layout_weight="1"/>
+        <CheckBox
+            android:id="@+id/day_checkbox_thursday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/thursday_short"
+            android:layout_weight="1"/>
+        <CheckBox
+            android:id="@+id/day_checkbox_friday"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/friday_short"
+            android:layout_weight="1"/>
+        <CheckBox
+            android:id="@+id/day_checkbox_saturday"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sunday_short"
+            android:layout_weight="1"
+            android:checked="true"/>
+        <CheckBox
+            android:id="@+id/day_checkbox_sunday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/saturday_short"
+            android:layout_weight="1"
+            android:checked="true"/>
+    </LinearLayout>
+</LinearLayout>
