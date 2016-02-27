@@ -42,41 +42,25 @@ public class PcInfoAdapter extends ArrayAdapter<PCInfo> {
         TextView tvSSID = (TextView) convertView.findViewById(R.id.list_item_ssid);
         tvMac.setText(info.getMacAdress());
         tvSSID.setText(info.getPcName());
-        final CheckBox chk = (CheckBox) convertView.findViewById(R.id.pc_item_checkbox);
-        chk.setChecked(info.isOnWifiEnabled());
 
+        //TODO change names no longer prelolipop
+        final ImageButton preLolipopConfigureButton = (ImageButton) convertView.findViewById(R.id.pre_lolipop_editPC);
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if(callback != null){
+            preLolipopConfigureButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.configurePressed(info,position);
+                }
+            });
 
-            //callback here because i cant access activity methods
-            //for lolipop we dont even respond to buttons,
-            //its all long click and single click  on list item direcrtly
-            final ImageButton preLolipopConfigureButton = (ImageButton) convertView.findViewById(R.id.pre_lolipop_editPC);
-
-            if(callback != null){
-
-                chk.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        callback.checkboxPressed(chk,info,position);
-                    }
-                });
-
-                preLolipopConfigureButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        callback.configurePressed(info,position);
-                    }
-                });
-
-            }
         }
+
         return convertView;
 
     }
 
     public interface PCInfoAdapterCallback{
-        void checkboxPressed(CheckBox chk, PCInfo pcinfo,int position);
         void configurePressed(PCInfo pcinfo,int position);
     }
 

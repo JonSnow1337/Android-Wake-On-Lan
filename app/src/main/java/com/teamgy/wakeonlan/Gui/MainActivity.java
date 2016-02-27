@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.teamgy.wakeonlan.data.PCInfo;
@@ -31,13 +30,12 @@ import com.teamgy.wakeonlan.utils.Tools;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements OnCreateViewListener,PcInfoAdapter.PCInfoAdapterCallback {
+public class MainActivity extends AppCompatActivity implements OnCreateViewListener {
 
     public static final int RESULT_DELETE = 10;
-    private MainFragment mainFrag;
+    private PCListHolderFragment mainFrag;
     final static int REQUEST_EDIT = 1;
     final static int REQUEST_ADD = 2;
-    private int checkboxClickCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +67,9 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
 
 
         if (savedInstanceState == null) {
-            mainFrag = new MainFragment();
+            mainFrag = new PCListHolderFragment();
         } else {
-            mainFrag = (MainFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
+            mainFrag = (PCListHolderFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
         }
         mainFrag.setOnCreateViewListener(this); //to set click listview listener
         replaceFragmentContainer(mainFrag, false);
@@ -161,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
             startActivityForResult(i, REQUEST_ADD);
         }
 
-
     }
 
     public void startEditPCActivity(View view, PCInfo pcInfo, final int position) {
@@ -237,60 +234,18 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
         }
     }
 
-    private void loadCheckBoxHitCounter(){
-        //used for displaying hints
-        SharedPreferences getPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext());
-        this.checkboxClickCounter = getPrefs.getInt("checkboxHitCounter", 0);
-    }
 
-    @Override
-    protected void onStart() {
-        loadCheckBoxHitCounter();
-        super.onStart();
-    }
 
-    @Override
-    protected void onPause() {
-        //save checkbox hit counters
-        SharedPreferences getPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getBaseContext());
-        getPrefs.edit().putInt("checkboxHitCounter", checkboxClickCounter).apply();
 
-        super.onPause();
-    }
 
-    public void displayListViewHint(){
-        //shows a snackbar to user when he clicks a checkbox first time
-        //telling him that his pc will turn on auto on wifi
 
-        //  If the activity has never started before...
-        if (checkboxClickCounter == 1) {
-            Snackbar.make(findViewById(R.id.fab), getString(R.string.first_time_checkbox_message), Snackbar.LENGTH_INDEFINITE).show();
-        }
-        if (checkboxClickCounter == 2) {
-            Snackbar.make(findViewById(R.id.fab), getString(R.string.second_time_checkbox_message), Snackbar.LENGTH_INDEFINITE).show();
-        }
-    }
 
 
     @Override
     public void onViewCreated() {
         ListView listView = mainFrag.getListview();
-
+        //holding the listview thingy
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP){
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    CheckBox checkBox = (CheckBox) view.findViewById(R.id.pc_item_checkbox);
-                    Tools.changeCheckboxState(checkBox);
-                    PCInfo pcToEdit = mainFrag.getPCInfo(position);
-                    //mainFrag.editPCInfo(new PCInfo(pcToEdit.getMacAdress(), pcToEdit.getPcName(), checkBox.isChecked()), position); //just chaning enabled state of pcinfo
-                    mainFrag.editPcInfoEnabled(checkBox.isChecked(),position);
-                    checkboxClickCounter ++;
-                    displayListViewHint();
-                }
-            });
             listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -300,35 +255,22 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
                 }
             });
 
-        }else{
-
-            PcInfoAdapter adapter = (PcInfoAdapter) listView.getAdapter();
-            adapter.setCallback(this);
-
         }
+        //clickign the edit button
+        PcInfoAdapter adapter = (PcInfoAdapter) listView.getAdapter();
+        adapter.setCallback(new PcInfoAdapter.PCInfoAdapterCallback() {
+            @Override
+            public void configurePressed(PCInfo pcinfo, int position) {
+                startEditPCActivity(null,pcinfo,position);
 
+            }
+        });
 
     }
-    public MainFragment getMainFrag() {
+    public PCListHolderFragment getMainFrag() {
         return mainFrag;
     }
 
-    @Override
-    public void checkboxPressed(CheckBox chk, PCInfo pcinfo,int position) {
-        //pre lolipop callback from listitem
-
-        PCInfo pcToEdit = mainFrag.getPCInfo(position);
-        mainFrag.editPcInfoEnabled(chk.isChecked(),position);
-        checkboxClickCounter ++;
-        displayListViewHint();
-    }
-
-    @Override
-    public void configurePressed(PCInfo pcinfo,int position) {
-
-        startEditPCActivity(null,pcinfo,position);
-
-    }
     public void initialiseIntro(){
         Thread t = new Thread(new Runnable() {
             @Override
@@ -363,6 +305,9 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
         t.start();
 
 
+    }
+    public void clickTest(View v){
+        Log.d("test","clicked");
     }
 }
 

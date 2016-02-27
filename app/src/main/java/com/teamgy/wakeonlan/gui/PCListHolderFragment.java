@@ -7,18 +7,21 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import com.teamgy.wakeonlan.data.PCInfo;
 import com.teamgy.wakeonlan.R;
 import com.teamgy.wakeonlan.utils.PCInfoDatabaseHelper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Jakov on 01/11/2015.
  */
-public class MainFragment extends Fragment {
+public class PCListHolderFragment extends Fragment {
 
 
     private OnCreateViewListener listener;
@@ -30,13 +33,28 @@ public class MainFragment extends Fragment {
     private ListView listview;
     private PCInfoDatabaseHelper dbHelper;
     private ArrayList<PCInfo> pcinfoArrList;
-    private PcInfoAdapter adapter;
     private MainActivity activity;
+    private BaseAdapter adapter;
+    private int layout = R.layout.content_main; //default layout with fab
+
+
+    public static  PCListHolderFragment newInstance(BaseAdapter adapter){
+        PCListHolderFragment fragmentDemo = new PCListHolderFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("adapter", (Serializable)adapter);
+        fragmentDemo.setArguments(args);
+        return fragmentDemo;
+
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.content_main, container, false);
+
+
+
+        View view = inflater.inflate(layout, container, false);
         Context context = view.getContext();
         dbHelper = PCInfoDatabaseHelper.getsInstance(context);
 
@@ -44,21 +62,31 @@ public class MainFragment extends Fragment {
         listview = (ListView) view.findViewById(R.id.pc_list_view);
 
 
+
         if (savedInstanceState == null) {
             if (pcinfoArrList == null) {
                 pcinfoArrList = new ArrayList<PCInfo>();
                 pcinfoArrList = dbHelper.getAllPCInfos();
-                adapter = new PcInfoAdapter(context, pcinfoArrList);
             }
-
 
         } else {
             pcinfoArrList = (ArrayList<PCInfo>) savedInstanceState.getSerializable("pcinfoArrList");
-            adapter = new PcInfoAdapter(context, pcinfoArrList);
 
         }
+        //reload adapter that might be set from newInstance(adapter)
+        Bundle args = getArguments();
+        if(args != null){
+            BaseAdapter adapterLoaded = (BaseAdapter) args.getSerializable("adapter");
+            if(adapterLoaded != null){
+                this.adapter = (BaseAdapter) adapterLoaded;
+            }
+        }
+        else{
+            this.adapter = new PcInfoAdapter(context,pcinfoArrList);
+        }
+        //adapter laoded or defaulted, set it
+        listview.setAdapter(this.adapter);
 
-        listview.setAdapter(adapter);
         if (listener != null) {
             listener.onViewCreated();
         }
@@ -94,7 +122,6 @@ public class MainFragment extends Fragment {
         final PCInfo toEdit = pcinfoArrList.get(position);
         toEdit.setOnWifiEnabled(newEnabled);
         adapter.notifyDataSetChanged();
-
        // dbHelper.updatePCInfo(toEdit, position);
         updateDatabase(toEdit,position);
 

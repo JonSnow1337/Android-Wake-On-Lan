@@ -50,6 +50,12 @@
             android:label="@string/intro_welcome"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".widget.ConfigureWidgetActivity"
+            android:theme="@style/AppTheme">
+        <intent-filter>
+            <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+        </intent-filter>
+        </activity>
 
         <service
             android:name=".sendWol.WOLService"
@@ -64,6 +70,14 @@
             <intent-filter>
                 <action android:name="android.net.wifi.STATE_CHANGE"></action>
             </intent-filter>
+        </receiver>
+
+        <receiver android:name=".widget.WidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/widget_info" />
         </receiver>
     </application>
 </manifest>

@@ -17,14 +17,37 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <FrameLayout
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/app_bar_layout"
-        android:elevation="10dp"
-        android:id="@+id/fragment_container"
-        ></FrameLayout>
+        android:layout_below="@id/app_bar_layout">
+        <FrameLayout
+            android:layout_gravity="top|left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/app_bar_layout"
+            android:elevation="10dp"
+            android:id="@+id/fragment_container"
+            >
 
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_add_black_24dp"
+                android:onClick="startAddPcFragment"
+                android:layout_margin="25dp"
+                android:layout_gravity="bottom|right"
+                android:clickable="true"
+                android:focusable="true"
+                />
+        </FrameLayout>
+
+
+
+
+
+    </android.support.design.widget.CoordinatorLayout>
 
 
     

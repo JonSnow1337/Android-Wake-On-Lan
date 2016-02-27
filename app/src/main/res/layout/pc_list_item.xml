@@ -2,20 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:backgroundTint="@color/colorPrimary"
     android:descendantFocusability="blocksDescendants"
+
     >
-    <CheckBox
-        android:id="@+id/pc_item_checkbox"
+    <ImageView
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_hardware_desktop_windows"
         android:layout_weight="1"
         android:layout_margin="10dp"
         android:layout_marginTop="0dp"
-        android:backgroundTint="@color/transparent"
-        android:background="@color/transparent"
-        android:focusable="false"
         />
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -44,9 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:focusable="false"
-            android:clickable="true"
             android:src="@drawable/ic_image_edit"
             android:background="@color/transparent"
+            android:focusable="false"
+            android:clickable="false"
+            android:onClick="clickTest"
             />
+
 </LinearLayout>
