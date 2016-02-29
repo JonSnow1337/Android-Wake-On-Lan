@@ -36,9 +36,7 @@ public class EditPCActivity extends AppCompatActivity  {
     private EditText editMac;
     private EditText editSSID;
     private Switch switchAutoWifi;
-    private Switch switchOnAlarm;
     private PCInfo pcInfoDraft;
-    private ArrayList<Checkable> daysCheckboxes = new ArrayList<Checkable>();
     private AppCompatActivity activity;
     private boolean editMode;
     private int positon;
@@ -64,9 +62,7 @@ public class EditPCActivity extends AppCompatActivity  {
 
         editMac = (EditText) findViewById(R.id.edit_mac);
         editSSID = (EditText) findViewById(R.id.edit_ssid);
-        switchOnAlarm = (Switch) findViewById(R.id.switch_on_alarm_enabled);
         switchAutoWifi = (Switch) findViewById(R.id.switch_on_wifi_enabled);
-        daysCheckboxes = initialiseDayCheckboxes();
 
 
 
@@ -84,13 +80,7 @@ public class EditPCActivity extends AppCompatActivity  {
             getSupportActionBar().setTitle("Edit PC");
             editMac.setText(pcInfoDraft.getMacAdress());
             editSSID.setText(pcInfoDraft.getPcName());
-            switchOnAlarm.setChecked(pcInfoDraft.isOnAlarmEnabled());
             switchAutoWifi.setChecked(pcInfoDraft.isOnWifiEnabled());
-            for(int j = 0; j < daysCheckboxes.size(); j++){
-                daysCheckboxes.get(j).setChecked(pcInfoDraft.getAlarmDays()[j]);
-            }
-
-
             positon = bundle.getInt("position");
             editMode = true;
             toolbar.setNavigationIcon(R.drawable.ic_delete_white_24dp);
@@ -119,59 +109,6 @@ public class EditPCActivity extends AppCompatActivity  {
                 return false;
             }
         });
-        switchOnAlarm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                LinearLayout alarmDaySelectorLayout = (LinearLayout)findViewById(R.id.clock_alarm_date_selector); //TODO rename resource
-                if(isChecked){
-                    //display day picker below
-                    Tools.fadeInView(alarmDaySelectorLayout);
-
-                }
-                else{
-                    Tools.fadeOutView(alarmDaySelectorLayout);
-
-                }
-
-            }
-        });
-        /*for (int i = 0; i < daysCheckboxes.size(); i++) {
-            CheckBox checkBox = daysCheckboxes.get(i);
-            final int finalI = i;
-            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    pcInfoDraft.setAlarmDay(Day.values()[finalI],isChecked);
-                }
-            });
-
-        }*/
-
-    }
-
-    private ArrayList<Checkable> initialiseDayCheckboxes(){
-
-        if(daysCheckboxes.size() == 0){
-            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_monday));
-            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_tuesday));
-            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_wednesday));
-            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_thursday));
-            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_friday));
-            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_saturday));
-            daysCheckboxes.add((Checkable)findViewById(R.id.day_checkbox_sunday));
-        }
-        return daysCheckboxes;
-    }
-
-    @Override
-    public View onCreateView(String name, Context context, AttributeSet attrs) {
-        if(editMode){
-            LinearLayout alarmDaySelectorLayout = (LinearLayout)findViewById(R.id.clock_alarm_date_selector); //TODO rename resource
-            if(switchOnAlarm.isChecked()){
-                alarmDaySelectorLayout.setVisibility( View.VISIBLE);
-            }
-        }
-        return super.onCreateView(name, context, attrs);
 
     }
 
@@ -279,10 +216,7 @@ public class EditPCActivity extends AppCompatActivity  {
         String newName = editSSID.getText().toString();
         this.pcInfoDraft.setMacAdress(newMac);
         this.pcInfoDraft.setPcName(newName);
-        this.pcInfoDraft.setOnAlarmEnabled(switchOnAlarm.isChecked());
         this.pcInfoDraft.setOnWifiEnabled(switchAutoWifi.isChecked());
-        this.pcInfoDraft.setAlarmDays(getDaysEnabled(daysCheckboxes));
-
         data.putExtra("pcInfo", this.pcInfoDraft);
         data.putExtra("position", positon); //TODO PLEASE CHANGE THIS ITS DUMB
         setResult(RESULT_OK, data);
@@ -301,16 +235,5 @@ public class EditPCActivity extends AppCompatActivity  {
         getMenuInflater().inflate(R.menu.menu_edit_pc_activity, menu);
         return true;
     }
-
-    private boolean [] getDaysEnabled(List<Checkable> checkables){
-        boolean daysEnabled [] = new boolean[7];
-        for(int i = 0; i <checkables.size(); i++){
-            daysEnabled[i] = checkables.get(i).isChecked();
-        }
-
-        return daysEnabled;
-
-    }
-
 
 }

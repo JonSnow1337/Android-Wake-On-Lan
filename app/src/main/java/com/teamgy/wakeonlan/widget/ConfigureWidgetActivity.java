@@ -48,6 +48,7 @@ public class ConfigureWidgetActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Select PCs for widget");
 
 
         PCInfoDatabaseHelper db  =PCInfoDatabaseHelper.getsInstance(getBaseContext());
@@ -90,6 +91,8 @@ public class ConfigureWidgetActivity extends AppCompatActivity {
             ArrayList<PCInfo> selectedPCInfos = getSelectedPCInfos();
             finishConfiguration(selectedPCInfos);
             return true;
+        }else{
+            finish();
         }
         return true;
     }
@@ -115,7 +118,10 @@ public class ConfigureWidgetActivity extends AppCompatActivity {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         RemoteViews views = new RemoteViews(context.getPackageName(),R.layout.widget);
        // appWidgetManager.updateAppWidget(widgetID,views);
-        WidgetProvider.updateAppWidget(context,appWidgetManager,widgetID);
+        //WidgetProvider.updateAppWidget(context,appWidgetManager,widgetID);
+        Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_UPDATE, null, this, WidgetProvider.class);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, new int[] {widgetID});
+        sendBroadcast(intent);//this will call widget provider onUpdate method.
 
         Intent resultValue = new Intent();
         resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetID);
