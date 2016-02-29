@@ -17,7 +17,6 @@ import com.teamgy.wakeonlan.R;
 import com.teamgy.wakeonlan.data.PCInfo;
 import com.teamgy.wakeonlan.sendWol.WOLService;
 import com.teamgy.wakeonlan.utils.Tools;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +26,6 @@ public class WidgetProvider extends AppWidgetProvider {
 
     private static final String SYNC_CLICKED    = "automaticWidgetSyncButtonClick";
     private static String stringToLog = "default string";
-
-    private static HashMap<Integer,ArrayList<PCInfo>> widgetData = new HashMap<Integer,ArrayList<PCInfo>> ();
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
@@ -51,13 +48,8 @@ public class WidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
         if (SYNC_CLICKED.equals(intent.getAction())) {
             //put this in a method
-            SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.widget_preference_file_key),0);
-            Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
-            String loadedWidgetdataRaw = prefs.getString(context.getString(R.string.saved_widget_data), "");
-            Type type = new TypeToken<HashMap<Integer, ArrayList<PCInfo>>>(){}.getType();
-            widgetData = gson.fromJson(loadedWidgetdataRaw,type);
             int widgetID = intent.getExtras().getInt("widgetID");
-            ArrayList<PCInfo> pcInfos = widgetData.get(Integer.valueOf(widgetID));
+            ArrayList<PCInfo> pcInfos = getWidgetPCInfos(context, widgetID);
             Intent serviceIntent = new Intent(context, WOLService.class);
             serviceIntent.putStringArrayListExtra("macAdresses", Tools.pcInfosToMacArrayList(pcInfos));
             context.startService(serviceIntent);
@@ -69,12 +61,25 @@ public class WidgetProvider extends AppWidgetProvider {
         intent.setAction(action);
         return PendingIntent.getBroadcast(context, 0, intent, 0);
     }
+
+    private static ArrayList<PCInfo> getWidgetPCInfos(Context context, Integer widgetID){
+        //returns Selected PCinfos for widgetId
+        //it is saved as gson in shared preferences
+        SharedPreferences prefs = context.getSharedPreferences(context.getString(R.string.widget_preference_file_key),0);
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        String loadedWidgetdataRaw = prefs.getString(context.getString(R.string.saved_widget_data), "");
+        Type type = new TypeToken<HashMap<Integer, ArrayList<PCInfo>>>(){}.getType();
+        HashMap<Integer,ArrayList<PCInfo>> widgetData = gson.fromJson(loadedWidgetdataRaw,type);
+        ArrayList<PCInfo> pcInfos = widgetData.get(widgetID);
+        return pcInfos;
+    }
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                        int appWidgetId){
-        //i have no idea why i have to do it like this..
-        //no idea whats the point of the onUpdate method either.
+        //method call from ConfigureActivity
 
         RemoteViews updateViews = new RemoteViews(context.getPackageName(), R.layout.widget);
+        String title = getWidgetPCInfos(context,appWidgetId).get(0).getPcName();
+        updateViews.setTextViewText(R.id.widget_button,title);
         Intent intent = new Intent(context, WidgetProvider.class);
         intent.setAction(SYNC_CLICKED);
         intent.putExtra("widgetID", appWidgetId);
@@ -82,5 +87,4 @@ public class WidgetProvider extends AppWidgetProvider {
         updateViews.setOnClickPendingIntent(R.id.widget_button,pendingIntent);
         appWidgetManager.updateAppWidget(appWidgetId, updateViews);
     }
-
 }
