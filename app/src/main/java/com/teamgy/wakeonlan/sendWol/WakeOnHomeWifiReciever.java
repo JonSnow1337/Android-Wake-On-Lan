@@ -19,7 +19,9 @@ import com.teamgy.wakeonlan.utils.Tools;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Jakov on 30/10/2015.
@@ -119,18 +121,14 @@ public class WakeOnHomeWifiReciever extends BroadcastReceiver {
     public boolean isTimeInRange(Date timeStart, Date timeEnd, Date timequestioned) {
         //seconds are a lot easier for comparing time ranges
         int timeStartSeconds = timeStart.getHours() * 3600 + timeStart.getMinutes() * 60;
-
         int timeEndSeconds = timeEnd.getHours() * 3600 + timeEnd.getMinutes() * 60;
-
         int currentSeconds =  timequestioned.getHours() * 3600 + timequestioned.getMinutes() *  60;
+
         boolean isInTimeRange = false;
         if(timeStartSeconds > timeEndSeconds){
-            isInTimeRange = currentSeconds <= timeStartSeconds &&  currentSeconds <= timeEndSeconds;
-
-        }
-        else{
+            isInTimeRange = currentSeconds >= timeStartSeconds || currentSeconds <= timeEndSeconds;
+        }else{
             isInTimeRange = currentSeconds >= timeStartSeconds && currentSeconds <= timeEndSeconds;
-
         }
         Log.d("wolreciever", "in time range? " + isInTimeRange);
         Log.d("wolreciever", "timeStartSecs: " + timeStartSeconds + "timeEndSeconds: " + timeEndSeconds +

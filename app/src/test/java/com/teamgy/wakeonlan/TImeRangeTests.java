@@ -114,4 +114,32 @@ public class TImeRangeTests {
             e.printStackTrace();
         }
     }
+    @Test
+    public void test_timeRange_inversed(){
+        WakeOnHomeWifiReciever reciever = new WakeOnHomeWifiReciever();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        try{
+            Date timeStart = dateFormat.parse("5:00");
+            Date timeEnd = dateFormat.parse("3:00");
+            Date timeNow = dateFormat.parse("4:30");
+            Assert.assertEquals(true,reciever.isTimeInRange(timeStart,timeEnd,timeNow));
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void test_timeRange_inversed2(){
+        WakeOnHomeWifiReciever reciever = new WakeOnHomeWifiReciever();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        try{
+            Date timeStart = dateFormat.parse("12:00");
+            Date timeEnd = dateFormat.parse("9:00");
+            Date timeNow = dateFormat.parse("10:30");
+            Assert.assertEquals(true,reciever.isTimeInRange(timeStart,timeEnd,timeNow));
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+    }
 }
