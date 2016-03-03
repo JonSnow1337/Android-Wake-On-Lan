@@ -13,6 +13,20 @@
             />
         </Preference>
 -->
+        <EditTextPreference
+            android:key="@string/key_pref_retry_amount"
+            android:title="@string/pref_description_retry_amount"
+            android:summary="Amount of repeated requests when connecting to wifi"
+            android:defaultValue="3"
+            android:inputType="number"
+            android:persistent="true"/>
+        <EditTextPreference
+            android:key="@string/key_pref_wol_port"
+            android:title="@string/pref_description_wol_port"
+            android:summary="Port to send WOL requests"
+            android:defaultValue="40000"
+            android:inputType="number"
+            android:persistent="true"/>
         <SwitchPreference
             android:key="@string/key_quiet_hours_enabled"
             android:title="Enable WOL on WiFi quiet hours"
@@ -20,7 +34,7 @@
             android:checked="false"
             android:persistent="true">
         </SwitchPreference>
-         <com.teamgy.wakeonlan.gui.settings.TimePickerPreference android:title="@string/settings_quiet_wol_start"
+        <com.teamgy.wakeonlan.gui.settings.TimePickerPreference android:title="@string/settings_quiet_wol_start"
             android:enabled="false"
             android:key="@string/key_time_start">
         </com.teamgy.wakeonlan.gui.settings.TimePickerPreference>

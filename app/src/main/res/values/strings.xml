@@ -48,6 +48,10 @@
     <string name="saturday_short">S</string>
     <string name="widget_preference_file_key">com.teamgy.wakeonlan.widgetData</string>
     <string name="saved_widget_data">saved_widget_data_prefs</string>
+    <string name="pref_description_retry_amount">WOL retry amount</string>
+    <string name="key_pref_retry_amount">key_pref_retry_amount</string>
+    <string name="key_pref_wol_port">key_pref_wol_port</string>
+    <string name="pref_description_wol_port">WOL port</string>
 
 
 </resources>

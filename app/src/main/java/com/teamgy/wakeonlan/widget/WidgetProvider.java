@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -60,7 +61,16 @@ public class WidgetProvider extends AppWidgetProvider {
             if(widgetData != null){
                 ArrayList<PCInfo> pcInfos = widgetData.get(Integer.valueOf(widgetID));
                 Intent serviceIntent = new Intent(context, WOLService.class);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                int wolPort = Integer.parseInt(prefs.getString(context.getString(R.string.key_pref_wol_port),"40000"));
+
                 serviceIntent.putStringArrayListExtra("macAdresses", Tools.pcInfosToMacArrayList(pcInfos));
+                serviceIntent.putExtra("retryInteval",1);
+                serviceIntent.putExtra("retrySleep",0);
+                serviceIntent.putExtra("wolPort",wolPort);
+
+
+
                 context.startService(serviceIntent);
             }
         }

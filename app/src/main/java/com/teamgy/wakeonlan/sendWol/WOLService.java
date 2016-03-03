@@ -69,15 +69,21 @@ public class WOLService extends IntentService {
         //http://support.amd.com/TechDocs/20213.pdf specification for magic packet
 
         try {
-            socket = new DatagramSocket(4000);
+            int retryInteval = intent.getIntExtra("retryInteval",3);
+            int retrySleep = intent.getIntExtra("retrySleep",1);
+            int wolPort = intent.getIntExtra("wolPort",40000);
+
+            socket = new DatagramSocket(wolPort);
             socket.setBroadcast(true);
             socket.setReuseAddress(true);
             ArrayList<String> macAdresses = intent.getStringArrayListExtra("macAdresses");
 
+
+
             if (macAdresses != null) {
                 String wolHeader = "ffffffffffff";
 
-                for (int i = 0; i < Config.retryInterval; i++) {
+                for (int i = 0; i < retryInteval; i++) {
 
                     for (String macAdress : macAdresses) {
 
@@ -94,7 +100,7 @@ public class WOLService extends IntentService {
                     try {
                         Log.d("wol", "sleeping");
                         //this is retrying because wifi might me iffy when user connects first time
-                        Thread.sleep(Config.retrySleep * 1000);
+                        Thread.sleep(retrySleep * 1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -108,7 +114,7 @@ public class WOLService extends IntentService {
 
             //TODO notify user something failed
             e.printStackTrace();
-            socket.close();
+            //socket.close();
 
 
         }

@@ -31,6 +31,21 @@ public class WakeOnHomeWifiReciever extends BroadcastReceiver {
             NetworkInfo networkInfo = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
             if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
                 if (networkInfo.isConnected()) {
+                    //since this method always gets called twice
+                    //i added so that it can only get called once in 5 seconds
+                    SharedPreferences prefs = context.getSharedPreferences("wifi_receiver",0);
+                    long lastTimeConnected = prefs.getLong("lastTimeConnected",0);
+                    Date now = new Date();
+                    if(lastTimeConnected + 5 < now.getTime() /1000 || lastTimeConnected == 0 ){
+                        //if last receive was more than 5 seconds ago
+                        prefs.edit().putLong("lastTimeConnected",now.getTime()/1000).commit();
+
+                    }else{
+                        //last time this method was called was less than 5 seconds ago
+                        // silently ignore it..
+                        Log.d("wolreciever", "onReceive called less than 5 seconds ago");
+                        return;
+                    }
                     WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                     PCInfoDatabaseHelper dbHelper = PCInfoDatabaseHelper.getsInstance(context);
@@ -47,8 +62,15 @@ public class WakeOnHomeWifiReciever extends BroadcastReceiver {
                         }
                     }
                     if (pcInfosToSend.size() > 0) {
+                        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+                        int wolPort = Integer.parseInt(prefs.getString(context.getString(R.string.key_pref_wol_port),"40000"));
+                        int wolRetry = Integer.parseInt(prefs.getString(context.getString(R.string.key_pref_retry_amount),"3"));
+
                         Intent serviceIntent = new Intent(context, WOLService.class);
                         serviceIntent.putStringArrayListExtra("macAdresses", Tools.pcInfosToMacArrayList(pcInfosToSend));
+                        serviceIntent.putExtra("retryInteval",wolRetry);
+                        serviceIntent.putExtra("wolPort",wolPort);
+
                         context.startService(serviceIntent);
 
                         Log.d("wolreciever", "started service");

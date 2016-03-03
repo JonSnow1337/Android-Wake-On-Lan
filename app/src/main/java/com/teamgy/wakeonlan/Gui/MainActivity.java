@@ -309,6 +309,9 @@ public class MainActivity extends AppCompatActivity implements OnCreateViewListe
     public void clickTest(View v){
         Log.d("test","clicked");
     }
+
+    public void networkDiscovery(View v){
+    }
 }
 
 
