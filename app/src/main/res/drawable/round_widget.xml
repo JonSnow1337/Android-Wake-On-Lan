@@ -14,10 +14,10 @@
 </selector>-->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_pressed="false"
-        android:drawable="@mipmap/widget_button">
+        android:drawable="@drawable/ic_widget_button_clicked">
     </item>
     <item android:state_pressed="true"
-        android:drawable="@drawable/ic_check_white_24dp">
+        android:drawable="@drawable/ic_widget_button_not_clicked">
     </item>
 
 

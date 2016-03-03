@@ -58,4 +58,60 @@ public class TImeRangeTests {
             e.printStackTrace();
         }
     }
+    @Test
+    public void test_timeRange_2_days_in_range(){
+        WakeOnHomeWifiReciever reciever = new WakeOnHomeWifiReciever();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        try{
+            Date timeStart = dateFormat.parse("23:00");
+            Date timeEnd = dateFormat.parse("10:00");
+            Date timeNow = dateFormat.parse("0:30");
+            Assert.assertEquals(true,reciever.isTimeInRange(timeStart,timeEnd,timeNow));
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void test_timeRange_2_days_in_range_2(){
+        WakeOnHomeWifiReciever reciever = new WakeOnHomeWifiReciever();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        try{
+            Date timeStart = dateFormat.parse("23:00");
+            Date timeEnd = dateFormat.parse("10:00");
+            Date timeNow = dateFormat.parse("23:30");
+            Assert.assertEquals(true,reciever.isTimeInRange(timeStart,timeEnd,timeNow));
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void test_timeRange_2_days_out_of_range(){
+        WakeOnHomeWifiReciever reciever = new WakeOnHomeWifiReciever();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        try{
+            Date timeStart = dateFormat.parse("23:00");
+            Date timeEnd = dateFormat.parse("10:00");
+            Date timeNow = dateFormat.parse("11:30");
+            Assert.assertEquals(false,reciever.isTimeInRange(timeStart,timeEnd,timeNow));
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void test_timeRange_2_days_out_of_range_2(){
+        WakeOnHomeWifiReciever reciever = new WakeOnHomeWifiReciever();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        try{
+            Date timeStart = dateFormat.parse("23:00");
+            Date timeEnd = dateFormat.parse("10:00");
+            Date timeNow = dateFormat.parse("21:30");
+            Assert.assertEquals(false,reciever.isTimeInRange(timeStart,timeEnd,timeNow));
+
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+    }
 }

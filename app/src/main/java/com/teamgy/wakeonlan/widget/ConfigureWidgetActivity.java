@@ -86,14 +86,13 @@ public class ConfigureWidgetActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("edit", "called it");
         if (item.getItemId() == R.id.menu_pc_check) {
             ArrayList<PCInfo> selectedPCInfos = getSelectedPCInfos();
-            finishConfiguration(selectedPCInfos);
-            return true;
-        }else{
-            finish();
+            if(selectedPCInfos.size() > 0) {
+                finishConfiguration(selectedPCInfos);
+            }
         }
+        finish(); //no pcs selected or anyhting else
         return true;
     }
     private ArrayList<PCInfo> getSelectedPCInfos(){

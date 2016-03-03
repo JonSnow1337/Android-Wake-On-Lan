@@ -101,8 +101,15 @@ public class WakeOnHomeWifiReciever extends BroadcastReceiver {
         int timeEndSeconds = timeEnd.getHours() * 3600 + timeEnd.getMinutes() * 60;
 
         int currentSeconds =  timequestioned.getHours() * 3600 + timequestioned.getMinutes() *  60;
+        boolean isInTimeRange = false;
+        if(timeStartSeconds > timeEndSeconds){
+            isInTimeRange = currentSeconds <= timeStartSeconds &&  currentSeconds <= timeEndSeconds;
 
-        boolean isInTimeRange = currentSeconds >= timeStartSeconds && currentSeconds <= timeEndSeconds;
+        }
+        else{
+            isInTimeRange = currentSeconds >= timeStartSeconds && currentSeconds <= timeEndSeconds;
+
+        }
         Log.d("wolreciever", "in time range? " + isInTimeRange);
         Log.d("wolreciever", "timeStartSecs: " + timeStartSeconds + "timeEndSeconds: " + timeEndSeconds +
               "currentSeconds: " + currentSeconds);
